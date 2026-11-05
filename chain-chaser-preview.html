@@ -17,11 +17,11 @@
 #homeCourseList{display:grid;gap:10px}.home-course-card{margin:0;padding:15px}.home-course-card .course-actions{display:block;margin-top:12px}.home-course-card .course-actions .btn{font-size:14px;padding:13px}.home-course-card h3{overflow-wrap:anywhere}
 .course-details{margin-top:10px;font-size:12px;color:var(--muted)}.course-details>summary,.more-throw>summary{cursor:pointer;padding:6px 0}.course-details .mini{margin:4px 0}.recent-rounds{border-top:1px solid var(--border);margin-top:18px;padding-top:14px}.recent-rounds p{margin-bottom:0}.locate-compact{font-size:12px;min-height:40px}
 .play-head{margin:0 0 10px}.play-subhead{display:flex;align-items:baseline;gap:9px;margin-top:5px}.play-subhead strong{font-size:19px}
-#play .distance-hero{padding:12px 14px;margin:8px 0}.distance-controls{display:flex;gap:6px}.distance-controls .mini{min-height:40px;font-size:12px}#play .distance-hero .big{font-size:46px;margin:3px 0}#voiceState{display:block;font-size:11px;margin-top:3px}
+#play .distance-hero{padding:6px 14px;margin:6px 0}.distance-controls{display:flex;gap:6px}.distance-controls .mini{min-height:40px;font-size:12px}#play .distance-hero .big{margin:2px 0}#voiceState{display:block;font-size:11px;margin-top:3px}
 .voice-help-trigger{min-width:40px;font-weight:800}#voiceCommandsHelp{width:calc(100% - 24px);max-width:440px;max-height:calc(100dvh - 24px);padding:0;border:1px solid var(--control-border);border-radius:17px;background:var(--panel);color:var(--text);overflow-y:auto}#voiceCommandsHelp::backdrop{background:var(--scrim)}.voice-help-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--control-border)}.voice-help-head h2{font-size:18px;margin:0}.voice-help-head .mini{min-width:44px;min-height:44px}.voice-help-content{padding:0 16px 16px;font-size:13px;line-height:1.5;overflow-wrap:anywhere}.voice-help-content h3{font-size:15px;color:var(--accent);margin:18px 0 8px}.voice-help-content dl{margin:0}.voice-help-content dt{line-height:1.9}.voice-help-content dd{margin:5px 0 13px;color:var(--muted)}.voice-help-content code{background:var(--bg);padding:2px 4px;border-radius:4px;white-space:normal;overflow-wrap:anywhere}#voiceDiscCommands{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
 .hole-strip{display:flex;align-items:center;gap:8px;margin:10px 0}.hole-strip>.mini{min-width:44px;min-height:44px;padding:8px}.hole-picker{position:relative;flex:1;min-width:0;text-align:center;padding:5px;border:1px solid var(--control-border);border-radius:10px;min-height:48px;background:var(--secondary);cursor:pointer}.hole-picker strong,.hole-picker .small{display:block}.hole-picker strong{font-size:14px}.hole-picker:focus-within{outline:2px solid var(--accent);outline-offset:2px}#holeNav{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}#holeNav:disabled{cursor:default}.hole-picker:has(#holeNav:disabled){opacity:.45}.throw-edit-actions{width:100%}.play-throw-actions>.basket-action{flex-basis:100%}.play-throw-actions>.mini:not(.basket-action){flex-basis:100%}.edit-throws{border-color:var(--accent);color:var(--accent)}
 .throw-panel{padding:12px;background:var(--panel);border:1px solid var(--border);border-radius:14px;margin:10px 0}.throw-panel .field{margin:6px 0;padding:10px}.throw-panel #primary{margin-bottom:0}.more-throw{font-size:12px}.more-throw[open]>label{display:block;margin-top:8px}.more-throw .row{margin:8px 0}.throw-panel #throwState{font-size:11px;margin:7px 0 2px}
-#play .real-map-wrap{height:190px;min-height:190px}#googleMap{isolation:isolate}
+#play .real-map-wrap{height:280px;min-height:280px}#googleMap{isolation:isolate}
 .map-toolbar{position:absolute;top:8px;left:8px;right:48px;z-index:3;display:flex;align-items:center;gap:4px}.map-toolbar>.mini{min-height:40px;padding:7px;font-size:11px;white-space:nowrap}.map-menu>summary{min-width:34px;font-size:11px}.map-menu .menu-panel{width:min(235px,calc(100vw - 48px))}#mapCover{padding-top:58px}
 #play .real-map-wrap.map-expanded{position:fixed;inset:8px 8px calc(90px + env(safe-area-inset-bottom));height:auto;min-height:0;max-width:760px;margin:0 auto;z-index:9;box-shadow:0 0 0 100vmax var(--map-scrim)}
 body.map-is-expanded{overflow:hidden}.play-throw-actions{gap:6px;margin-top:9px}.play-throw-actions .mini{min-height:42px;flex:1;font-size:12px}.play-throw-actions .basket-action{background:var(--primary);color:var(--on-primary);font-weight:750}.last-throw{margin-top:10px}#mapMessage{font-size:11px;margin:6px 0;line-height:1.4}#mapper #expandMapButton{display:none}
@@ -153,6 +153,57 @@ input:invalid{border-color:var(--danger)}
 .hole-review-content ol{padding-left:22px}
 .hole-review-nav{position:sticky;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:var(--panel);border-top:1px solid var(--border)}
 .hole-review-nav .mini{min-height:44px;min-width:44px}
+/* Mobile touch targets and essential Play text; section order and map size stay unchanged. */
+#score .counter{gap:8px;flex-shrink:0}
+#score .counter button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;flex-shrink:0}
+#score .counter strong{min-width:2ch;text-align:center}
+#score .row>div:first-child{min-width:0;overflow-wrap:anywhere}
+#score .btn,#endRoundDialog .btn,#play #primary,#play #throwDisc{min-height:48px}
+#play .distance-controls{flex-shrink:0}
+#play .distance-controls .mini{min-width:48px;min-height:48px;padding:8px 6px;font-size:13px;line-height:1.3}
+#play .distance-hero>.row>.eyebrow{min-width:0;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+#play .distance-hero .big{font-size:36px;line-height:1.15}
+#play #voiceState{margin-top:1px}
+#play #basketAccuracy,#play #voiceState,#play .throw-panel #throwState,#play #physicalDistanceEstimate{font-size:14px;line-height:1.4;overflow-wrap:anywhere}
+#play #holeTitle{font-size:14px;line-height:1.4}
+#play .hole-picker strong{font-size:16px;line-height:1.3}
+#play .hole-picker .small{font-size:14px;line-height:1.4}
+#play .hole-strip>.mini{min-width:48px;min-height:48px}
+#play .play-throw-actions .mini{min-height:48px;font-size:14px;line-height:1.3}
+#play .last-throw{font-size:14px;line-height:1.4}
+#play #mapMessage{font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+#satelliteMapWrap .map-toolbar{align-items:stretch}
+#satelliteMapWrap .map-toolbar>.mini{flex:1;min-width:48px;min-height:48px;padding:5px 4px;font-size:12px;line-height:1.2;white-space:normal;overflow-wrap:anywhere}
+#satelliteMapWrap .map-menu{flex-shrink:0}
+#satelliteMapWrap .map-menu>summary{min-width:48px;min-height:48px}
+#playMenu>summary{min-width:48px;min-height:48px}
+#playMenu .btn,#playMenu .status-select,#play #throwType{min-height:48px}
+#throwDiscPicker .throw-disc-option,#throwDiscPicker .mini,.voice-help-head .mini{min-height:48px}
+/* Administrative map tools remain in Course Mapper and More settings. */
+#play .map-menu{display:none}
+/* Existing voice controls beside the Play hole heading. */
+#play .play-head{gap:8px;align-items:center}
+#play .play-head>div:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
+#play .play-head .play-subhead{flex-wrap:wrap;gap:4px 9px}
+/* Keep both action fills visible, including while disc selection or GPS disables them. */
+#play .throw-panel #primary,#play .throw-panel #finishBasket{display:block;width:100%;min-height:48px;height:auto;border:0;border-radius:13px;padding:15px 14px;font-family:inherit;font-size:inherit;font-weight:800;line-height:normal;letter-spacing:normal;text-transform:uppercase;text-align:center;box-shadow:none;opacity:1}
+#play .throw-panel #primary{background:#F58220;color:var(--on-primary)}
+#play .throw-panel #finishBasket{margin:6px 0 0;background:#2878B8;color:#FFFFFF}
+#play .throw-panel #primary:disabled,#play .throw-panel #finishBasket:disabled{box-shadow:inset 0 0 0 2px var(--control-border);cursor:not-allowed}
+/* Background-only translucency; selected orange uses 86% to retain dark-text contrast. */
+#play #satelliteMapWrap .map-toolbar>.mini{background:rgba(52,73,99,.85)}
+@media(hover:hover){#play #satelliteMapWrap .map-toolbar>.mini:not(:disabled):hover{background:rgba(65,91,121,.85)}}
+#play #satelliteMapWrap .map-toolbar>.mini:not(:disabled):active{background:rgba(38,55,80,.85);border-color:var(--accent)}
+#play #satelliteMapWrap .map-toolbar>.mini.selected,#play #satelliteMapWrap .map-toolbar>.mini[aria-pressed="true"]{background:rgba(245,130,32,.86)}
+@media(hover:hover){#play #satelliteMapWrap .map-toolbar>.mini.selected:not(:disabled):hover,#play #satelliteMapWrap .map-toolbar>.mini[aria-pressed="true"]:not(:disabled):hover{background:rgba(255,170,89,.85)}}
+#play #satelliteMapWrap .map-toolbar>.mini:disabled{background:rgba(38,55,80,.85)}
+/* Compact visible controls; transparent extensions retain the original 48px touch height. */
+#play #satelliteMapWrap .map-toolbar{pointer-events:none}
+#play #satelliteMapWrap .map-toolbar>.mini{position:relative;flex:0 0 auto;width:max-content;min-width:48px;height:41px;min-height:41px;padding:4px;white-space:nowrap;overflow-wrap:normal;overflow:visible;pointer-events:auto}
+#play #satelliteMapWrap .map-toolbar>.mini::after{content:"";position:absolute;top:-1px;right:-1px;bottom:-8px;left:-1px}
+#play .distance-hero .round-running-score{display:inline-flex;align-items:baseline;gap:5px;margin-left:auto;min-width:0;font-size:13px;line-height:1.4;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+#play .distance-hero .round-running-score span{text-transform:uppercase}
+#play .distance-hero .round-running-score strong{font-size:inherit;line-height:inherit;color:var(--accent)}
 </style></head><body><div class="app"><header class="top"><img class="home-header-logo" src="./chain-chaser-header-logo.png?v=108e60d4" alt="Chain Chaser" width="2172" height="724"><div class="header-titles"><div class="eyebrow">CHAIN CHASER</div><div class="title" id="heading">Courses</div></div><details class="app-menu"><summary aria-label="App settings and information">•••</summary><div class="menu-panel"><span class="pill" id="status">DEMO MODE</span><p class="foot">Prototype: Google satellite map and GPS are real when enabled. Round scoring, voice, group sync and offline support are still demos. Imported course mapping is saved in this browser.</p></div></details></header><p id="appSaveStatus" class="notice hidden" role="status" aria-live="polite"></p>
 <section id="home">
 <p id="sharedLibraryHomeStatus" class="notice hidden" role="status" aria-live="polite"></p>
@@ -185,6 +236,7 @@ input:invalid{border-color:var(--danger)}
 <section id="courses" class="hidden"><div class="step">COURSE</div><h2>Select course</h2><div class="card"><h3>⌖ Nearby course (demo)</h3><label class="small" for="courseChoice">Choose a course</label><select class="field" id="courseChoice" onchange="selectCourse(this.value)"><option value="disc-on-6th-midvale-ut">Disc On 6th · Midvale · 10 holes</option><option value="mills-park-woods-cross-ut">Mills Park Disc Golf Park · Woods Cross · 13 holes</option></select><p class="muted small" id="courseDescription">Mills Park: 12 published holes (par 36 · 2,909 ft) + custom Hole 13 (303 ft · par 3). Tee/basket mapping still needs verification.</p><div class="notice">Only the course owner/admin can permanently edit course maps. Other courses can be preloaded later.</div></div><div class="card" id="basketCard"><h3>Basket locations</h3><p class="muted small">Disc On 6th has one fixed basket per hole. No basket selection is needed for this course.</p><div id="basketSetup"></div></div><button class="btn alt" onclick="openMapper()">🗺 MAP / VERIFY COURSE</button><button class="btn" onclick="startRound()">✓ START ROUND</button><button class="btn outline" onclick="show('setup')">← Back to round setup</button></section>
 <section id="mapper" class="hidden"><h2>Course map editor</h2><div class="card"><strong id="mapCourseTitle">Course</strong><p class="small muted" id="mapCourseAddress"></p><p class="notice" id="mapperAddressStatus" role="status" aria-live="polite"></p><button class="mini hidden" id="retryMapperAddress" onclick="locateMapperAddress(true)">Retry address lookup</button><p class="muted small">Choose a hole, then tap a tool and tap the satellite map. Tee and basket pins can be dragged to refine their locations. Changes save in this browser; export a backup when finished.</p><label class="small" for="mapperCourseChoice">Course</label><select class="field" id="mapperCourseChoice" onchange="changeMapperCourse(this.value)"></select><div id="customCourseControls" class="hidden"><p class="notice" id="customMapStatus"></p><div id="privateCourseLocation" class="hidden"><label class="small" for="privateCourseAddress">Your course location</label><input class="field" id="privateCourseAddress" type="text" maxlength="500" autocomplete="off" placeholder="Enter your course address or location"><button class="mini" id="savePrivateLocation" onclick="savePrivateCourseLocation()">Save location</button><p class="small muted">Saved only in this browser. Google receives the location when you use address lookup. Existing mapping pins are kept.</p></div><label class="small" for="customHoleCount">Number of holes</label><div class="row"><input class="field" id="customHoleCount" type="number" min="1" max="999" step="1" placeholder="Enter hole count" style="min-width:0"><button class="mini" id="saveCustomCount" onclick="saveCustomHoleCount()">Save count</button></div></div><p class="notice hidden" id="dryMapLayoutNote">Official Holes 1–12 share their existing Main 12 mappings. Hole 2A is unofficial, belongs only to Custom 13, and saves separately.</p><label class="small" for="mapHole">Hole</label><select class="field" id="mapHole" onchange="mapperAddressOverview=false;mapperHole(+this.value)"></select><p id="mapHoleInfo" class="muted small"></p><div id="customHoleDetails" class="hidden"><div class="two"><div><label class="small" for="customHolePar">Par</label><input class="field" id="customHolePar" type="number" min="1" step="1" placeholder="Not set"></div><div><label class="small" for="customHoleDistance">Hole length (ft)</label><input class="field" id="customHoleDistance" type="number" min="1" step="1" placeholder="Unmeasured"></div></div><p class="small muted">Leave length blank to use the measured straight-line distance between your tee and basket pins.</p><button class="mini" onclick="saveCustomHoleDetails()">Save hole details</button></div><div class="maptools"><button class="mini" onclick="mapTool('tee')">Add Tee</button><button class="mini" onclick="mapTool('basket')">Add Basket</button><button class="mini" onclick="mapTool('route')">Draw Path</button><button class="mini" onclick="mapTool('fairway')">Draw fairway</button><button class="mini" onclick="mapTool('none')">Stop drawing</button></div><p id="mapToolStatus" class="muted small">Choose a mapping tool.</p><label class="small" for="copyBasketFrom">Copy basket from another hole (optional)</label><div class="row"><select class="field" id="copyBasketFrom" style="min-width:0"></select><button class="mini" id="copyBasketButton" onclick="copyMapperBasket()">Copy Basket</button></div><div id="mapperMapSlot"></div><button class="btn" id="saveCourseMapping" onclick="saveCurrentMapping()">Save Mapping</button><div class="maptools"><button class="mini" id="clearFlightPath" onclick="clearFlightPath()">Clear Flight Path</button><button class="mini" onclick="undoMapPoint()">Undo last point</button><button class="mini" onclick="clearMapDrawing()">Clear selected drawing</button><button class="mini" onclick="exportCourseMap()">Export course JSON</button><button class="mini" onclick="document.getElementById('layoutImport').click()">Import course JSON</button></div><details class="card"><summary>Administrator · shared-course export</summary><p class="notice">Course coordinates and addresses may become publicly visible if this file is published. Review the contents privately first. This action only downloads the selected course; it does not upload or publish anything.</p><button class="btn alt" id="exportSharedCourse" onclick="exportSharedCourseJson()">Export Shared Course JSON</button><p class="small muted" id="sharedCourseExportStatus" role="status" aria-live="polite" style="overflow-wrap:anywhere"></p></details><p class="muted small">A flight path is a sequence of points from tee toward basket. Tap points in order. Fairways are polygons; tap around their perimeter. The map shows saved shapes immediately.</p></div><button class="btn outline" id="mapperBack" onclick="closeMapper()">← Back to courses</button></section><section id="play" class="hidden">
 <div class="play-head row"><div><div class="eyebrow" id="holeTitle">Hole 1 of 10</div><div class="play-subhead"><strong id="parLabel">Par 3</strong><span class="muted small" id="strokeTitle">· Throw 1</span></div></div>
+<div class="distance-controls"><button class="mini" onclick="speakBasketDistance()" aria-label="Speak distance to basket" title="Speak distance">🔊</button><button class="mini" id="micButton" onclick="toggleVoice()" aria-label="Toggle voice commands">🎙 Speak</button><button class="mini voice-help-trigger" id="voiceHelpButton" onclick="openVoiceHelp()" aria-label="Voice Commands Help" aria-haspopup="dialog" aria-controls="voiceCommandsHelp" title="Voice Commands Help">?</button></div>
 <details class="play-menu" id="playMenu"><summary aria-label="Round menu">•••</summary><div class="menu-panel">
 <button class="btn alt" onclick="this.closest('details').open=false;openCorrections()">Edit throws / score</button>
 <button class="btn alt" onclick="this.closest('details').open=false;openMapper(true)">Edit Course Map</button>
@@ -194,16 +246,16 @@ input:invalid{border-color:var(--danger)}
 <p class="small muted" id="voiceHelp">Say “How far to basket?”, “Start throw”, or a disc name.</p>
 <button class="btn outline" onclick="this.closest('details').open=false;openEndRound()">End Round</button>
 </div></details></div>
-<div class="distance-hero"><div class="row"><span class="eyebrow">To basket</span><div class="distance-controls"><button class="mini" onclick="speakBasketDistance()" aria-label="Speak distance to basket" title="Speak distance">🔊</button><button class="mini" id="micButton" onclick="toggleVoice()" aria-label="Toggle voice commands">🎙 Speak</button><button class="mini voice-help-trigger" id="voiceHelpButton" onclick="openVoiceHelp()" aria-label="Voice Commands Help" aria-haspopup="dialog" aria-controls="voiceCommandsHelp" title="Voice Commands Help">?</button></div></div><div id="basketLive" class="big">— ft</div><div id="basketAccuracy" class="small muted">Waiting for GPS</div><span id="voiceState" class="small muted">Off</span></div>
-<div class="hole-strip" aria-label="Hole navigation"><button class="mini" id="previousHole" onclick="reviewPreviousHole()" aria-label="Review previous hole" aria-describedby="holeReviewLock">←</button><label class="hole-picker"><span aria-hidden="true"><strong id="currentHoleLabel">Hole 1 of 10</strong><span class="small muted" id="currentHolePar">Par 3 ▾</span></span><select id="holeNav" aria-label="Choose a hole" onchange="jumpHole(+this.value);this.value=String(s.hole)"></select></label><button class="mini" id="nextHole" onclick="moveOpenHole(1)" aria-label="Next unfinished hole">→</button></div>
-<p class="notice hidden" id="holeReviewLock" role="status">Hole navigation is locked during a throw. Finish or cancel your active throw before reviewing or changing holes.</p>
+<div class="distance-hero"><div class="row"><span class="eyebrow">To basket</span><output class="round-running-score" id="playRoundScore" aria-live="polite" aria-atomic="true" title="Your score relative to par on confirmed holes"><span class="small muted">Round</span><strong id="playRoundScoreValue">E</strong></output></div><div id="basketLive" class="big">— ft</div><div id="basketAccuracy" class="small muted">Waiting for GPS</div><span id="voiceState" class="small muted" role="status" aria-live="polite" aria-atomic="true">Voice: Off</span></div>
 <div class="throw-panel"><label class="small" id="throwDiscLabel" for="throwDisc">Disc for this throw · required</label><button type="button" class="field throw-disc-trigger" id="throwDisc" value="" aria-haspopup="dialog" aria-controls="throwDiscPicker" aria-expanded="false" aria-labelledby="throwDiscLabel throwDiscValue" onclick="openThrowDiscPicker()" onkeydown="throwDiscTriggerKey(event)"><span id="throwDiscValue">Choose a disc for each throw</span><span aria-hidden="true">▾</span></button><span id="selectedDisc" class="hidden"></span>
 <p class="notice hidden" id="physicalPlayStatus" role="status"></p>
 <p class="notice hidden" id="physicalVoiceStatus" role="status" aria-live="polite"></p>
 <details class="more-throw"><summary>More Throw Options</summary><label class="small" for="throwType">Throw type · optional</label><select class="field" id="throwType" onchange="if(!appStateMutationAllowed()){this.value=currentThrowType;return}currentThrowType=this.value;saveAppState()"><option value="">Not specified</option><option>Backhand</option><option>Forehand</option><option>Putt</option><option>Roller</option><option>Other</option></select><div class="row small"><span id="activeBasket">Fixed basket</span><button class="mini hidden" id="changeBasket" onclick="cycleBasket()">Change basket</button></div><button class="mini" onclick="simulateVoice()">Voice demo commands</button></details>
-<p class="small muted" id="throwState">Ready to start throw</p><button class="btn" id="primary" onclick="primaryAction()">START THROW</button></div>
+<p class="small muted" id="throwState">Ready to start throw</p><button class="btn" id="primary" onclick="primaryAction()">START THROW</button><button class="mini basket-action" id="finishBasket" onclick="finishHole()">In the basket</button></div>
+<div class="hole-strip" aria-label="Hole navigation"><button class="mini" id="previousHole" onclick="reviewPreviousHole()" aria-label="Review previous hole" aria-describedby="holeReviewLock">←</button><label class="hole-picker"><span aria-hidden="true"><strong id="currentHoleLabel">Hole 1 of 10</strong><span class="small muted" id="currentHolePar">Par 3 ▾</span></span><select id="holeNav" aria-label="Choose a hole" onchange="jumpHole(+this.value);this.value=String(s.hole)"></select></label><button class="mini" id="nextHole" onclick="moveOpenHole(1)" aria-label="Next unfinished hole">→</button></div>
+<p class="notice hidden" id="holeReviewLock" role="status">Hole navigation is locked during a throw. Finish or cancel your active throw before reviewing or changing holes.</p>
 <div class="real-map-wrap" id="satelliteMapWrap"><div id="googleMap" aria-label="Google satellite course map"></div><div class="hidden" id="mapperLocationCover"><p id="mapperLocationMessage"></p></div><div class="map-toolbar"><button class="mini" onclick="locateOnMap()" aria-label="Locate my GPS on map">GPS</button><button class="mini" onclick="if(mapEditorActive)mapperAddressOverview=false;focusHole()">Show hole</button><button class="mini" id="expandMapButton" onclick="setMapExpanded()">Expand Map</button><details class="map-menu"><summary aria-label="Map tools">•••</summary><div class="menu-panel"><button class="btn alt" onclick="this.closest('details').open=false;document.getElementById('layoutImport').click()">Import course mapping</button><button class="btn alt" onclick="this.closest('details').open=false;manageMapKey()">Maps key</button></div></details></div><input type="file" id="layoutImport" accept="application/json,.json" hidden onchange="importLayout(event)"><div id="mapCover"><strong>Google satellite map</strong><p>Enter a Maps key to load satellite imagery. Your key is remembered in this browser.</p><input id="googleKey" class="field" type="password" placeholder="Google Maps API key" autocomplete="off"><button class="btn" onclick="loadSatellite()">SAVE / LOAD SATELLITE MAP</button><div class="maptools"><button class="mini" onclick="clearSavedMapKey()">Clear saved key</button><button class="mini hidden" id="mapKeyBack" onclick="document.getElementById('mapCover').style.display='none'">Back to map</button><button class="mini hidden" id="mapKeyReload" onclick="saveAppState();location.reload()">Reload page to apply</button></div><details class="small muted"><summary>Maps setup help</summary><p>Google Maps requires internet, an enabled Maps JavaScript API and appropriate key restrictions. A file opened directly from your computer may be blocked by HTTP referrer restrictions. The original app’s saved key is supported.</p></details></div></div>
-<div class="maptools play-throw-actions"><button class="mini" id="pinLanding" onclick="togglePin()">Place landing pin</button><div class="two throw-edit-actions"><button class="mini" id="undoAction" onclick="undoThrow()">Undo</button><button class="mini edit-throws" id="editThrows" onclick="openCorrections()">Edit Throws</button></div><button class="mini basket-action" id="finishBasket" onclick="finishHole()">In the basket</button></div>
+<div class="maptools play-throw-actions"><button class="mini" id="pinLanding" onclick="togglePin()">Place landing pin</button><div class="two throw-edit-actions"><button class="mini" id="undoAction" onclick="undoThrow()">Undo</button><button class="mini edit-throws" id="editThrows" onclick="openCorrections()">Edit Throws</button></div></div>
 <div class="last-throw small muted">Last throw: <strong id="lastDistance">— ft</strong></div><span id="remaining" class="hidden" aria-hidden="true"></span>
 <p id="physicalDistanceEstimate" class="small muted hidden"></p>
 <p id="mapMessage" class="small muted"></p>
@@ -919,7 +971,7 @@ document.getElementById('physicalDiscDetails').addEventListener('close',()=>{
  const card=Array.from(document.querySelectorAll('[data-physical-disc]')).find(b=>b.dataset.physicalDisc===id);
  (card||document.querySelector('[data-disc-filter="'+discFilter+'"]'))?.focus({preventScroll:true});
 });
-function render(){renderHomeCourses();document.getElementById('status').textContent=s.active?(mode==='group'?'GROUP · DEMO':'SOLO · DEMO'):'DEMO MODE';buildSetup();renderBoard();document.getElementById('activeBasket').textContent=course.multipleBaskets?'Position '+baskets[s.hole-1]:'Fixed basket';document.getElementById('changeBasket').classList.toggle('hidden',!course.multipleBaskets);document.getElementById('holeNav').innerHTML=roundHoleOrder().map(n=>{const h=courseHole(baseCourse,n),completed=s.completed.find(x=>x.hole===n),status=completed?'Completed · '+completed.score+' strokes':s.throws.some(t=>t.hole===n)?'In progress':'Unplayed';return '<option value="'+n+'"'+(n===s.hole?' selected':'')+(completed?' disabled':'')+'>Hole '+holeLabel(n)+' · Par '+(isCustomCourse()?customHoleData(baseCourse,n).par??'not set':baseCourse.id===dryCreekCourse.id?parFor(n):h.par||par)+' — '+status+'</option>'}).join('');document.getElementById('holeTitle').textContent=roundHoleTitle();document.getElementById('strokeTitle').textContent='· Throw '+(s.holeThrows.length+1);document.getElementById('selectedDisc').textContent=discSnapshotLabel(currentThrowDisc())||'Choose a disc';updateThrowDiscSelector();document.getElementById('lastDistance').textContent=s.last?s.last+' ft':'— ft';document.getElementById('remaining').textContent=s.remaining+' ft';updateBasketLive();document.getElementById('throwState').textContent=s.started?'Throw in progress · mark your landing':'Ready to start throw';document.getElementById('primary').disabled=!s.started&&!currentThrowDisc();document.getElementById('primary').textContent=s.started?"I'm at my disc":'START THROW';document.getElementById('mapMessage').textContent=s.pinMode?'Tap Google satellite map to mark the landing position.':'';syncSatellite();renderDiscGrid();let ds=s.throws.filter(t=>!t.made),avg=ds.length?Math.round(ds.reduce((a,b)=>a+b.distance,0)/ds.length):null;document.getElementById('statThrows').textContent=s.throws.length;document.getElementById('statAvg').textContent=avg===null?'— ft':avg+' ft';const groups={};ds.forEach(t=>(groups[t.disc]??=[]).push(t.distance));document.getElementById('discStats').innerHTML=Object.keys(groups).length?Object.entries(groups).map(([d,arr])=>'<div class="history">'+escapeHtml(d)+' <strong style="float:right">'+Math.round(arr.reduce((a,b)=>a+b,0)/arr.length)+' ft avg</strong><div class="statbar"><i style="width:'+Math.min(100,arr.reduce((a,b)=>a+b,0)/arr.length/4)+'%"></i></div></div>').join(''):'Record a throw to see demo data.';renderCompletedScoreSummary();document.getElementById('recent').textContent=s.rounds.length?s.rounds[0].date+' · '+s.rounds[0].scores.reduce((a,b)=>a+b.score,0)+' strokes'+(s.rounds[0].endedEarly?' · Ended early':''):'No completed rounds yet.';renderRoundHistory();if(!document.getElementById('score').classList.contains('hidden'))renderScore();updatePlayLayout();renderPhysicalDistances();saveAppState()}
+function render(){renderHomeCourses();document.getElementById('status').textContent=s.active?(mode==='group'?'GROUP · DEMO':'SOLO · DEMO'):'DEMO MODE';buildSetup();renderBoard();document.getElementById('activeBasket').textContent=course.multipleBaskets?'Position '+baskets[s.hole-1]:'Fixed basket';document.getElementById('changeBasket').classList.toggle('hidden',!course.multipleBaskets);document.getElementById('holeNav').innerHTML=roundHoleOrder().map(n=>{const h=courseHole(baseCourse,n),completed=s.completed.find(x=>x.hole===n),status=completed?'Completed · '+completed.score+' strokes':s.throws.some(t=>t.hole===n)?'In progress':'Unplayed';return '<option value="'+n+'"'+(n===s.hole?' selected':'')+(completed?' disabled':'')+'>Hole '+holeLabel(n)+' · Par '+(isCustomCourse()?customHoleData(baseCourse,n).par??'not set':baseCourse.id===dryCreekCourse.id?parFor(n):h.par||par)+' — '+status+'</option>'}).join('');document.getElementById('holeTitle').textContent=roundHoleTitle();document.getElementById('strokeTitle').textContent='· Throw '+(s.holeThrows.length+1);document.getElementById('selectedDisc').textContent=discSnapshotLabel(currentThrowDisc())||'Choose a disc';updateThrowDiscSelector();document.getElementById('lastDistance').textContent=s.last?s.last+' ft':'— ft';document.getElementById('remaining').textContent=s.remaining+' ft';updateBasketLive();document.getElementById('primary').disabled=!s.started&&!currentThrowDisc();document.getElementById('primary').textContent=s.started?"I'm at my disc":'START THROW';document.getElementById('mapMessage').textContent=s.pinMode?'Tap Google satellite map to mark the landing position.':'';syncSatellite();renderDiscGrid();let ds=s.throws.filter(t=>!t.made),avg=ds.length?Math.round(ds.reduce((a,b)=>a+b.distance,0)/ds.length):null;document.getElementById('statThrows').textContent=s.throws.length;document.getElementById('statAvg').textContent=avg===null?'— ft':avg+' ft';const groups={};ds.forEach(t=>(groups[t.disc]??=[]).push(t.distance));document.getElementById('discStats').innerHTML=Object.keys(groups).length?Object.entries(groups).map(([d,arr])=>'<div class="history">'+escapeHtml(d)+' <strong style="float:right">'+Math.round(arr.reduce((a,b)=>a+b,0)/arr.length)+' ft avg</strong><div class="statbar"><i style="width:'+Math.min(100,arr.reduce((a,b)=>a+b,0)/arr.length/4)+'%"></i></div></div>').join(''):'Record a throw to see demo data.';renderCompletedScoreSummary();document.getElementById('recent').textContent=s.rounds.length?s.rounds[0].date+' · '+s.rounds[0].scores.reduce((a,b)=>a+b.score,0)+' strokes'+(s.rounds[0].endedEarly?' · Ended early':''):'No completed rounds yet.';renderRoundHistory();if(!document.getElementById('score').classList.contains('hidden'))renderScore();updatePlayLayout();renderPhysicalDistances();saveAppState()}
 
 // Satellite map integration based on the user's uploaded Disc Golf GPS index.html.
 let baseCourse={"id":"disc-on-6th-midvale-ut","name":"Disc On 6th","address":"425 W 6th Avenue, Midvale, UT 84047","center":{"lat":40.61454239831233,"lng":-111.90334159880877},"layout":"Main","par":30,"publishedTotalFeet":2479,"publishedLengthCoversHoles":9,"holes":[{"number":1,"par":3,"distanceFeet":257,"tee":{"lat":40.614548,"lng":-111.903389,"status":"published_pdga_first_tee_unverified"},"basket":null},{"number":2,"par":3,"distanceFeet":240,"tee":null,"basket":null},{"number":3,"par":3,"distanceFeet":337,"tee":null,"basket":null},{"number":4,"par":3,"distanceFeet":251,"tee":null,"basket":null},{"number":5,"par":3,"distanceFeet":375,"tee":null,"basket":null},{"number":6,"par":3,"distanceFeet":293,"tee":null,"basket":null},{"number":7,"par":3,"distanceFeet":216,"tee":null,"basket":null},{"number":8,"par":3,"distanceFeet":281,"tee":null,"basket":null},{"number":9,"par":3,"distanceFeet":230,"tee":null,"basket":null},{"number":10,"par":3,"distanceFeet":null,"tee":null,"basket":null,"status":"user_added"}],"sources":["https://udisc.com/courses/disc-on-6th-R2cD","https://www.pdga.com/course-directory/course/disc-6th"],"notes":"Tee and basket locations require field verification. Hole 1 tee is a PDGA published location, not independently verified."};
@@ -1465,6 +1517,33 @@ function createPhysicalGps(resumed=false){
   originState:resumed&&isMapPoint(throwStartGps)?'ready':'waiting',request:null,message:'',mapArm:null,mapListener:null,marker:null,previousOrigin:throwStartMarker};
  if(physicalGps.originState==='ready')drawPhysicalOrigin(physicalGps);
 }
+function throwStatusMessage(){
+ if(appStateWritePause||appStateBlocked)return 'Saving paused. Resolve the storage warning before continuing.';
+ if(!s.active)return 'Start a round to record throws.';
+ const physical=isPhysicalRound(),c=physical?physicalGps:null;
+ if(s.pendingScore)return !physical||pendingBasketValid()?'Confirm your score to continue.':'Score verification failed. Review the warning before continuing.';
+ if(!s.started){
+  if(document.getElementById('primary').disabled)return physical&&physicalPlayError?'Check My Discs, then choose an available disc.':'Choose a disc to begin.';
+  return 'Ready to start your throw.';
+ }
+ if(physical){
+  if(!physicalGpsValid(c))return 'Throw cannot continue. Review the warning or cancel the throw.';
+  if(c.request)return c.request.kind==='origin'?'Waiting for a GPS start position.':'Recording GPS landing. Please wait.';
+  if(c.originState==='waiting')return 'Waiting for a GPS start position.';
+  if(c.originState!=='ready')return c.message||'GPS start not saved. Retry GPS origin or cancel the throw.';
+ }else if(!throwStartGps)return 'GPS start not saved yet. Check location access; cancel and retry if needed.';
+ if(s.pinMode)return gmap?'Map-pin mode is on; GPS landing is also available.':'Load the satellite map to use a pin, or record landing with GPS.';
+ if(physical&&c.message){
+  const cause=c.message.replace(' Tap GPS landing or enable a new map pin to retry.','').replace(' Tap landing again when you return.','');
+  return cause+(gmap?' Retry GPS landing or choose Place landing pin.':' Check GPS access, or load the map to use a pin.');
+ }
+ return gmap?'Walk to your disc; use GPS or Place landing pin.':"Walk to your disc, then tap I'm at my disc for GPS landing.";
+}
+function updateThrowStatus(){
+ if(devSimEnabled)return;
+ const status=document.getElementById('throwState'),message=throwStatusMessage();
+ if(status.textContent!==message)status.textContent=message;
+}
 function physicalGpsControls(){
  if(devSimEnabled||!isPhysicalRound()||!s.started)return;
  const c=physicalGps,ready=physicalGpsValid(c)&&c.originState==='ready',busy=!!c?.request,paused=!!appStateWritePause||appStateBlocked;
@@ -1474,7 +1553,7 @@ function physicalGpsControls(){
  document.getElementById('pinLanding').disabled=!ready||busy||paused;
  document.getElementById('pinLanding').setAttribute('aria-pressed',String(s.pinMode));
  if(!s.pinMode)document.getElementById('mapMessage').textContent='';
- document.getElementById('throwState').textContent=paused?'Saving is paused. GPS throw requests are blocked.':c?.message||(ready?'GPS origin saved · Walk to your disc or place a landing pin.':'Acquiring GPS origin. Landing is unavailable until the origin is saved.');
+ updateThrowStatus();
 }
 function drawPhysicalOrigin(c){
  if(!physicalGpsValid(c)||c.originState!=='ready'||!gmap||c.marker)return;
@@ -1557,7 +1636,7 @@ function suspendPhysicalGps(){
  if(kind==='origin'){c.originState='error';c.message='GPS origin request stopped. Return to your throw start, then retry or cancel.'}
  else if(kind==='landing')c.message='Landing request stopped. Tap landing again when you return.';
 }
-function captureThrowStart(){if(isPhysicalRound()){if(!physicalGps)createPhysicalGps();requestPhysicalGps('origin');return}const generation=roundGeneration,frozen=physicalRound?.frozenDisc;gpsOnce(p=>{if(isPhysicalRound()&&physicalRound.frozenDisc!==frozen)return;if(generation!==roundGeneration||!s.active||!s.started)return;if(!appStateMutationAllowed())return;throwStartGps=p;if(gmap){if(throwStartMarker)throwStartMarker.setMap(null);throwStartMarker=new google.maps.Marker({map:gmap,position:p,label:'S',title:'Throw start'})}saveAppState()})}
+function captureThrowStart(){if(isPhysicalRound()){if(!physicalGps)createPhysicalGps();requestPhysicalGps('origin');return}const generation=roundGeneration,frozen=physicalRound?.frozenDisc;gpsOnce(p=>{if(isPhysicalRound()&&physicalRound.frozenDisc!==frozen)return;if(generation!==roundGeneration||!s.active||!s.started)return;if(!appStateMutationAllowed())return;throwStartGps=p;if(gmap){if(throwStartMarker)throwStartMarker.setMap(null);throwStartMarker=new google.maps.Marker({map:gmap,position:p,label:'S',title:'Throw start'})}saveAppState();updateThrowStatus()})}
 function markLanding(p,source){if(isPhysicalRound())return completePhysicalLanding(p,source);if(!appStateMutationAllowed())return;if(!throwStartGps){notify('Start GPS position unavailable. Allow location access or try again.');return}if(gmap){if(landingMarker)landingMarker.setMap(null);landingMarker=new google.maps.Marker({map:gmap,position:p,draggable:true,label:'L',title:'Landing point'});landingMarker.addListener('dragend',e=>{notify('Landing pin adjusted · press Start Throw for next throw')});if(throwLine)throwLine.setMap(null);throwLine=new google.maps.Polyline({map:gmap,path:[throwStartGps,p],strokeColor:'#F58220',strokeWeight:4})}saveLanding(feetBetween(throwStartGps,p),source);if(!isPhysicalRound()||!s.started)throwStartGps=p}
 function captureGpsLanding(){if(isPhysicalRound()){requestPhysicalGps('landing');return}const generation=roundGeneration,frozen=physicalRound?.frozenDisc;gpsOnce(p=>{if(isPhysicalRound()&&physicalRound.frozenDisc!==frozen)return;if(generation===roundGeneration&&s.active&&s.started)markLanding(p,'GPS')})}
 function importLayout(event){
@@ -1768,11 +1847,23 @@ function removePhysicalThrow(i){if(!appStateMutationAllowed())return;
 function removeThrow(i){if(!appStateMutationAllowed())return;if(isPhysicalRound())return removePhysicalThrow(i);if(!confirm('Remove this throw?'))return;const t=s.holeThrows.splice(i,1)[0];const j=s.throws.indexOf(t);if(j>=0)s.throws.splice(j,1);renderCorrections();render()}
 function editThrow(i){if(!appStateMutationAllowed())return;if(isPhysicalRound())return openPhysicalThrowCorrection(i);const t=s.holeThrows[i];const d=prompt('Disc name for throw '+(i+1),t.disc);if(d===null)return;const n=prompt('Distance in feet (GPS/map corrections can be made separately)',String(t.distance));if(n===null)return;const v=Number(n);if(!d.trim()||!Number.isFinite(v)||v<0){notify('Invalid disc or distance');return}t.disc=d.trim();t.distance=Math.round(v);renderCorrections();render()}
 function addMissedThrow(){if(!appStateMutationAllowed())return;if(isPhysicalRound())return addPhysicalMissedThrow();if(!s.disc){notify('Select the disc used for the missed throw first');return}const n=prompt('Approximate missed throw distance in feet (optional GPS correction later)','0');if(n===null)return;const v=Number(n);if(!Number.isFinite(v)||v<0){notify('Enter a valid distance');return}const t={hole:s.hole,disc:s.disc,distance:Math.round(v),source:'manual correction',throwType:currentThrowType};s.holeThrows.push(t);s.throws.push(t);s.disc='';currentThrowType='';renderCorrections();render()}
-function voiceModeChanged(){stopVoice();document.getElementById('voiceHelp').textContent=document.getElementById('voiceMode').value==='handsfree'?'Hands-free will attempt to restart listening while this screen stays open. Browsers may stop it.':'Tap the microphone for each command.'}
+// Display-only feedback; never used to gate recognition or gameplay.
+let voiceStatusError='';
+function renderVoiceStatus(){
+ const status=document.getElementById('voiceState'),mode=document.getElementById('voiceMode').value==='handsfree'?'Hands-Free':'Tap to Speak';
+ const supported=!!(window.SpeechRecognition||window.webkitSpeechRecognition);
+ const text=!supported?'Voice: Unavailable':voiceStatusError?'Voice: '+voiceStatusError:
+  'Voice: '+(voiceListening?'Listening':voiceOn?'Not listening':'Off')+' ('+mode+')';
+ if(status.textContent!==text)status.textContent=text;
+ status.title=!supported?'Speech recognition is unavailable in this browser. Manual controls remain available.':
+  voiceStatusError?'Selected mode: '+mode+'. '+voiceStatusError+'. '+(voiceStatusError==='No speech — retry'?'Repeat your command. ':'Check microphone access and connection. ')+(voiceOn?'Tap Stop, then Speak to retry.':'Tap Speak to retry.'):
+  'Selected mode: '+mode+'. '+(voiceListening?'The app has started a listening request.':voiceOn?'Voice is enabled but is not currently listening.':'Microphone listening is off. Tap Speak to begin.');
+}
+function voiceModeChanged(){voiceStatusError='';stopVoice();document.getElementById('voiceHelp').textContent=document.getElementById('voiceMode').value==='handsfree'?'Hands-free will attempt to restart listening while this screen stays open. Browsers may stop it.':'Tap the microphone for each command.'}
 function stopVoice(){
  voiceOn=false;voiceSessionId++;voiceListening=false;const recognition=voiceRecognition;voiceRecognition=null;
  try{recognition?.stop()}catch(e){}
- document.getElementById('voiceState').textContent='Off';document.getElementById('micButton').textContent='🎙 Speak';
+ renderVoiceStatus();document.getElementById('micButton').textContent='🎙 Speak';
 }
 // Physical voice choices are ephemeral; only selectThrowDisc() persists selection.
 let voiceSessionId=0,voiceDiscChoice=null,voiceDiscFeedbackContext=null;
@@ -1931,7 +2022,7 @@ document.getElementById('voiceDiscChoiceDialog').addEventListener('close',()=>{
 });
 function startVoiceListening(SR,session){
  if(!voiceOn||session!==voiceSessionId)return;
- let recognition;try{recognition=new SR()}catch(e){stopVoice();notify('Speech recognition could not start: '+e.message);return}
+ let recognition;try{recognition=new SR()}catch(e){stopVoice();voiceStatusError='Unable to start';renderVoiceStatus();notify('Speech recognition could not start: '+e.message);return}
  const physical=isPhysicalRound(),context=physical?capturePhysicalVoiceContext():null;
  let handled=false;voiceRecognition=recognition;
  const current=()=>voiceOn&&session===voiceSessionId&&voiceRecognition===recognition;
@@ -1957,18 +2048,21 @@ function startVoiceListening(SR,session){
   if(!current())return;
   document.getElementById('voiceHelp').textContent='Microphone: '+e.error;
   if(e.error==='not-allowed'||e.error==='service-not-allowed')stopVoice();
+  voiceStatusError=({'not-allowed':'Access denied','service-not-allowed':'Access denied','audio-capture':'Microphone unavailable','no-speech':'No speech — retry','network':'Network error — retry','aborted':'Interrupted — retry'})[e.error]||'Recognition error — retry';
+  renderVoiceStatus();
  };
  recognition.onend=()=>{
   if(!current())return;voiceListening=false;
   if(document.getElementById('voiceMode').value==='handsfree'&&!document.getElementById('play').classList.contains('hidden'))startVoiceListening(SR,session);else stopVoice();
  };
- try{recognition.start();voiceListening=true;document.getElementById('voiceState').textContent='Listening';document.getElementById('micButton').textContent='■ Stop'}
- catch(e){if(current()){stopVoice();notify(e.message)}}
+ try{recognition.start();voiceListening=true;voiceStatusError='';renderVoiceStatus();document.getElementById('micButton').textContent='■ Stop'}
+ catch(e){if(current()){stopVoice();voiceStatusError='Unable to start';renderVoiceStatus();notify(e.message)}}
 }
 function toggleVoice(){
+ voiceStatusError='';
  if(voiceOn){stopVoice();return}
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!SR){notify('Speech recognition is not supported in this browser');return}
+ if(!SR){renderVoiceStatus();notify('Speech recognition is not supported in this browser');return}
  voiceOn=true;voiceSessionId++;startVoiceListening(SR,voiceSessionId);
 }
 function handleVoicePhrase(p,metadata){if(reviewHoleId!==null){if(isPhysicalRound()&&isDiagnosticDiscAttempt(metadata?.transcript??p)){const diagnostic=beginVoiceDiscDiagnostic({transcript:metadata?.transcript??p,confidence:metadata?.confidence??1,confidenceProvided:metadata?.confidenceProvided,source:metadata?.source||'Direct command / demo'});finishVoiceDiscDiagnostic(diagnostic,'protected_state','Completed-hole review is open.')}notify('Return to the active hole before using voice commands.');return}if(isPhysicalRound()){handlePhysicalVoicePhrase(p,metadata);return}if(/how far|distance to (the )?(basket|pin)/.test(p)){speakBasketDistance();return}if(!appStateMutationAllowed())return;const found=s.discs.find(d=>p.includes(d.toLowerCase()));if(found){s.disc=found;render();speakText(found+' selected')}if(/forehand/.test(p))currentThrowType='Forehand';else if(/backhand/.test(p))currentThrowType='Backhand';else if(/putt/.test(p))currentThrowType='Putt';if(/start throw/.test(p)){primaryAction();return}if(/at my disc|mark landing/.test(p)){gpsLanding();return}if(/in the basket/.test(p)){finishHole();return}render()}
@@ -2005,6 +2099,7 @@ function safeAppSaveMessage(message){
    if(!notice){notice=document.createElement('p');notice.className='notice';notice.dataset.appStatePause='';notice.setAttribute('role','status');dialog.appendChild(notice)}
    if(notice.textContent!==appStatePauseMessage())notice.textContent=appStatePauseMessage();
   }
+  updateThrowStatus();
  }catch(e){}
 }
 function pauseAppStateWrites(reason){
@@ -2102,7 +2197,28 @@ let reviewHoleId=null,holeReviewContext=null,completedScoreEdit=null;
 function isManuallyAdjustedScore(score,throws){
  return Array.isArray(throws)&&Number.isInteger(score.penalty)&&score.penalty>=0&&score.score!==throws.filter(t=>t&&t.hole===score.hole).length+score.penalty;
 }
+function completedRoundRelativeScore(records=s.completed){
+ if(!Array.isArray(records))return null;
+ let total=0;const seen=new Set();
+ for(const record of records){
+  if(!record||!Number.isSafeInteger(record.hole)||record.hole<1||seen.has(record.hole)||!Number.isSafeInteger(record.score)||record.score<1)return null;
+  const holePar=record.par??parFor(record.hole);
+  if(!Number.isSafeInteger(holePar)||holePar<1)return null;
+  seen.add(record.hole);total+=record.score-holePar;
+  if(!Number.isSafeInteger(total))return null;
+ }
+ return total;
+}
+function renderPlayRoundScore(){
+ const output=document.getElementById('playRoundScore'),value=document.getElementById('playRoundScoreValue');
+ const total=completedRoundRelativeScore(),count=Array.isArray(s.completed)?s.completed.length:0;
+ value.textContent=total===null?'—':total===0?'E':total>0?'+'+total:String(total);
+ const description=total===null?'Round score unavailable: a confirmed score or its par could not be verified.':
+  'Your round: '+(total===0?'even par':Math.abs(total)+(total<0?' under par':' over par'))+' on '+count+' confirmed '+(count===1?'hole':'holes')+'. Unfinished holes are excluded.';
+ output.setAttribute('aria-label',description);output.title=description;
+}
 function renderCompletedScoreSummary(){
+ renderPlayRoundScore();
  document.getElementById('scoreStats').textContent=s.completed.length?s.completed.map(x=>'Hole '+holeLabel(x.hole)+': '+x.score+' strokes'+(isManuallyAdjustedScore(x,s.throws)?' · Manually adjusted score':'')).join(' · '):'Finish a hole to see its score.';
 }
 function completedScoreEditMessage(message){
@@ -2227,6 +2343,8 @@ function updatePlayLayout(){
  document.getElementById('holeNav').disabled=s.started||pending;
  document.getElementById('holeNav').setAttribute('aria-label','Choose a hole. '+roundHoleTitle()+'. Completed holes list their scores; view them on the scorecard.');
  physicalGpsControls();
+ if(!isPhysicalRound()||!s.started)updateThrowStatus();
+ renderVoiceStatus();
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMapExpanded(false)});
 function renderRoundHistory(){
