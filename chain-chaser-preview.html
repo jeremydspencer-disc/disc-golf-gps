@@ -255,6 +255,7 @@ input:invalid{border-color:var(--danger)}
 <h3>Basket distance</h3>
 <dl><dt><code>How far</code> · <code>How far to basket?</code></dt><dt><code>Distance to basket</code> · <code>Distance to the basket</code></dt><dt><code>Distance to pin</code> · <code>Distance to the pin</code></dt><dd>Requests your GPS position and speaks the distance to the mapped basket. Requires location permission and a mapped basket; spoken output depends on browser speech synthesis.</dd></dl>
 </div></dialog>
+<script src="maps-config.js?v=125c"></script>
 <script src="shared-course-library.js?v=dd8f030cec3774e4"></script>
 <script>
 const devSimEnabled=new URLSearchParams(location.search).get('devSim')==='1'; // Development convenience only; not an access-control boundary.
@@ -1377,7 +1378,22 @@ function exportSharedCourseJson(){
 }
 
 window.chainMapReady=function(){const c=devSimEnabled?devSimulation.course:mappingCourse();gmap=new google.maps.Map(document.getElementById('googleMap'),{center:c?.center||{lat:0,lng:0},zoom:c?.center?17:2,mapTypeId:'satellite',streetViewControl:false,mapTypeControl:false,fullscreenControl:true});document.getElementById('mapCover').style.display='none';gmap.addListener('click',e=>{if(devSimEnabled)return;if(mapEditorActive){if(mapEditorTool!=='none')mapperMapClick(e);return}if(isPhysicalRound())return;if(!s.pinMode||!s.started)return;const p={lat:e.latLng.lat(),lng:e.latLng.lng()};markLanding(p,'map pin')});focusHole();updateMapperLocation();if(devSimEnabled){drawDevSimulation();bindDevSimulationLanding()}else{drawPhysicalOrigin(physicalGps);bindPhysicalMapLanding();if(!mapEditorActive)locateOnMap()}};
-function manageMapKey(){document.getElementById('mapCover').style.display='flex';document.getElementById('googleKey').value='';document.getElementById('mapKeyBack').classList.toggle('hidden',!gmap);document.getElementById('googleKey').focus()}
+function productionMapKey(){
+ if(devSimEnabled||location.origin!=='https://jeremydspencer-disc.github.io'||location.pathname!=='/disc-golf-gps/chain-chaser-preview.html')return '';
+ const key=window.ChainChaserMapsConfig?.productionApiKey;
+ return typeof key==='string'?key.trim():'';
+}
+function mapKeyStatus(message,loading=false){
+ document.getElementById('mapCover').style.display='flex';
+ document.querySelector('#mapCover>p').textContent=message;
+ for(const selector of ['#googleKey','#mapCover>.btn','#mapCover>.maptools','#mapCover>details'])document.querySelector(selector).classList.toggle('hidden',loading);
+}
+window.gm_authFailure=function(){
+ mapKeyStatus('Google Maps authentication failed. The owner should check the configured key, website/API restrictions and billing. If using a saved override, replace or clear it, then reload.');
+ document.getElementById('mapKeyReload').classList.remove('hidden');
+ notify('Google Maps authentication failed. Your rounds and mappings are unchanged.');
+};
+function manageMapKey(){mapKeyStatus('Advanced Maps key override. Leave the production configuration unchanged unless troubleshooting.');document.getElementById('googleKey').value='';document.getElementById('mapKeyBack').classList.toggle('hidden',!gmap);document.getElementById('googleKey').focus()}
 function clearSavedMapKey(){
  if(devSimEnabled){notify('Storage changes are disabled in DEV SIMULATION');return false}
  if(!confirm('Clear the saved Chain Chaser Maps key in this browser? Your rounds, course mappings, and the original app\'s key will be kept.'))return;
@@ -1388,19 +1404,21 @@ function clearSavedMapKey(){
  try{sessionStorage.removeItem('chain-chaser-map-key')}catch(e){}
  document.getElementById('googleKey').value='';
  document.getElementById('mapKeyReload').classList.remove('hidden');
- notify('Saved Chain Chaser key cleared. Reload to stop using the loaded key.');
+ notify('Saved Chain Chaser key cleared. Reload to use the production configuration when available.');
 }
-function loadSatellite(remember=true){
- const k=document.getElementById('googleKey').value.trim();if(!k){notify('Enter a Google Maps API key');return}
+function loadSatellite(remember=true,configuredKey=''){
+ const k=configuredKey||document.getElementById('googleKey').value.trim();if(!k){notify('Enter a Google Maps API key');return}
  let remembered=true;
- if(remember&&!devSimEnabled){
+ const publicKey=window.ChainChaserMapsConfig?.productionApiKey;
+ if(remember&&!configuredKey&&!devSimEnabled&&k!==(typeof publicKey==='string'?publicKey.trim():'')){
   try{localStorage.setItem('chain-chaser-map-key',k)}catch(e){remembered=false;notify('Map can load, but browser storage could not remember this key.')}
   try{sessionStorage.setItem('chain-chaser-map-key',k)}catch(e){}
  }
  if(gmap||document.getElementById('chainMapsScript')){if(devSimEnabled){notify('Map already loaded or loading for this page. Entered key was not saved.');return}if(remembered){document.getElementById('mapKeyReload').classList.remove('hidden');notify('Reload the page to use the saved replacement key.')}else notify('Could not save the replacement key. Browser storage is unavailable.');return}
  const script=document.createElement('script');script.id='chainMapsScript';
  script.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(k)+'&callback=chainMapReady';
- script.onerror=()=>{script.remove();notify('Map failed to load. Check key, billing, internet and referrer restrictions.')};document.head.appendChild(script)
+ script.onerror=()=>{script.remove();mapKeyStatus('Google Maps could not be downloaded. Check your internet connection and reload. If the problem persists, ask the owner to check Maps configuration.');document.getElementById('mapKeyReload').classList.remove('hidden');notify('Google Maps network loading failed. Your rounds and mappings are unchanged.')};
+ mapKeyStatus('Loading Google satellite map…',true);document.head.appendChild(script)
 }
 function gpsOnce(cb){
  if(devSimEnabled){notify('Browser GPS is disabled in DEV SIMULATION');return}
@@ -1570,8 +1588,10 @@ function restoreMapKey(){
  try{previewKey=localStorage.getItem('chain-chaser-map-key')}catch(e){storageFailed=true}
  try{originalKey=localStorage.getItem('disc-golf-map-key')||''}catch(e){storageFailed=true}
  try{legacyKey=sessionStorage.getItem('chain-chaser-map-key')||''}catch(e){storageFailed=true}
- const key=previewKey!==null?previewKey:(originalKey||legacyKey);
+ const key=previewKey!==null?previewKey:(originalKey||legacyKey),configured=productionMapKey();
  if(key){document.getElementById('googleKey').value=key;loadSatellite(previewKey===null&&!originalKey)}
+ else if(configured)loadSatellite(false,configured);
+ else if(location.origin==='https://jeremydspencer-disc.github.io'&&location.pathname==='/disc-golf-gps/chain-chaser-preview.html')mapKeyStatus('Production Maps configuration is unavailable. The owner must supply the browser key in maps-config.js. Existing maps and round data are kept. Advanced users can enter an override below.');
  else if(storageFailed)notify('Browser storage is unavailable. Enter your Maps key to load the map.');
 }
 restoreMapKey();
