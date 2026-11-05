@@ -1,0 +1,26 @@
+{
+    "format":  "chain-chaser-course-library",
+    "schemaVersion":  1,
+    "courses":  [
+                    {
+                        "courseId":  "privare-course-salt-lake-city-ut",
+                        "url":  "chain-chaser-shared-course-privare-course-salt-lake-city-ut-v1.json",
+                        "sha256":  "21bdc8b625eb0f1d2dd95b8ee18880241b07a7c3028ce433e429b1abf2fc2c8b"
+                    },
+                    {
+                        "courseId":  "mills-park-woods-cross-ut",
+                        "url":  "chain-chaser-shared-course-mills-park-woods-cross-ut-v1.json",
+                        "sha256":  "3544cb296f1854fb011322c31dde6c2bd6c63e8738a1ac22897701b74fbbfa52"
+                    },
+                    {
+                        "courseId":  "disc-on-6th-midvale-ut",
+                        "url":  "chain-chaser-shared-course-disc-on-6th-midvale-ut-v1.json",
+                        "sha256":  "2b35cd410cdf41a72ca20c6e48860dfe3b8689bb82d4118c4b89d7d6fb5c29df"
+                    },
+                    {
+                        "courseId":  "dry-creek-trail-park-lehi-ut",
+                        "url":  "chain-chaser-shared-course-dry-creek-trail-park-lehi-ut-v1.json",
+                        "sha256":  "3fa5a0e628ddadea9bebf2a8b0e1e9332793ed3fa1b39e5862472acf7ba0da09"
+                    }
+                ]
+}

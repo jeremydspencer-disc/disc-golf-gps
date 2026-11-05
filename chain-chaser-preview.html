@@ -155,6 +155,7 @@ input:invalid{border-color:var(--danger)}
 .hole-review-nav .mini{min-height:44px;min-width:44px}
 </style></head><body><div class="app"><header class="top"><img class="home-header-logo" src="./chain-chaser-header-logo.png?v=108e60d4" alt="Chain Chaser" width="2172" height="724"><div class="header-titles"><div class="eyebrow">CHAIN CHASER</div><div class="title" id="heading">Courses</div></div><details class="app-menu"><summary aria-label="App settings and information">•••</summary><div class="menu-panel"><span class="pill" id="status">DEMO MODE</span><p class="foot">Prototype: Google satellite map and GPS are real when enabled. Round scoring, voice, group sync and offline support are still demos. Imported course mapping is saved in this browser.</p></div></details></header><p id="appSaveStatus" class="notice hidden" role="status" aria-live="polite"></p>
 <section id="home">
+<p id="sharedLibraryHomeStatus" class="notice hidden" role="status" aria-live="polite"></p>
 <div class="home-course-head"><span class="muted small">Nearby courses</span><button class="mini locate-compact" onclick="refreshNearby()" aria-label="Refresh nearby courses">⌖ Locate</button></div>
 <p id="nearbyStatus" class="muted small" style="margin:6px 0 12px">Checking your location…</p>
 <div id="homeCourseList" aria-live="polite"></div>
@@ -182,7 +183,7 @@ input:invalid{border-color:var(--danger)}
 </section>
 <section id="setup" class="hidden"><div class="step">ROUND SETUP</div><h2>How are you playing?</h2><div class="choice"><input type="radio" name="mode" id="solo" value="solo" checked onchange="setMode('solo')"><label for="solo"><strong>Individual round</strong><br><span class="muted small">Track your own throws and scores</span></label></div><div class="choice"><input type="radio" name="mode" id="group" value="group" onchange="setMode('group')"><label for="group"><strong>Group round</strong><br><span class="muted small">Live-style scoreboard with teammates</span></label></div><div id="groupSetup" class="card hidden"><h3>Group settings</h3><div class="notice">Preview only: Mike, Chris and Dave are simulated players. Real invites and live sync will come later.</div><label class="small">Scorekeeping</label><select class="field" id="scorekeeper" onchange="saveAppState()"><option>Everyone enters their own scores</option><option>Designated scorekeeper can enter all scores</option></select></div><div class="card hidden" id="dryLayoutSetup"><label class="small" for="dryLayoutChoice">Dry Creek layout</label><select class="field" id="dryLayoutChoice" onchange="chooseDryLayout(this.value)"><option value="main-12">Main 12</option><option value="custom-13">Custom 13</option></select><p class="small muted" id="dryLayoutSummary"></p></div><div class="card"><h3>Starting hole</h3><div class="chips" id="startHoles"></div><p class="muted small">You can jump to any hole during play and return to skipped holes.</p></div><button class="btn" onclick="startRound()">✓ START ROUND</button><button class="btn outline" onclick="show('courses')">Choose a different course</button></section>
 <section id="courses" class="hidden"><div class="step">COURSE</div><h2>Select course</h2><div class="card"><h3>⌖ Nearby course (demo)</h3><label class="small" for="courseChoice">Choose a course</label><select class="field" id="courseChoice" onchange="selectCourse(this.value)"><option value="disc-on-6th-midvale-ut">Disc On 6th · Midvale · 10 holes</option><option value="mills-park-woods-cross-ut">Mills Park Disc Golf Park · Woods Cross · 13 holes</option></select><p class="muted small" id="courseDescription">Mills Park: 12 published holes (par 36 · 2,909 ft) + custom Hole 13 (303 ft · par 3). Tee/basket mapping still needs verification.</p><div class="notice">Only the course owner/admin can permanently edit course maps. Other courses can be preloaded later.</div></div><div class="card" id="basketCard"><h3>Basket locations</h3><p class="muted small">Disc On 6th has one fixed basket per hole. No basket selection is needed for this course.</p><div id="basketSetup"></div></div><button class="btn alt" onclick="openMapper()">🗺 MAP / VERIFY COURSE</button><button class="btn" onclick="startRound()">✓ START ROUND</button><button class="btn outline" onclick="show('setup')">← Back to round setup</button></section>
-<section id="mapper" class="hidden"><h2>Course map editor</h2><div class="card"><strong id="mapCourseTitle">Course</strong><p class="small muted" id="mapCourseAddress"></p><p class="notice" id="mapperAddressStatus" role="status" aria-live="polite"></p><button class="mini hidden" id="retryMapperAddress" onclick="locateMapperAddress(true)">Retry address lookup</button><p class="muted small">Choose a hole, then tap a tool and tap the satellite map. Tee and basket pins can be dragged to refine their locations. Changes save in this browser; export a backup when finished.</p><label class="small" for="mapperCourseChoice">Course</label><select class="field" id="mapperCourseChoice" onchange="changeMapperCourse(this.value)"></select><div id="customCourseControls" class="hidden"><p class="notice" id="customMapStatus"></p><div id="privateCourseLocation" class="hidden"><label class="small" for="privateCourseAddress">Your course location</label><input class="field" id="privateCourseAddress" type="text" maxlength="500" autocomplete="off" placeholder="Enter your course address or location"><button class="mini" id="savePrivateLocation" onclick="savePrivateCourseLocation()">Save location</button><p class="small muted">Saved only in this browser. Google receives the location when you use address lookup. Existing mapping pins are kept.</p></div><label class="small" for="customHoleCount">Number of holes</label><div class="row"><input class="field" id="customHoleCount" type="number" min="1" max="999" step="1" placeholder="Enter hole count" style="min-width:0"><button class="mini" id="saveCustomCount" onclick="saveCustomHoleCount()">Save count</button></div></div><p class="notice hidden" id="dryMapLayoutNote">Official Holes 1–12 share their existing Main 12 mappings. Hole 2A is unofficial, belongs only to Custom 13, and saves separately.</p><label class="small" for="mapHole">Hole</label><select class="field" id="mapHole" onchange="mapperAddressOverview=false;mapperHole(+this.value)"></select><p id="mapHoleInfo" class="muted small"></p><div id="customHoleDetails" class="hidden"><div class="two"><div><label class="small" for="customHolePar">Par</label><input class="field" id="customHolePar" type="number" min="1" step="1" placeholder="Not set"></div><div><label class="small" for="customHoleDistance">Hole length (ft)</label><input class="field" id="customHoleDistance" type="number" min="1" step="1" placeholder="Unmeasured"></div></div><p class="small muted">Leave length blank to use the measured straight-line distance between your tee and basket pins.</p><button class="mini" onclick="saveCustomHoleDetails()">Save hole details</button></div><div class="maptools"><button class="mini" onclick="mapTool('tee')">Add Tee</button><button class="mini" onclick="mapTool('basket')">Add Basket</button><button class="mini" onclick="mapTool('route')">Draw Path</button><button class="mini" onclick="mapTool('fairway')">Draw fairway</button><button class="mini" onclick="mapTool('none')">Stop drawing</button></div><p id="mapToolStatus" class="muted small">Choose a mapping tool.</p><label class="small" for="copyBasketFrom">Copy basket from another hole (optional)</label><div class="row"><select class="field" id="copyBasketFrom" style="min-width:0"></select><button class="mini" id="copyBasketButton" onclick="copyMapperBasket()">Copy Basket</button></div><div id="mapperMapSlot"></div><button class="btn" id="saveCourseMapping" onclick="saveCurrentMapping()">Save Mapping</button><div class="maptools"><button class="mini" id="clearFlightPath" onclick="clearFlightPath()">Clear Flight Path</button><button class="mini" onclick="undoMapPoint()">Undo last point</button><button class="mini" onclick="clearMapDrawing()">Clear selected drawing</button><button class="mini" onclick="exportCourseMap()">Export course JSON</button><button class="mini" onclick="document.getElementById('layoutImport').click()">Import course JSON</button></div><p class="muted small">A flight path is a sequence of points from tee toward basket. Tap points in order. Fairways are polygons; tap around their perimeter. The map shows saved shapes immediately.</p></div><button class="btn outline" id="mapperBack" onclick="closeMapper()">← Back to courses</button></section><section id="play" class="hidden">
+<section id="mapper" class="hidden"><h2>Course map editor</h2><div class="card"><strong id="mapCourseTitle">Course</strong><p class="small muted" id="mapCourseAddress"></p><p class="notice" id="mapperAddressStatus" role="status" aria-live="polite"></p><button class="mini hidden" id="retryMapperAddress" onclick="locateMapperAddress(true)">Retry address lookup</button><p class="muted small">Choose a hole, then tap a tool and tap the satellite map. Tee and basket pins can be dragged to refine their locations. Changes save in this browser; export a backup when finished.</p><label class="small" for="mapperCourseChoice">Course</label><select class="field" id="mapperCourseChoice" onchange="changeMapperCourse(this.value)"></select><div id="customCourseControls" class="hidden"><p class="notice" id="customMapStatus"></p><div id="privateCourseLocation" class="hidden"><label class="small" for="privateCourseAddress">Your course location</label><input class="field" id="privateCourseAddress" type="text" maxlength="500" autocomplete="off" placeholder="Enter your course address or location"><button class="mini" id="savePrivateLocation" onclick="savePrivateCourseLocation()">Save location</button><p class="small muted">Saved only in this browser. Google receives the location when you use address lookup. Existing mapping pins are kept.</p></div><label class="small" for="customHoleCount">Number of holes</label><div class="row"><input class="field" id="customHoleCount" type="number" min="1" max="999" step="1" placeholder="Enter hole count" style="min-width:0"><button class="mini" id="saveCustomCount" onclick="saveCustomHoleCount()">Save count</button></div></div><p class="notice hidden" id="dryMapLayoutNote">Official Holes 1–12 share their existing Main 12 mappings. Hole 2A is unofficial, belongs only to Custom 13, and saves separately.</p><label class="small" for="mapHole">Hole</label><select class="field" id="mapHole" onchange="mapperAddressOverview=false;mapperHole(+this.value)"></select><p id="mapHoleInfo" class="muted small"></p><div id="customHoleDetails" class="hidden"><div class="two"><div><label class="small" for="customHolePar">Par</label><input class="field" id="customHolePar" type="number" min="1" step="1" placeholder="Not set"></div><div><label class="small" for="customHoleDistance">Hole length (ft)</label><input class="field" id="customHoleDistance" type="number" min="1" step="1" placeholder="Unmeasured"></div></div><p class="small muted">Leave length blank to use the measured straight-line distance between your tee and basket pins.</p><button class="mini" onclick="saveCustomHoleDetails()">Save hole details</button></div><div class="maptools"><button class="mini" onclick="mapTool('tee')">Add Tee</button><button class="mini" onclick="mapTool('basket')">Add Basket</button><button class="mini" onclick="mapTool('route')">Draw Path</button><button class="mini" onclick="mapTool('fairway')">Draw fairway</button><button class="mini" onclick="mapTool('none')">Stop drawing</button></div><p id="mapToolStatus" class="muted small">Choose a mapping tool.</p><label class="small" for="copyBasketFrom">Copy basket from another hole (optional)</label><div class="row"><select class="field" id="copyBasketFrom" style="min-width:0"></select><button class="mini" id="copyBasketButton" onclick="copyMapperBasket()">Copy Basket</button></div><div id="mapperMapSlot"></div><button class="btn" id="saveCourseMapping" onclick="saveCurrentMapping()">Save Mapping</button><div class="maptools"><button class="mini" id="clearFlightPath" onclick="clearFlightPath()">Clear Flight Path</button><button class="mini" onclick="undoMapPoint()">Undo last point</button><button class="mini" onclick="clearMapDrawing()">Clear selected drawing</button><button class="mini" onclick="exportCourseMap()">Export course JSON</button><button class="mini" onclick="document.getElementById('layoutImport').click()">Import course JSON</button></div><details class="card"><summary>Administrator · shared-course export</summary><p class="notice">Course coordinates and addresses may become publicly visible if this file is published. Review the contents privately first. This action only downloads the selected course; it does not upload or publish anything.</p><button class="btn alt" id="exportSharedCourse" onclick="exportSharedCourseJson()">Export Shared Course JSON</button><p class="small muted" id="sharedCourseExportStatus" role="status" aria-live="polite" style="overflow-wrap:anywhere"></p></details><p class="muted small">A flight path is a sequence of points from tee toward basket. Tap points in order. Fairways are polygons; tap around their perimeter. The map shows saved shapes immediately.</p></div><button class="btn outline" id="mapperBack" onclick="closeMapper()">← Back to courses</button></section><section id="play" class="hidden">
 <div class="play-head row"><div><div class="eyebrow" id="holeTitle">Hole 1 of 10</div><div class="play-subhead"><strong id="parLabel">Par 3</strong><span class="muted small" id="strokeTitle">· Throw 1</span></div></div>
 <details class="play-menu" id="playMenu"><summary aria-label="Round menu">•••</summary><div class="menu-panel">
 <button class="btn alt" onclick="this.closest('details').open=false;openCorrections()">Edit throws / score</button>
@@ -215,6 +216,7 @@ input:invalid{border-color:var(--danger)}
 <section id="discs" class="hidden"><h2>My Discs</h2><p class="muted small">Tap a disc to edit its details. New rounds use this physical disc bag. Legacy active rounds continue using your previous bag.</p><div class="disc-search"><label class="small" for="discSearch">Search discs</label><div class="disc-search-controls"><input id="discSearch" class="field" type="search" placeholder="Name or color" autocomplete="off" aria-controls="discList" oninput="setDiscSearch(this.value)"><button type="button" class="mini" id="clearDiscSearch" onclick="clearDiscSearch()" disabled>Clear</button></div></div><div class="disc-filters" role="group" aria-label="Filter discs by category"><button type="button" class="mini selected" data-disc-filter="all" aria-pressed="true" onclick="setDiscFilter('all')">All</button><button type="button" class="mini" data-disc-filter="drivers" aria-pressed="false" onclick="setDiscFilter('drivers')">Drivers</button><button type="button" class="mini" data-disc-filter="fairways" aria-pressed="false" onclick="setDiscFilter('fairways')">Fairways</button><button type="button" class="mini" data-disc-filter="midranges" aria-pressed="false" onclick="setDiscFilter('midranges')">Midranges</button><button type="button" class="mini" data-disc-filter="putters" aria-pressed="false" onclick="setDiscFilter('putters')">Putters</button></div><p class="notice hidden" id="discCategoryStatus" role="status"></p><div id="discList" class="disc-list" role="list" aria-label="Physical discs"></div><p id="discFilterEmpty" class="notice hidden" role="status">No discs in this category. Choose All to see your entire bag.</p><form class="card" id="physicalDiscAddForm" onsubmit="event.preventDefault();addDisc()"><fieldset id="physicalDiscAddFields"><legend>Add Disc</legend><label class="small" for="newDisc">Disc Name (required)</label><input id="newDisc" class="field" required placeholder="e.g. Destroyer"><label class="small" for="newDiscColor">Disc Color</label><input id="newDiscColor" class="field" placeholder="e.g. Blue/Yellow"><label class="small" for="newDiscCategory">Disc Type (required)</label><select class="field" id="newDiscCategory" required><option value="" disabled selected>Choose disc type</option><option value="drivers">Drivers</option><option value="fairways">Fairways</option><option value="midranges">Midranges</option><option value="putters">Putters</option></select><button type="submit" class="btn alt">+ Add disc</button></fieldset></form></section>
 <section id="measure" class="hidden measure-screen"><div class="eyebrow">PRACTICE · NO SAVED DATA</div><h2>📏 Measure Throw</h2><p class="muted small">Set your starting point once, then walk to each disc. Distance updates live from the same starting position.</p><div class="distance-hero"><div class="eyebrow">DISTANCE FROM START</div><div id="measureDistance" class="big">— ft</div><div id="measureAccuracy" class="small muted">Waiting to set starting point</div></div><button class="btn" onclick="setMeasureStart()">📍 Set / Reset Starting Point</button><button class="btn outline" onclick="stopMeasuring()">Stop Measuring</button><div class="notice">No discs, rounds, throws, or measurements are stored. Requires GPS permission and HTTPS or localhost.</div></section><section id="rounds" class="hidden"><h2>Round History</h2><div id="roundHistory" class="card muted">No completed demo rounds yet.</div><p class="small muted">Rounds and discs are saved automatically in this browser.</p></section>
 <section id="more" class="hidden" aria-label="More"><h2>More</h2>
+<div id="sharedLibraryPanel" class="card hidden"><strong>Shared-course library</strong><p id="sharedLibraryStatus" class="small muted" role="status" aria-live="polite">Personal mappings take precedence.</p><button class="mini" id="sharedLibraryRetry" style="min-height:44px" onclick="refreshSharedCourseLibrary()">Check shared library</button></div>
 <div class="card more-links"><button class="btn alt" onclick="show('measure')">Measure Throw</button><button class="btn alt" onclick="show('analyze')">Analyze / Statistics</button></div>
 <div class="card more-links"><h2>Scores &amp; Round History</h2><button class="btn alt" id="moreScorecard" onclick="show('board')">Current round scorecard</button><p class="small muted" id="moreScoreNotice">Start a round to view its scorecard.</p><button class="btn alt" onclick="show('rounds')">Round History</button></div>
 <div class="card more-links"><h2>Course Mapping</h2><label class="small" for="moreMappingCourse">Choose a course to map</label><select class="field" id="moreMappingCourse"></select><button class="btn alt" onclick="openMoreMapper()">Open Course Mapper</button></div>
@@ -253,6 +255,7 @@ input:invalid{border-color:var(--danger)}
 <h3>Basket distance</h3>
 <dl><dt><code>How far</code> · <code>How far to basket?</code></dt><dt><code>Distance to basket</code> · <code>Distance to the basket</code></dt><dt><code>Distance to pin</code> · <code>Distance to the pin</code></dt><dd>Requests your GPS position and speaks the distance to the mapped basket. Requires location permission and a mapped basket; spoken output depends on browser speech synthesis.</dd></dl>
 </div></dialog>
+<script src="shared-course-library.js?v=dd8f030cec3774e4"></script>
 <script>
 const devSimEnabled=new URLSearchParams(location.search).get('devSim')==='1'; // Development convenience only; not an access-control boundary.
 const course={name:'Disc On 6th',multipleBaskets:false};let holes=10;const par=3;let selectedCourseId='disc-on-6th-midvale-ut';const millsDistances=[254,224,166,218,289,247,246,257,198,252,334,224];let s={active:false,hole:1,started:false,pinMode:false,disc:'',discs:['Destroyer','Buzzz','Luna','Zone'],throws:[],holeThrows:[],penalty:0,completed:[],rounds:[],last:0,remaining:257};let toastTimer;let mode='solo',startHole=1,baskets=Array(10).fill('A'),otherScores={Mike:{},Chris:{},Dave:{}},offline=false;
@@ -623,6 +626,9 @@ function savePhysicalThrowCorrection(){if(!appStateMutationAllowed())return;
 }
 document.getElementById('physicalThrowCorrection').addEventListener('close',()=>{physicalCorrectionThrow=null});
 function startRound(){if(!appStateMutationAllowed())return;
+ if(!s.active&&sharedCourseBlocked(selectedCourseId)){notify(sharedLibraryMessage);return}
+ if(sharedCourseConflict(selectedCourseId)){notify('Course data changed in another tab. Reload before starting a round.');return}
+ if(sharedLibraryMode&&sharedResolvedMappings.has(selectedCourseId)&&!sharedCourseHasPersonalData(selectedCourseId)&&!sharedLibraryClient?.isDurable()){notify('Shared course cache is unavailable. Explicitly save its mapping or enable caching before starting a recoverable round.');return}
  if(devSimEnabled)return;
  if(s.active){resumeRound();return}
  if(!readPhysicalPlayBag()){notify(physicalPlayError);return}
@@ -635,6 +641,7 @@ function startRound(){if(!appStateMutationAllowed())return;
   physicalRound={selectedDiscId:'',frozenDisc:null,roundId:newRecordingId()};
   s={...s,active:true,hole:startHole,started:false,pinMode:false,throws:[],holeThrows:[],completed:[],penalty:0,last:0,remaining:lengthFor(startHole),pendingScore:false,scoreThrows:undefined};
   otherScores={Mike:{},Chris:{},Dave:{}};currentThrowType='';throwStartGps=null;
+  saveSharedRoundContext();
   saved=saveAppState();
  }catch(e){failure=e instanceof Error?e.message:'Recording metadata could not be created.'}
  if(!saved){
@@ -976,6 +983,19 @@ function saveDryMapping(data,mode){
  return true;
 }
 const dryCreekEditKey='chain-chaser-dry-creek-edits-v1',dryCreekShapeKey='chain-chaser-dry-creek-shapes-v1';
+// Emergency fallback disables downloads only; cached-round recovery stays enabled.
+const sharedLibraryNetworkPolicy=true;
+function sharedLibraryEnvironmentFor(address){
+ try{const u=new URL(address),production=u.origin==='https://jeremydspencer-disc.github.io'&&u.pathname==='/disc-golf-gps/chain-chaser-preview.html',local=['http:','https:'].includes(u.protocol)&&['localhost','127.0.0.1','[::1]'].includes(u.hostname)&&u.pathname.endsWith('/chain-chaser-preview.html')&&u.searchParams.get('sharedCourses')==='1';return {enabled:u.searchParams.get('devSim')!=='1'&&(production||local),network:u.searchParams.get('sharedNetwork')!=='off'}}catch(e){return {enabled:false,network:false}}
+}
+const sharedLibraryEnvironment=sharedLibraryEnvironmentFor(location.href);
+const sharedLibraryMode=!devSimEnabled&&sharedLibraryEnvironment.enabled;
+const sharedLibraryNetworkEnabled=sharedLibraryNetworkPolicy&&sharedLibraryEnvironment.network;
+let sharedLibraryPhase='loading',sharedLibraryMessage='Loading shared courses. Existing personal mappings are kept.';
+const sharedResolvedMappings=new Map();
+const sharedPersonalBaselines=new Map();
+let sharedLibraryClient=null,sharedLibraryBusy=false,sharedLibraryInitialCustomMissing=false;
+if(sharedLibraryMode){try{sharedLibraryInitialCustomMissing=localStorage.getItem('chain-chaser-custom-courses-v1')===null}catch(e){}}
 const customCourseKey='chain-chaser-custom-courses-v1';
 let customStorageBlocked=false,customSaveFailed=false;
 function isMapPoint(p){return p&&Number.isFinite(p.lat)&&Math.abs(p.lat)<=90&&Number.isFinite(p.lng)&&Math.abs(p.lng)<=180}
@@ -999,7 +1019,7 @@ const customCourses=(()=>{
   if(saved.version!==1||!Array.isArray(saved.courses)||new Set(saved.courses.map(c=>c?.id)).size!==saved.courses.length)throw Error('Invalid custom-course storage');
   // Existing hole counts and mappings stay exactly as saved; only Save count may resize them.
   saved.courses.forEach(validateCustomCourse);
-  if(!saved.courses.some(c=>c.id===seed.id)){saved.courses.push(seed);if(!devSimEnabled)localStorage.setItem(customCourseKey,JSON.stringify(saved))}
+  if(!saved.courses.some(c=>c.id===seed.id)){saved.courses.push(seed);if(!devSimEnabled&&!sharedLibraryMode)localStorage.setItem(customCourseKey,JSON.stringify(saved))}
   for(const c of saved.courses)if(c.id===seed.id&&c.name==='Privare Course')c.name=seed.name;
   return saved.courses;
  }catch(e){customStorageBlocked=true;notify('Custom-course storage is unavailable or unreadable. Existing saved data has been kept.');return [seed]}
@@ -1012,8 +1032,9 @@ function customCourseReady(c=baseCourse){return c.holes.length>0&&c.holes.every(
 function parFor(n=s.hole){return isCustomCourse()?customHoleData(baseCourse,n).par??null:baseCourse.id===dryCreekCourse.id?({...courseHole(baseCourse,n),...(n===13?edits[13]:{})}).par??par:par}
 function saveCustomCourse(c=mappingCourse(),data=mappingData()){
  if(devSimEnabled){notify('Storage changes are disabled in DEV SIMULATION');return false}
+ if(sharedCourseConflict(c.id)){notify('Course data changed in another tab. Reload before editing; existing data was kept.');return false}
  if(customStorageBlocked){notify('Custom-course storage could not be read. No saved data was replaced.');return false}
- try{c.edits=data.edits;c.shapes=data.shapes;validateCustomCourse(c);localStorage.setItem(customCourseKey,JSON.stringify({version:1,courses:customCourses}));customSaveFailed=false;return true}
+ try{c.edits=data.edits;c.shapes=data.shapes;validateCustomCourse(c);localStorage.setItem(customCourseKey,JSON.stringify({version:1,courses:customCourses}));rememberSharedPersonalBaseline(c.id);customSaveFailed=false;return true}
  catch(e){customSaveFailed=true;notify('Could not save custom course. Keep this page open and retry.');return false}
 }
 function saveCustomHoleCount(){
@@ -1046,7 +1067,7 @@ function savePrivateCourseLocation(){
   if(!confirm('Replace the course location after the failed lookup? All existing mapping pins will be kept.'))return;
  }
  try{
-  const raw=localStorage.getItem(customCourseKey),saved=JSON.parse(raw);
+  const raw=localStorage.getItem(customCourseKey),saved=raw===null&&sharedLibraryMode&&sharedLibraryInitialCustomMissing?{version:1,courses:JSON.parse(JSON.stringify(customCourses))}:JSON.parse(raw);
   if(saved?.version!==1||!Array.isArray(saved.courses)||new Set(saved.courses.map(x=>x?.id)).size!==saved.courses.length)throw Error('Saved courses are unreadable.');
   saved.courses.forEach(validateCustomCourse);
   const matches=saved.courses.filter(x=>x.id===c.id),record=matches[0];
@@ -1055,7 +1076,7 @@ function savePrivateCourseLocation(){
   if(localStorage.getItem(customCourseKey)!==raw)throw Error('Saved courses changed. Reload before trying again.');
   localStorage.setItem(customCourseKey,JSON.stringify(saved));
  }catch(e){notify('Location was not saved. '+(e instanceof Error?e.message:'Check browser storage and retry.'));return}
- c.address=address;geocodeSequence++;mapperAddressLocations.delete(c.id);
+ c.address=address;rememberSharedPersonalBaseline(c.id);geocodeSequence++;mapperAddressLocations.delete(c.id);
  document.getElementById('privateCourseAddress').value='';refreshMapperControls();renderHomeCourses();focusHole();notify('Course location saved in this browser. Existing mapping pins were kept.');
 }
 let mapperCourseId=null,mapperMappings=null,mapperAddressOverview=false,geocodeSequence=0;
@@ -1063,7 +1084,9 @@ const mapperAddressLocations=new Map();
 function mappingCourse(){const c=courseRegistry.find(c=>c.id===(mapEditorActive?mapperCourseId:selectedCourseId));if(!c)throw Error('Unknown course ID');return c}
 function mappingData(){const data=mapEditorActive?mapperMappings:{courseId:selectedCourseId,edits,shapes};if(!data||data.courseId!==mappingCourse().id)throw Error('Mapping course ID mismatch');return data}
 function readCourseMappings(c){
+ if(sharedCourseConflict(c.id))throw Error('Course data changed. Reload before opening mappings.');
  if(isCustomCourse(c))return {courseId:c.id,edits:c.edits,shapes:c.shapes};
+ if(sharedLibraryMode&&sharedResolvedMappings.has(c.id)&&!sharedCourseHasPersonalData(c.id))return JSON.parse(JSON.stringify(sharedResolvedMappings.get(c.id)));
  const keys=c.id===discOnSixth.id?[oldEditKey,oldShapeKey]:c.id===millsCourse.id?[millsEditKey,millsShapeKey]:c.id===dryCreekCourse.id?[dryCreekEditKey,dryCreekShapeKey]:null;
  if(!keys)throw Error('No mapping storage for this course ID');
  const data={courseId:c.id,edits:JSON.parse(localStorage.getItem(keys[0])||'{}'),shapes:JSON.parse(localStorage.getItem(keys[1])||'{}')};
@@ -1151,10 +1174,12 @@ function homeCourseLocation(c){
  return null;
 }
 function sortedCourses(){return [...courseRegistry].sort((a,b)=>{if(!nearbyPosition)return a.name.localeCompare(b.name);const aLocation=homeCourseLocation(a),bLocation=homeCourseLocation(b),da=aLocation?courseMiles(nearbyPosition,aLocation):Infinity,db=bLocation?courseMiles(nearbyPosition,bLocation):Infinity;return da-db||a.name.localeCompare(b.name)})}
-function renderHomeCourses(){const holder=document.getElementById('homeCourseList');if(!holder)return;const courses=sortedCourses();holder.innerHTML=courses.map(c=>{const location=homeCourseLocation(c),distance=nearbyPosition&&location?courseMiles(nearbyPosition,location):null;const city=c.city||(isCustomCourse(c)?c.city||c.type||'Custom course':c.id===millsCourse.id?'Woods Cross, Utah':'Midvale, Utah');const safeId=JSON.stringify(c.id);return `<article class="home-course-card ${c.id===selectedCourseId?'selected':''}"><div class="row"><h3>${escapeHtml(c.name)}</h3>${distance!==null?`<span class="course-distance">${distance<10?distance.toFixed(1):Math.round(distance)} mi</span>`:c.id===privareCourseId&&!location?'<span class="small muted" title="Course location unavailable; map the Hole 1 tee to show mileage.">Distance unavailable</span>':''}</div><div class="course-meta"><span>📍 ${escapeHtml(city)} · ${isCustomCourse(c)?'Private / Custom · ':''}${c.holes.length?c.holes.length+' holes':'Define holes'}</span>${c.id===selectedCourseId?'<span>Selected ✓</span>':''}</div><div class="course-actions"><button class="btn" onclick='homeCourseAction(${safeId},"setup")'>${s.active&&c.id===selectedCourseId?'Resume Round':isCustomCourse(c)&&(!customCourseReady(c))?'Set Up Course':'Start Round'}</button></div><details class="course-details"><summary>Course details</summary><p>${escapeHtml(c.address||city)}</p>${c.id===dryCreekCourse.id?'<p>'+escapeHtml(c.layout)+' · Par 37 · 3,184 ft listed. Tee and basket GPS pins need mapping. Custom 13 adds unofficial Hole 2A; select its layout in Round Setup.</p>':''}<button class="mini" onclick='homeCourseAction(${safeId},"map")'>Map / Verify</button></details></article>`}).join('');const msg=document.getElementById('nearbyStatus');if(msg)msg.textContent=nearbyState==='ready'?'Nearest first · approximate distance':nearbyState==='pending'?'Finding nearby courses…':nearbyState==='unavailable'?'Location unavailable · A–Z':'Enable location for nearest courses · A–Z';const select=document.getElementById('courseChoice');if(select){const previous=selectedCourseId;select.innerHTML=courses.map(c=>`<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)} · ${c.holes.length?c.holes.length+' holes':'Set up holes'}</option>`).join('');select.value=previous}}
+function renderHomeCourses(){const holder=document.getElementById('homeCourseList');if(!holder)return;const courses=sortedCourses();holder.innerHTML=courses.map(c=>{const location=homeCourseLocation(c),distance=nearbyPosition&&location?courseMiles(nearbyPosition,location):null;const city=c.city||(isCustomCourse(c)?c.city||c.type||'Custom course':c.id===millsCourse.id?'Woods Cross, Utah':'Midvale, Utah');const safeId=JSON.stringify(c.id);return `<article data-course-id="${escapeHtml(c.id)}" class="home-course-card ${c.id===selectedCourseId?'selected':''}"><div class="row"><h3>${escapeHtml(c.name)}</h3>${distance!==null?`<span class="course-distance">${distance<10?distance.toFixed(1):Math.round(distance)} mi</span>`:c.id===privareCourseId&&!location?'<span class="small muted" title="Course location unavailable; map the Hole 1 tee to show mileage.">Distance unavailable</span>':''}</div><div class="course-meta"><span>📍 ${escapeHtml(city)} · ${isCustomCourse(c)?'Private / Custom · ':''}${c.holes.length?c.holes.length+' holes':'Define holes'}</span>${c.id===selectedCourseId?'<span>Selected ✓</span>':''}</div><div class="course-actions"><button class="btn" onclick='homeCourseAction(${safeId},"setup")'>${s.active&&c.id===selectedCourseId?'Resume Round':isCustomCourse(c)&&(!customCourseReady(c))?'Set Up Course':'Start Round'}</button></div><details class="course-details"><summary>Course details</summary><p>${escapeHtml(c.address||city)}</p>${c.id===dryCreekCourse.id?'<p>'+escapeHtml(c.layout)+' · Par 37 · 3,184 ft listed. Tee and basket GPS pins need mapping. Custom 13 adds unofficial Hole 2A; select its layout in Round Setup.</p>':''}<button class="mini" onclick='homeCourseAction(${safeId},"map")'>Map / Verify</button></details></article>`}).join('');const msg=document.getElementById('nearbyStatus');if(msg)msg.textContent=nearbyState==='ready'?'Nearest first · approximate distance':nearbyState==='pending'?'Finding nearby courses…':nearbyState==='unavailable'?'Location unavailable · A–Z':'Enable location for nearest courses · A–Z';const select=document.getElementById('courseChoice');if(select){const previous=selectedCourseId;select.innerHTML=courses.map(c=>`<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)} · ${c.holes.length?c.holes.length+' holes':'Set up holes'}</option>`).join('');select.value=previous}updateSharedLibraryReadiness()}
 function refreshNearby(){if(!navigator.geolocation){nearbyState='unavailable';renderHomeCourses();return}nearbyState='pending';renderHomeCourses();navigator.geolocation.getCurrentPosition(p=>{nearbyPosition={lat:p.coords.latitude,lng:p.coords.longitude};nearbyState='ready';renderHomeCourses()},()=>{nearbyPosition=null;nearbyState='denied';renderHomeCourses()},{enableHighAccuracy:false,timeout:12000,maximumAge:300000})}
 function homeCourseAction(id,action){
  const c=courseRegistry.find(c=>c.id===id);if(!c){notify('Course not found');return}
+ if(!s.active&&action!=='map'&&sharedCourseBlocked(id)){notify(sharedLibraryMessage);return}
+ if(action==='map'&&sharedLibraryMode&&sharedLibraryPhase==='loading'&&!sharedCourseHasPersonalData(id)&&!sharedResolvedMappings.has(id)){notify('Shared mappings are loading. Please wait before editing this course.');return}
  if(action==='map'){if(!s.active&&id!==selectedCourseId)selectCourse(id);openMapper(false,id);return}
  if(s.active){if(id!==selectedCourseId){notify('Finish your current round before switching courses');return}resumeRound();return}
  if(id!==selectedCourseId)selectCourse(id);
@@ -1162,10 +1187,12 @@ function homeCourseAction(id,action){
 }
 const millsEditKey='chain-chaser-mills-park-edits-v1',millsShapeKey='chain-chaser-mills-park-shapes-v1';
 function selectCourse(id){if(!appStateMutationAllowed())return;
+ if(sharedCourseConflict(id)){notify('Course data changed in another tab. Reload before selecting it.');return}
  if(s.active){notify('Finish the current round before changing courses');return}
  const selected=courseRegistry.find(c=>c.id===id);if(!selected){notify('Course not found');return}
  selectedCourseId=id;baseCourse=selected;course.name=selected.name;holes=selected.holes.length;lengths=selected.holes.map(h=>h.distanceFeet??0);baskets=Array(holes).fill('A');startHole=1;s.hole=1;dryRoundLayout=null;drySetupLayoutId='main-12';
- if(isCustomCourse()){edits=baseCourse.edits;shapes=baseCourse.shapes}
+ if(sharedLibraryMode&&sharedResolvedMappings.has(id)&&!sharedCourseHasPersonalData(id)){const data=readCourseMappings(selected);edits=data.edits;shapes=data.shapes}
+ else if(isCustomCourse()){edits=baseCourse.edits;shapes=baseCourse.shapes}
  else if(id===dryCreekCourse.id){try{const data=readCourseMappings(selected);edits=data.edits;shapes=data.shapes}catch(e){edits={};shapes={};notify('Dry Creek mappings could not be read; existing saved data was kept.')}}
  else if(id===millsCourse.id){try{edits=JSON.parse(localStorage.getItem(millsEditKey)||'{}');shapes=JSON.parse(localStorage.getItem(millsShapeKey)||'{}');edits[13]={...(edits[13]||{}),distanceFeet:303}}catch(e){edits={};shapes={}}}
  else{try{edits=JSON.parse(localStorage.getItem(oldEditKey)||'{}');shapes=JSON.parse(localStorage.getItem(oldShapeKey)||'{}')}catch(e){edits={};shapes={}}}
@@ -1202,12 +1229,14 @@ let mapEditorActive=false,mapEditorTool='none',mapEditorHole=1,mapperReturnTab='
 function mapEditStorage(mode='hole'){
  if(devSimEnabled){notify('Storage changes are disabled in DEV SIMULATION');return false}
  const c=mappingCourse(),data=mappingData();
+ if(sharedCourseConflict(c.id)){notify('Course data changed in another tab. Reload before saving; existing data was kept.');return false}
  if(isCustomCourse(c)){if(saveCustomCourse(c,data)===false)return false}
- else if(c.id===dryCreekCourse.id){try{saveDryMapping(data,mode)}catch(e){notify('Dry Creek mapping could not be saved. Existing data was kept.');return false}}
+ else if(c.id===dryCreekCourse.id){try{saveDryMapping(data,sharedLibraryMode&&sharedResolvedMappings.has(c.id)&&!sharedCourseHasPersonalData(c.id)?'import':mode)}catch(e){notify('Dry Creek mapping could not be saved. Existing data was kept.');return false}}
  else{const keys=c.id===discOnSixth.id?[oldEditKey,oldShapeKey]:c.id===millsCourse.id?[millsEditKey,millsShapeKey]:c.id===dryCreekCourse.id?[dryCreekEditKey,dryCreekShapeKey]:null;if(!keys)throw Error('Unknown mapping course ID');localStorage.setItem(keys[0],JSON.stringify(data.edits));localStorage.setItem(keys[1],JSON.stringify(data.shapes))}
- if(c.id===selectedCourseId){edits=data.edits;shapes=data.shapes}return true;
+ rememberSharedPersonalBaseline(c.id);if(c.id===selectedCourseId){edits=data.edits;shapes=data.shapes}return true;
 }
 function openMapper(fromRound=false,courseId=selectedCourseId){
+ if(sharedCourseConflict(courseId)){notify('Course data changed in another tab. Reload before mapping.');return}
  const c=courseRegistry.find(c=>c.id===courseId);if(!c){notify('Unknown mapping course ID. No fallback course was opened.');return}
  let data;try{data=readCourseMappings(c)}catch(e){notify('Could not open '+c.name+' mappings. Existing data was kept.');if(mapEditorActive)document.getElementById('mapperCourseChoice').value=mapperCourseId;return}
  if(c.id===selectedCourseId){edits=data.edits;shapes=data.shapes}
@@ -1261,6 +1290,91 @@ function clearFlightPath(){
 }
 function clearMapDrawing(){if(mapEditorTool==='route'){clearFlightPath();return}if(!['route','fairway'].includes(mapEditorTool)){notify('Select flight path or fairway first');return}if(!confirm('Clear '+mappingCourse().name+' Hole '+holeLabel(mapEditorHole,mappingCourse())+' '+mapEditorTool+'?'))return;const data=mappingData();data.shapes[mapEditorHole]=data.shapes[mapEditorHole]||{};const previous=data.shapes[mapEditorHole][mapEditorTool];data.shapes[mapEditorHole][mapEditorTool]=[];if(mapEditStorage()===false){data.shapes[mapEditorHole][mapEditorTool]=previous;return}syncSatellite()}
 function exportCourseMap(){const c=mappingCourse(),data=mappingData();const blob=new Blob([JSON.stringify({courseId:c.id,courseName:c.name,exportedAt:new Date().toISOString(),courseEdits:data.edits,holeShapes:data.shapes},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=c.id+'-layout.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+
+// Course-only draft format. Never spread raw records or enumerate browser storage here.
+function sharedCoursePoint(value,field){
+ if(value===null||value===undefined)return null;
+ if(typeof value!=='object'||Array.isArray(value)||!isMapPoint(value))throw Error(field+' has invalid coordinates.');
+ return {lat:value.lat,lng:value.lng};
+}
+function sharedCourseNumber(value,field,integer=false){
+ if(value===null||value===undefined)return null;
+ if(!Number.isFinite(value)||value<=0||integer&&!Number.isInteger(value))throw Error(field+' must be a positive '+(integer?'whole number.':'number.'));
+ return value;
+}
+function validateSharedCourseExport(candidate){
+ if(candidate?.format!=='chain-chaser-shared-course'||candidate.schemaVersion!==1||candidate.appName!=='Chain Chaser')throw Error('Unsupported shared-course schema.');
+ const c=courseRegistry.find(x=>x.id===candidate.courseId);
+ if(!c||!/^[-a-z0-9]+$/.test(candidate.courseId)||typeof candidate.courseName!=='string'||!candidate.courseName.trim())throw Error('Invalid course identity.');
+ if(!Array.isArray(candidate.holes)||!candidate.holes.length||candidate.holeCount!==candidate.holes.length)throw Error('Invalid hole count.');
+ const expected=c.id===dryCreekCourse.id?[...dryLayouts['custom-13']]:c.holes.map(h=>h.number),ids=new Set();
+ for(const h of candidate.holes){
+  if(!Number.isInteger(h.number)||h.number<1||ids.has(h.number)||!expected.includes(h.number)||h.label!==holeLabel(h.number,c))throw Error('Duplicate, missing, or mislabeled hole identity.');
+  ids.add(h.number);sharedCourseNumber(h.par,'Hole '+h.label+' par',true);sharedCourseNumber(h.distanceFeet,'Hole '+h.label+' distance');sharedCoursePoint(h.tee,'Hole '+h.label+' tee');sharedCoursePoint(h.basket,'Hole '+h.label+' basket');
+  if(!h.overrides||typeof h.overrides!=='object'||Array.isArray(h.overrides))throw Error('Missing saved override record.');
+  for(const key of Object.keys(h.overrides))if(!['par','distanceFeet','tee','basket'].includes(key)||JSON.stringify(h.overrides[key])!==JSON.stringify(h[key]))throw Error('Invalid saved override.');
+ }
+ if(ids.size!==expected.length||expected.some(n=>!ids.has(n)))throw Error('Missing hole definitions.');
+ if(c.id===discOnSixth.id&&candidate.holeCount!==10||c.id===millsCourse.id&&candidate.holeCount!==13||c.id===dryCreekCourse.id&&candidate.holeCount!==13)throw Error('Unexpected built-in course hole count.');
+ if(c.id===millsCourse.id){const h=candidate.holes.find(h=>h.number===13);if(h.par!==3||h.distanceFeet!==303)throw Error('Mills Park Hole 13 must retain par 3 and 303 feet.');}
+ const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+ if(!object(candidate.holeShapes)||Object.keys(candidate.holeShapes).length!==ids.size)throw Error('Missing hole shape records.');
+ for(const [key,sh]of Object.entries(candidate.holeShapes)){
+  if(!/^[1-9]\d*$/.test(key)||!ids.has(Number(key))||!object(sh))throw Error('Shape belongs to an unknown hole.');
+  for(const field of ['route','fairway','mandos']){
+   if(!Array.isArray(sh[field]))throw Error('Invalid '+field+' array.');
+   for(const p of sh[field]){if(!sharedCoursePoint(p,'Hole '+key+' '+field)||field==='mandos'&&!['left','right'].includes(p.side))throw Error('Invalid '+field+' point.');}
+  }
+ }
+ const orders=c.id===dryCreekCourse.id?Object.entries(dryLayouts):[[c.id===discOnSixth.id?'main-10':c.id===millsCourse.id?'main-13':'custom',expected]];
+ if(!Array.isArray(candidate.layouts)||candidate.layouts.length!==orders.length||candidate.defaultLayoutId!==orders[0][0])throw Error('Missing or invalid layouts.');
+ const layouts=new Set();for(const l of candidate.layouts){const order=orders.find(([id])=>id===l.id)?.[1];if(!order||layouts.has(l.id)||!Array.isArray(l.holeOrder)||JSON.stringify(l.holeOrder)!==JSON.stringify(order)||l.holeCount!==order.length)throw Error('Invalid layout order.');layouts.add(l.id);}
+ sharedCoursePoint(candidate.location?.center,'Course center');
+ if(!object(candidate.location)||!(candidate.location.address===null||typeof candidate.location.address==='string')||!(candidate.location.city===null||typeof candidate.location.city==='string'))throw Error('Invalid course location.');
+ return candidate;
+}
+function collectSharedCourseExport(c=mappingCourse(),data=mappingData()){
+ if(devSimEnabled)throw Error('Shared-course export is disabled in Test Mode.');
+ const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+ if(!c||!Array.isArray(c.holes)||!c.holes.length||!object(data)||data.courseId!==c.id||!object(data.edits)||!object(data.shapes))throw Error('Course mappings or identity are unavailable.');
+ const baseIds=c.holes.map(h=>h?.number),baseExpected=Array.from({length:c.id===discOnSixth.id?10:c.id===millsCourse.id?13:c.id===dryCreekCourse.id?12:c.holes.length},(_,i)=>i+1);
+ if(JSON.stringify(baseIds)!==JSON.stringify(baseExpected))throw Error('Base hole IDs are missing, duplicated, or out of order.');
+ const definitions=mappingHoles(c),allowed=new Set(definitions.map(h=>h?.number));
+ for(const collection of [data.edits,data.shapes])for(const key of Object.keys(collection))if(!/^[1-9]\d*$/.test(key)||!allowed.has(Number(key)))throw Error('Mapping data belongs to an unknown hole.');
+ const incompleteHoles=[],missingReferenceDistances=[],baseCoordinateHoles=[],holeShapes={};
+ const holes=definitions.map(base=>{
+  const n=base.number,label=holeLabel(n,c),edit=data.edits[n]??{},sh=data.shapes[n]??{};
+  if(!object(edit)||!object(sh))throw Error('Invalid mapping record for Hole '+label+'.');
+  const value=key=>Object.hasOwn(edit,key)?edit[key]:base[key];
+  const h={number:n,label,par:sharedCourseNumber(value('par'),'Hole '+label+' par',true),distanceFeet:sharedCourseNumber(value('distanceFeet'),'Hole '+label+' distance'),tee:sharedCoursePoint(value('tee'),'Hole '+label+' tee'),basket:sharedCoursePoint(value('basket'),'Hole '+label+' basket'),overrides:{}};
+  for(const key of ['par','distanceFeet','tee','basket'])if(Object.hasOwn(edit,key))h.overrides[key]=h[key]===null?null:typeof h[key]==='object'?{...h[key]}:h[key];
+  const missing=['par','tee','basket'].filter(k=>h[k]===null);if(missing.length)incompleteHoles.push({number:n,label,missing});
+  if(h.distanceFeet===null)missingReferenceDistances.push(n);
+  if(['tee','basket'].some(k=>h[k]!==null&&!Object.hasOwn(edit,k)))baseCoordinateHoles.push(n);
+  const points=field=>{if(sh[field]===undefined)return [];if(!Array.isArray(sh[field]))throw Error('Invalid '+field+' for Hole '+label+'.');return sh[field].map(p=>{const q=sharedCoursePoint(p,'Hole '+label+' '+field);if(!q)throw Error('Missing '+field+' coordinates.');if(field==='mandos'){if(!['left','right'].includes(p.side))throw Error('Invalid mando side.');return {...q,side:p.side}}return q})};
+  holeShapes[n]={route:points('route'),fairway:points('fairway'),mandos:points('mandos')};return h;
+ });
+ const makeLayout=(id,name,order,official,reference=null)=>{const rows=order.map(n=>holes.find(h=>h.number===n));return {id,name,holeCount:order.length,holeOrder:[...order],official,par:rows.every(h=>h.par!==null)?rows.reduce((n,h)=>n+h.par,0):null,totalDistanceFeet:rows.every(h=>h.distanceFeet!==null)?rows.reduce((n,h)=>n+h.distanceFeet,0):null,reference}};
+ const ref=count=>({distanceFeet:sharedCourseNumber(c.publishedTotalFeet,'Published reference distance'),coversHoleCount:count});
+ const layouts=c.id===dryCreekCourse.id?[makeLayout('main-12','Main 12',dryLayouts['main-12'],true,ref(12)),makeLayout('custom-13','Custom 13 (unofficial 2A)',dryLayouts['custom-13'],false)]:[makeLayout(c.id===discOnSixth.id?'main-10':c.id===millsCourse.id?'main-13':'custom',c.layout||'Custom',baseIds,isCustomCourse(c)?false:null,c.id===discOnSixth.id?ref(9):c.id===millsCourse.id?ref(12):null)];
+ const warnings=[];
+ if(baseCoordinateHoles.length)warnings.push('Some coordinates come from base definitions. Their geographic accuracy has not been verified by this export.');
+ if(c.id===privareCourseId&&holes.length!==19)warnings.push('Private Course currently has '+holes.length+' saved holes; the intended shared layout has 19. No holes were added.');
+ return validateSharedCourseExport({format:'chain-chaser-shared-course',schemaVersion:1,appName:'Chain Chaser',courseId:c.id,courseName:c.name,courseType:typeof c.type==='string'?c.type:null,distanceUnit:'ft',holeCount:holes.length,location:{address:typeof c.address==='string'&&c.address.trim()?c.address:null,city:typeof c.city==='string'?c.city:null,center:sharedCoursePoint(c.center,'Course center')},defaultLayoutId:layouts[0].id,holes,holeShapes,layouts,validation:{mappingComplete:incompleteHoles.length===0,incompleteHoles,missingReferenceDistances,baseCoordinateHoles,warnings}});
+}
+function exportSharedCourseJson(){
+ const status=document.getElementById('sharedCourseExportStatus');let url=null;
+ try{
+  if(devSimEnabled||!mapEditorActive)throw Error('Open the selected course in the normal Course Mapper first.');
+  const candidate=collectSharedCourseExport(),v=candidate.validation;
+  if(!confirm('Download a course-only draft for '+candidate.courseName+'? Coordinates and addresses may become public if published. Review privately before publication. '+(v.mappingComplete?'Mapping coverage is complete; geographic accuracy is not verified.':v.incompleteHoles.length+' holes have incomplete mapping or par data.')+' This does not upload or publish anything.')){status.textContent='Shared-course export canceled. No data was changed.';return}
+  const blob=new Blob([JSON.stringify(candidate,null,2)],{type:'application/json;charset=utf-8'}),link=document.createElement('a');
+  if(!('download' in link)||!window.URL?.createObjectURL)throw Error('This browser cannot initiate a download.');
+  url=URL.createObjectURL(blob);link.href=url;link.download='chain-chaser-shared-course-'+candidate.courseId+'-v1.json';link.hidden=true;document.body.appendChild(link);try{link.click()}finally{link.remove()}
+  status.textContent='Download requested for '+candidate.courseName+' · '+candidate.holeCount+' hole definitions · '+candidate.layouts.length+' layouts. '+(v.mappingComplete?'Mapping coverage complete.':'Incomplete holes: '+v.incompleteHoles.slice(0,10).map(h=>h.label).join(', ')+(v.incompleteHoles.length>10?'…':'')+'.')+' '+v.missingReferenceDistances.length+' missing reference distances. '+v.warnings.join(' ')+' Review the file privately before publishing; this draft is not published.';
+ }catch(e){status.textContent='Shared-course export failed. '+(e instanceof Error?e.message:'No file was downloaded.')+' Stored data was not changed.'}
+ finally{if(url)setTimeout(()=>URL.revokeObjectURL(url),1000)}
+}
 
 window.chainMapReady=function(){const c=devSimEnabled?devSimulation.course:mappingCourse();gmap=new google.maps.Map(document.getElementById('googleMap'),{center:c?.center||{lat:0,lng:0},zoom:c?.center?17:2,mapTypeId:'satellite',streetViewControl:false,mapTypeControl:false,fullscreenControl:true});document.getElementById('mapCover').style.display='none';gmap.addListener('click',e=>{if(devSimEnabled)return;if(mapEditorActive){if(mapEditorTool!=='none')mapperMapClick(e);return}if(isPhysicalRound())return;if(!s.pinMode||!s.started)return;const p={lat:e.latLng.lat(),lng:e.latLng.lng()};markLanding(p,'map pin')});focusHole();updateMapperLocation();if(devSimEnabled){drawDevSimulation();bindDevSimulationLanding()}else{drawPhysicalOrigin(physicalGps);bindPhysicalMapLanding();if(!mapEditorActive)locateOnMap()}};
 function manageMapKey(){document.getElementById('mapCover').style.display='flex';document.getElementById('googleKey').value='';document.getElementById('mapKeyBack').classList.toggle('hidden',!gmap);document.getElementById('googleKey').focus()}
@@ -2398,11 +2512,98 @@ function focusDevSimulation(){
  else{const center=devSimulation.course?.center;gmap.setCenter(center||{lat:0,lng:0});gmap.setZoom(center?17:2)}
 }
 
+function sharedCourseStorageKeys(id){return id===privareCourseId?[customCourseKey]:id===discOnSixth.id?[oldEditKey,oldShapeKey]:id===millsCourse.id?[millsEditKey,millsShapeKey]:id===dryCreekCourse.id?[dryCreekEditKey,dryCreekShapeKey,dryCreek2AKey]:null}
+function sharedCourseBlocked(id){return sharedLibraryMode&&!sharedCourseHasPersonalData(id)&&(!sharedResolvedMappings.has(id)||!sharedLibraryClient?.isDurable())}
+function updateSharedLibraryReadiness(){
+ if(!sharedLibraryMode)return;
+ const home=document.getElementById('sharedLibraryHomeStatus');home.classList.remove('hidden');home.textContent=sharedLibraryMessage;
+ for(const card of document.querySelectorAll('#homeCourseList [data-course-id]')){const button=card.querySelector('.course-actions .btn'),blocked=!s.active&&sharedCourseBlocked(card.dataset.courseId);if(button){button.disabled=blocked;button.setAttribute('aria-describedby','sharedLibraryHomeStatus');button.title=blocked?sharedLibraryMessage:''}}
+ const list=document.getElementById('homeCourseList');if(list)list.setAttribute('aria-busy',String(sharedLibraryPhase==='loading'));
+}
+function setSharedLibraryStatus(phase,message){sharedLibraryPhase=phase;sharedLibraryMessage=message;const status=document.getElementById('sharedLibraryStatus');if(status)status.textContent=message;updateSharedLibraryReadiness()}
+const sharedRoundContextPrefix='chain-chaser-shared-round-context-v1:';
+function saveSharedRoundContext(){
+ if(!sharedLibraryMode||!sharedResolvedMappings.has(selectedCourseId)||sharedCourseHasPersonalData(selectedCourseId))return;
+ const id=physicalRound?.roundId,revision=sharedLibraryClient?.revisionFor(selectedCourseId);
+ if(typeof id!=='string'||!/^[a-zA-Z0-9-]{1,160}$/.test(id)||!revision||!sharedLibraryClient.isDurable())throw Error('Shared course resume context is unavailable.');
+ const key=sharedRoundContextPrefix+id;
+ if(localStorage.getItem(key)!==null)throw Error('Shared round context already exists. Existing data was kept.');
+ localStorage.setItem(key,JSON.stringify({version:1,courseId:selectedCourseId,roundId:id,revision}));
+}
+function sharedCachedDefinitionsForStartup(records){
+ try{
+  const raw=localStorage.getItem(appStateKey);if(raw===null)return records;
+  const saved=JSON.parse(raw);if(saved?.version!==1||typeof saved?.state?.active!=='boolean')return [];
+  if(!saved.state.active)return records;
+  const id=saved.roundId;if(typeof id!=='string'||!/^[a-zA-Z0-9-]{1,160}$/.test(id))return [];
+  const context=JSON.parse(localStorage.getItem(sharedRoundContextPrefix+id));
+  if(!context||Object.keys(context).length!==4||context.version!==1||context.roundId!==id||context.courseId!==saved.selectedCourseId||context.revision!==sharedLibraryClient.revisionFor(saved.selectedCourseId)||!sharedLibraryClient.isDurable())return [];
+  return records;
+ }catch(e){return []}
+}
+function rememberSharedPersonalBaseline(id){if(!sharedLibraryMode||!sharedResolvedMappings.has(id))return;try{sharedPersonalBaselines.set(id,sharedCourseStorageKeys(id).map(k=>localStorage.getItem(k)))}catch(e){sharedPersonalBaselines.set(id,null)}}
+function sharedCourseConflict(id){if(!sharedLibraryMode||!sharedPersonalBaselines.has(id))return false;try{return JSON.stringify(sharedPersonalBaselines.get(id))!==JSON.stringify(sharedCourseStorageKeys(id).map(k=>localStorage.getItem(k)))}catch(e){return true}}
+function sharedCourseHasPersonalData(id){
+ const keys=sharedCourseStorageKeys(id);
+ if(!keys)return true;
+ try{return keys.some(k=>localStorage.getItem(k)!==null)}catch(e){return true}
+}
+function applySharedCourseDefinitions(records){
+ if(!sharedLibraryMode||customStorageBlocked)return {applied:0,protected:records.length};
+ let applied=0,protectedCount=0;
+ for(const record of records){
+  const c=courseRegistry.find(c=>c.id===record.courseId);
+  if(!c||sharedCourseHasPersonalData(c.id)){protectedCount++;continue}
+  const copy=JSON.parse(JSON.stringify(record)),data={courseId:c.id,edits:{},shapes:copy.holeShapes};
+  for(const h of copy.holes)data.edits[h.number]={par:h.par,distanceFeet:h.distanceFeet,tee:h.tee,basket:h.basket};
+  // Official Dry Creek IDs remain 1–12; the existing ID-13 overlay supplies 2A.
+  c.holes=copy.holes.filter(h=>c.id!==dryCreekCourse.id||h.number!==13).map(h=>({number:h.number,par:h.par,distanceFeet:h.distanceFeet,tee:h.tee,basket:h.basket}));
+  c.name=copy.courseName;c.center=copy.location.center;c.address=copy.location.address||'';
+  if(copy.location.city!==null)c.city=copy.location.city;
+  c.layout=copy.layouts.find(l=>l.id===copy.defaultLayoutId).name;
+  if(copy.courseType!==null)c.type=copy.courseType;
+  if(isCustomCourse(c)){c.edits=data.edits;c.shapes=data.shapes}
+  sharedResolvedMappings.set(c.id,data);rememberSharedPersonalBaseline(c.id);applied++;
+ }
+ if(sharedResolvedMappings.has(selectedCourseId)&&!sharedCourseHasPersonalData(selectedCourseId)){
+  const data=readCourseMappings(baseCourse);edits=data.edits;shapes=data.shapes;
+  holes=baseCourse.holes.length;lengths=baseCourse.holes.map(h=>h.distanceFeet??0);baskets=Array(holes).fill('A');
+ }
+ return {applied,protected:protectedCount};
+}
+function sharedLibraryCanRefresh(){return sharedLibraryMode&&!s.active&&!s.started&&!s.pendingScore&&!mapEditorActive&&!appStateBlocked&&!appStateWritePause&&!customStorageBlocked&&['home','more'].some(id=>!document.getElementById(id).classList.contains('hidden'))}
+async function refreshSharedCourseLibrary(){
+ if(!sharedLibraryClient||sharedLibraryBusy)return;
+ const status=document.getElementById('sharedLibraryStatus'),button=document.getElementById('sharedLibraryRetry');
+ if(!sharedLibraryNetworkEnabled){setSharedLibraryStatus('cache-only',sharedResolvedMappings.size?'Downloads are disabled. Your saved shared courses remain available.':'Downloads are disabled and no saved shared courses are available. Your personal courses are kept.');return}
+ if(!sharedLibraryCanRefresh()){setSharedLibraryStatus('deferred','Library loading deferred. Existing rounds can resume unchanged. Return Home with no active round to retry; local data needing review is kept.');return}
+ sharedLibraryBusy=true;button.disabled=true;setSharedLibraryStatus('loading',sharedResolvedMappings.size?'Validated cached courses are available. Checking the shared library…':'Loading shared courses. Please wait before starting a shared-course round.');
+ try{
+  const result=await sharedLibraryClient.refresh(sharedLibraryCanRefresh);
+  if(result.courses.length&&sharedLibraryCanRefresh()){
+   const outcome=applySharedCourseDefinitions(result.courses);renderHomeCourses();
+   setSharedLibraryStatus(result.status,outcome.applied+(result.status==='memory-only'?' shared courses available to view; ':' shared courses ready; ')+outcome.protected+' personal courses kept. '+(result.status==='memory-only'?'This browser could not save the shared courses. Save a personal mapping before starting a round.':'Course data is saved for your next visit.'));
+  }else setSharedLibraryStatus(result.status,({'offline-cache':'Download failed or was invalid. Validated cached courses remain available.','unavailable':'Shared-course download failed. No usable shared data was loaded. Retry from More; existing personal courses were kept.','update-available':'A different course revision is available. Your validated cached revision is pinned and was not replaced.','deferred':'Library application deferred because gameplay or navigation changed. Return Home to retry.','cache-conflict':'Library cache changed in another tab. Nothing was replaced; reload after closing the other tab.'})[result.status]||'Existing courses were kept.');
+ }catch(e){setSharedLibraryStatus('unavailable','Shared library unavailable. Personal data was kept. Retry from More.')}
+ finally{sharedLibraryBusy=false;button.disabled=false;updateSharedLibraryReadiness()}
+}
+function initializeSharedCourseLibrary(){
+ if(!sharedLibraryMode)return;
+ document.getElementById('sharedLibraryPanel').classList.remove('hidden');
+ try{
+  const manifestUrl=new URL('courses/manifest.json',location.href).href;
+  sharedLibraryClient=window.ChainChaserCourseLibrary.createClient({storage:localStorage,manifestUrl,networkEnabled:sharedLibraryNetworkEnabled,
+   fetchFile:async url=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),10000);try{const response=await fetch(url,{credentials:'omit',redirect:'error',cache:'no-cache',signal:controller.signal});if(!response.ok)throw Error('Unavailable');const text=await response.text();if(text.length>2000000)throw Error('Too large');return text}finally{clearTimeout(timer)}},
+   digest:async text=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))),b=>b.toString(16).padStart(2,'0')).join('')});
+  const outcome=applySharedCourseDefinitions(sharedCachedDefinitionsForStartup(sharedLibraryClient.cached()));
+  setSharedLibraryStatus(outcome.applied?'cached':'loading',outcome.applied?'Validated cached courses are available.':'Loading shared courses. Existing personal courses are kept.');
+ }catch(e){setSharedLibraryStatus('unavailable','Shared loader or cache unavailable. Personal data was kept; reload to retry.');sharedLibraryClient=null}
+}
 if(!devSimEnabled){
- loadAppState();appStateReady=true;
+ initializeSharedCourseLibrary();loadAppState();appStateReady=true;
  window.addEventListener('storage',handleAppStateStorage);
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveAppState()});
  window.addEventListener('pagehide',saveAppState);
 }
-if(devSimEnabled)initDevSimulation();else{show('home');refreshNearby()}
+if(devSimEnabled)initDevSimulation();else{show('home');refreshNearby();if(sharedLibraryMode)refreshSharedCourseLibrary()}
 </script></body></html>
