@@ -75,13 +75,13 @@ input:invalid{border-color:var(--danger)}
 #devSimFallback svg:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 /* One approved logo header for the four primary app screens. */
 .home-header-logo{display:none}
-.app:has(>:is(#home,#play,#discs,#more):not(.hidden))>.top{background:#000000;height:78px;margin:-18px -16px 18px;padding:4px 16px;gap:12px}
+.app:has(>:is(#home,#play,#discs,#more,#measure,#analyze,#rounds,#board):not(.hidden))>.top{background:#000000;height:78px;margin:-18px -16px 18px;padding:4px 16px;gap:12px}
 .app:has(>:is(#home,#play,#discs,#more):not(.hidden))>.top>.header-titles{display:none}
 .app:has(>:is(#home,#play,#discs,#more):not(.hidden))>.top>.home-header-logo{display:block;flex:0 1 210px;min-width:0;width:210px;max-width:calc(100% - 56px);height:auto;object-fit:contain}
-.app:has(>:is(#home,#play,#discs,#more):not(.hidden))>.top>:is(.app-menu,.play-menu){flex-shrink:0}
-.app:has(>:is(#home,#play,#discs,#more):not(.hidden))>.top>:is(.app-menu,.play-menu)>summary{min-width:44px;min-height:44px}
+.app:has(>:is(#home,#play,#discs,#more,#measure,#analyze,#rounds,#board):not(.hidden))>.top>:is(.app-menu,.play-menu){flex-shrink:0}
+.app:has(>:is(#home,#play,#discs,#more,#measure,#analyze,#rounds,#board):not(.hidden))>.top>:is(.app-menu,.play-menu)>summary{min-width:44px;min-height:44px}
 .app:has(>#play:not(.hidden))>.top>.app-menu{display:none}
-@media(min-width:600px){.app:has(>:is(#home,#play,#discs,#more):not(.hidden))>.top{border-radius:25px 25px 0 0}}
+@media(min-width:600px){.app:has(>:is(#home,#play,#discs,#more,#measure,#analyze,#rounds,#board):not(.hidden))>.top{border-radius:25px 25px 0 0}}
 /* My Discs only: name-based bag records remain unchanged. */
 .disc-filters{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;margin:12px 0;scroll-padding:2px}
 .disc-filters .mini{flex:0 0 auto;min-height:44px}
@@ -204,6 +204,12 @@ input:invalid{border-color:var(--danger)}
 #play .distance-hero .round-running-score{display:inline-flex;align-items:baseline;gap:5px;margin-left:auto;min-width:0;font-size:13px;line-height:1.4;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
 #play .distance-hero .round-running-score span{text-transform:uppercase}
 #play .distance-hero .round-running-score strong{font-size:inherit;line-height:inherit;color:var(--accent)}
+/* Fit secondary-page titles within the existing shared header. */
+.app:has(>:is(#analyze,#rounds,#board):not(.hidden))>.top>.header-titles{min-width:0}
+.app:has(>:is(#analyze,#rounds,#board):not(.hidden))>.top .title{font-size:clamp(20px,6vw,25px);line-height:1.2;overflow-wrap:anywhere}
+.app:has(>#board:not(.hidden))>.top .title{font-size:clamp(19px,5.9vw,25px)}
+#fullBackupPreview{width:calc(100% - 24px);max-width:460px;max-height:calc(100dvh - 24px);padding:0;background:var(--panel);color:var(--text);border:1px solid var(--control-border);border-radius:17px;overflow-y:auto}
+#fullBackupPreview::backdrop{background:var(--scrim)}#fullBackupPreview input[type="file"]{min-width:0;max-width:100%}#fullBackupPreview .mini{min-width:48px;min-height:48px}#fullBackupPreview .backup-preview-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#fullBackupPreview dt{color:var(--muted);font-size:12px}#fullBackupPreview dd{margin:4px 0 0;overflow-wrap:anywhere}#fullBackupPreview li{margin:8px 0;overflow-wrap:anywhere}#fullBackupPreviewContent{overflow-wrap:anywhere}
 </style></head><body><div class="app"><header class="top"><img class="home-header-logo" src="./chain-chaser-header-logo.png?v=108e60d4" alt="Chain Chaser" width="2172" height="724"><div class="header-titles"><div class="eyebrow">CHAIN CHASER</div><div class="title" id="heading">Courses</div></div><details class="app-menu"><summary aria-label="App settings and information">•••</summary><div class="menu-panel"><span class="pill" id="status">DEMO MODE</span><p class="foot">Prototype: Google satellite map and GPS are real when enabled. Round scoring, voice, group sync and offline support are still demos. Imported course mapping is saved in this browser.</p></div></details></header><p id="appSaveStatus" class="notice hidden" role="status" aria-live="polite"></p>
 <section id="home">
 <p id="sharedLibraryHomeStatus" class="notice hidden" role="status" aria-live="polite"></p>
@@ -262,18 +268,18 @@ input:invalid{border-color:var(--danger)}
 <div id="corrections" class="card hidden"><h3>Correct recorded throws</h3><div id="correctionList"></div><button class="btn alt" onclick="addMissedThrow()">+ Add missed throw</button><button class="btn outline" onclick="document.getElementById('corrections').classList.add('hidden')">Close</button></div>
 <div id="voicebox" class="voicebox hidden"><div id="voiceMessage">Voice demo</div><div class="two"><button class="btn alt" onclick="voiceCommand('start')">“Start throw”</button><button class="btn alt" onclick="voiceCommand('land')">“I'm at my disc”</button><button class="btn alt" onclick="voiceCommand('basket')">“In the basket”</button><button class="btn alt" onclick="voiceCommand('disc')">“Select Buzzz”</button></div></div>
 </section>
-<section id="board" class="hidden"><h2 id="boardTitle">Round scorecard</h2><div class="notice" id="boardNotice">Scores update immediately in this simulated group. Offline entries would sync when reconnected in the finished app.</div><div class="card"><h3>Current standings</h3><table class="scoreboard"><thead><tr><th>Player</th><th>Total</th><th>Current hole</th></tr></thead><tbody id="boardRows"></tbody></table></div><div class="card"><h3>Your hole scores</h3><div id="scorecard"></div></div><div class="card" id="scorekeeperCard"><h3>Scorekeeper demo</h3><p class="muted small">Enter another player's hole score to see the scoreboard update.</p><select id="playerScore" class="field"><option>Mike</option><option>Chris</option><option>Dave</option></select><div class="two"><select id="playerHole" class="field"></select><input id="playerStrokes" class="field" type="number" min="1" max="20" value="3"></div><button class="btn alt" onclick="saveOtherScore()">Save teammate score</button></div><button class="btn" onclick="show('play')">← BACK TO PLAY</button></section>
+<section id="board" class="hidden"><h2 id="boardTitle" class="hidden">Round scorecard</h2><div class="notice" id="boardNotice">Scores update immediately in this simulated group. Offline entries would sync when reconnected in the finished app.</div><div class="card"><h3>Current standings</h3><table class="scoreboard"><thead><tr><th>Player</th><th>Total</th><th>Current hole</th></tr></thead><tbody id="boardRows"></tbody></table></div><div class="card"><h3>Your hole scores</h3><div id="scorecard"></div></div><div class="card" id="scorekeeperCard"><h3>Scorekeeper demo</h3><p class="muted small">Enter another player's hole score to see the scoreboard update.</p><select id="playerScore" class="field"><option>Mike</option><option>Chris</option><option>Dave</option></select><div class="two"><select id="playerHole" class="field"></select><input id="playerStrokes" class="field" type="number" min="1" max="20" value="3"></div><button class="btn alt" onclick="saveOtherScore()">Save teammate score</button></div><button class="btn" onclick="show('play')">← BACK TO PLAY</button></section>
 <section id="score" class="hidden"><div class="eyebrow" id="scoreHole">Hole 1 · Par 3</div><h2>Confirm Hole Score</h2><div class="card" style="text-align:center"><div class="eyebrow">Hole score</div><div id="scoreValue" style="font-size:64px;font-weight:800">3</div><div id="scoreLabel">Par</div></div><div class="card"><div class="row"><div>Throws recorded</div><div class="counter"><button onclick="adjust('throws',-1)">−</button><strong id="throwsValue">3</strong><button onclick="adjust('throws',1)">+</button></div></div><hr style="border:0;border-top:1px solid var(--border);margin:18px 0"><div class="row"><div>Penalty strokes</div><div class="counter"><button onclick="adjust('penalty',-1)">−</button><strong id="penaltyValue">0</strong><button onclick="adjust('penalty',1)">+</button></div></div></div><button class="btn" onclick="confirmScore()">✓ CONFIRM SCORE & NEXT HOLE</button><button class="btn outline" onclick="show('play')">Back to hole</button></section>
-<section id="analyze" class="hidden"><h2>Gameplay Analytics</h2><p class="muted small">Sample analytics from throws recorded in this demo session. These aren't real performance measurements.</p><div class="two"><div class="metric"><div class="eyebrow">Recorded throws</div><strong id="statThrows">0</strong></div><div class="metric"><div class="eyebrow">Avg distance</div><strong id="statAvg">— ft</strong></div></div><div class="card"><h3>Distance by disc</h3><div id="discStats" class="muted small">Record a throw to see demo data.</div></div><div class="card"><h3>Round scoring</h3><div id="scoreStats" class="muted small">Finish a hole to see its score.</div></div><p class="hint">Planned analytics: putting percentages, fairway accuracy, distance trends, and per-course comparisons.</p></section>
-<section id="discs" class="hidden"><h2>My Discs</h2><p class="muted small">Tap a disc to edit its details. New rounds use this physical disc bag. Legacy active rounds continue using your previous bag.</p><div class="disc-search"><label class="small" for="discSearch">Search discs</label><div class="disc-search-controls"><input id="discSearch" class="field" type="search" placeholder="Name or color" autocomplete="off" aria-controls="discList" oninput="setDiscSearch(this.value)"><button type="button" class="mini" id="clearDiscSearch" onclick="clearDiscSearch()" disabled>Clear</button></div></div><div class="disc-filters" role="group" aria-label="Filter discs by category"><button type="button" class="mini selected" data-disc-filter="all" aria-pressed="true" onclick="setDiscFilter('all')">All</button><button type="button" class="mini" data-disc-filter="drivers" aria-pressed="false" onclick="setDiscFilter('drivers')">Drivers</button><button type="button" class="mini" data-disc-filter="fairways" aria-pressed="false" onclick="setDiscFilter('fairways')">Fairways</button><button type="button" class="mini" data-disc-filter="midranges" aria-pressed="false" onclick="setDiscFilter('midranges')">Midranges</button><button type="button" class="mini" data-disc-filter="putters" aria-pressed="false" onclick="setDiscFilter('putters')">Putters</button></div><p class="notice hidden" id="discCategoryStatus" role="status"></p><div id="discList" class="disc-list" role="list" aria-label="Physical discs"></div><p id="discFilterEmpty" class="notice hidden" role="status">No discs in this category. Choose All to see your entire bag.</p><form class="card" id="physicalDiscAddForm" onsubmit="event.preventDefault();addDisc()"><fieldset id="physicalDiscAddFields"><legend>Add Disc</legend><label class="small" for="newDisc">Disc Name (required)</label><input id="newDisc" class="field" required placeholder="e.g. Destroyer"><label class="small" for="newDiscColor">Disc Color</label><input id="newDiscColor" class="field" placeholder="e.g. Blue/Yellow"><label class="small" for="newDiscCategory">Disc Type (required)</label><select class="field" id="newDiscCategory" required><option value="" disabled selected>Choose disc type</option><option value="drivers">Drivers</option><option value="fairways">Fairways</option><option value="midranges">Midranges</option><option value="putters">Putters</option></select><button type="submit" class="btn alt">+ Add disc</button></fieldset></form></section>
-<section id="measure" class="hidden measure-screen"><div class="eyebrow">PRACTICE · NO SAVED DATA</div><h2>📏 Measure Throw</h2><p class="muted small">Set your starting point once, then walk to each disc. Distance updates live from the same starting position.</p><div class="distance-hero"><div class="eyebrow">DISTANCE FROM START</div><div id="measureDistance" class="big">— ft</div><div id="measureAccuracy" class="small muted">Waiting to set starting point</div></div><button class="btn" onclick="setMeasureStart()">📍 Set / Reset Starting Point</button><button class="btn outline" onclick="stopMeasuring()">Stop Measuring</button><div class="notice">No discs, rounds, throws, or measurements are stored. Requires GPS permission and HTTPS or localhost.</div></section><section id="rounds" class="hidden"><h2>Round History</h2><div id="roundHistory" class="card muted">No completed demo rounds yet.</div><p class="small muted">Rounds and discs are saved automatically in this browser.</p></section>
+<section id="analyze" class="hidden"><p class="muted small">Current-round records. Physical averages use eligible unedited GPS/map-pin distances, following Disc Details rules. Legacy/demo/unverified data is separate. GPS labels are not independently verified.</p><div class="two"><div class="metric"><div class="eyebrow">Recorded throws</div><strong id="statThrows">0</strong></div><div class="metric"><div class="eyebrow" id="statAvgLabel">Avg distance</div><strong id="statAvg">— ft</strong></div></div><div class="card"><h3>Distance by disc</h3><div id="discStats" class="muted small">Record a throw to see data.</div></div><div class="card"><h3>Round scoring</h3><div id="scoreStats" class="muted small">Finish a hole to see its score.</div></div><p class="hint">Planned analytics: putting percentages, fairway accuracy, distance trends, and per-course comparisons.</p></section>
+<section id="discs" class="hidden"><h2>My Discs</h2><p class="muted small">Tap a disc to edit its details. New rounds use this physical disc bag. Legacy active rounds continue using your previous bag.</p><button type="button" class="btn alt" id="discAddToggle" aria-expanded="false" aria-controls="physicalDiscAddForm" onclick="toggleDiscAddForm()">+ Add Disc</button><form class="card hidden" id="physicalDiscAddForm" onsubmit="event.preventDefault();addDisc()"><fieldset id="physicalDiscAddFields"><legend>Add Disc</legend><label class="small" for="newDisc">Disc Name (required)</label><input id="newDisc" class="field" required placeholder="e.g. Destroyer"><label class="small" for="newDiscColor">Disc Color</label><input id="newDiscColor" class="field" placeholder="e.g. Blue/Yellow"><label class="small" for="newDiscCategory">Disc Type (required)</label><select class="field" id="newDiscCategory" required><option value="" disabled selected>Choose disc type</option><option value="drivers">Drivers</option><option value="fairways">Fairways</option><option value="midranges">Midranges</option><option value="putters">Putters</option></select><button type="submit" class="btn alt">Save Disc</button></fieldset></form><div class="disc-search"><label class="small" for="discSearch">Search discs</label><div class="disc-search-controls"><input id="discSearch" class="field" type="search" placeholder="Name or color" autocomplete="off" aria-controls="discList" oninput="setDiscSearch(this.value)"><button type="button" class="mini" id="clearDiscSearch" onclick="clearDiscSearch()" disabled>Clear</button></div></div><div class="disc-filters" role="group" aria-label="Filter discs by category"><button type="button" class="mini selected" data-disc-filter="all" aria-pressed="true" onclick="setDiscFilter('all')">All</button><button type="button" class="mini" data-disc-filter="drivers" aria-pressed="false" onclick="setDiscFilter('drivers')">Drivers</button><button type="button" class="mini" data-disc-filter="fairways" aria-pressed="false" onclick="setDiscFilter('fairways')">Fairways</button><button type="button" class="mini" data-disc-filter="midranges" aria-pressed="false" onclick="setDiscFilter('midranges')">Midranges</button><button type="button" class="mini" data-disc-filter="putters" aria-pressed="false" onclick="setDiscFilter('putters')">Putters</button></div><p class="notice hidden" id="discCategoryStatus" role="status"></p><div id="discList" class="disc-list" role="list" aria-label="Physical discs"></div><p id="discFilterEmpty" class="notice hidden" role="status">No discs in this category. Choose All to see your entire bag.</p></section>
+<section id="measure" class="hidden measure-screen"><div class="eyebrow">PRACTICE · NO SAVED DATA</div><p class="muted small">Set your starting point once, then walk to each disc. Distance updates live from the same starting position.</p><div class="distance-hero"><div class="eyebrow">DISTANCE FROM START</div><div id="measureDistance" class="big">— ft</div><div id="measureAccuracy" class="small muted">Waiting to set starting point</div></div><button class="btn" onclick="setMeasureStart()">📍 Set / Reset Starting Point</button><button class="btn outline" onclick="stopMeasuring()">Stop Measuring</button><div class="notice">No discs, rounds, throws, or measurements are stored. Requires GPS permission and HTTPS or localhost.</div></section><section id="rounds" class="hidden"><div id="roundHistory" class="card muted">No completed demo rounds yet.</div><p class="small muted">Rounds and discs are saved automatically in this browser.</p></section>
 <section id="more" class="hidden" aria-label="More"><h2>More</h2>
 <div id="sharedLibraryPanel" class="card hidden"><strong>Shared-course library</strong><p id="sharedLibraryStatus" class="small muted" role="status" aria-live="polite">Personal mappings take precedence.</p><button class="mini" id="sharedLibraryRetry" style="min-height:44px" onclick="refreshSharedCourseLibrary()">Check shared library</button></div>
 <div class="card more-links"><button class="btn alt" onclick="show('measure')">Measure Throw</button><button class="btn alt" onclick="show('analyze')">Analyze / Statistics</button></div>
 <div class="card more-links"><h2>Scores &amp; Round History</h2><button class="btn alt" id="moreScorecard" onclick="show('board')">Current round scorecard</button><p class="small muted" id="moreScoreNotice">Start a round to view its scorecard.</p><button class="btn alt" onclick="show('rounds')">Round History</button></div>
 <div class="card more-links"><h2>Course Mapping</h2><label class="small" for="moreMappingCourse">Choose a course to map</label><select class="field" id="moreMappingCourse"></select><button class="btn alt" onclick="openMoreMapper()">Open Course Mapper</button></div>
 <details class="card more-settings"><summary>Settings</summary><button class="btn alt" onclick="openMoreMapper(true)">Manage Maps key</button><p class="small muted">Replace or clear the Maps key saved in this browser using the existing map controls.</p></details>
-<details class="card more-settings"><summary>Data backup</summary><p class="small muted">Download this browser’s stored Chain Chaser data as JSON. Includes saved Maps API keys in readable form; keep the file private. Unsaved changes and session-only data are not included. Restore is not available yet.</p><button type="button" class="btn alt" id="exportFullBackupButton" onclick="exportFullBackup()">Export Full Backup</button><p class="notice hidden" id="fullBackupStatus" role="status" aria-live="polite"></p></details>
+<details class="card more-settings"><summary>Data backup</summary><p class="small muted">Download this browser’s stored Chain Chaser data with SHA-256 integrity checks. Saved Maps overrides are excluded by default. Backups may contain private course and throw locations; keep them private. Unsaved changes and session-only data are not included. Restore is not available yet.</p><label class="small"><input type="checkbox" id="fullBackupIncludeMaps"> Include saved Maps key overrides — warning: the file will contain these keys in readable form.</label><button type="button" class="btn alt" id="exportFullBackupButton" onclick="exportFullBackup()">Export Full Backup</button><button type="button" class="btn outline" id="fullBackupPreviewButton" onclick="openFullBackupPreview()" aria-haspopup="dialog" aria-controls="fullBackupPreview">Import Full Backup — Preview</button><p class="notice hidden" id="fullBackupStatus" role="status" aria-live="polite"></p></details>
 </section>
 <nav class="nav" aria-label="Main navigation"><button type="button" data-tab="home" onclick="show('home')"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h5v-7h4v7h5V9"/></svg><span>Home</span></button><button type="button" data-tab="play" onclick="resumeRound()"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 22V3m0 1c5-4 9 4 15 0v10c-6 4-10-4-15 0"/></svg><span>Play</span></button><button type="button" data-tab="discs" onclick="show('discs')"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><ellipse cx="12" cy="12" rx="10" ry="6"/><path d="M4 10c3 4 13 4 16 0"/></svg><span>My Discs</span></button><button type="button" data-tab="more" onclick="show('more')"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>More</span></button></nav></div><div id="toast" class="toast hidden"></div><dialog id="throwDiscPicker" aria-labelledby="throwDiscPickerTitle">
 <div class="throw-disc-picker-head"><h2 id="throwDiscPickerTitle">Disc for this throw</h2><button type="button" class="mini" onclick="closeThrowDiscPicker()" aria-label="Close disc selection">Close</button></div>
@@ -283,6 +289,13 @@ input:invalid{border-color:var(--danger)}
 <dialog id="holeReviewDialog" aria-labelledby="holeReviewTitle" aria-describedby="holeReviewNotice"><div class="hole-review-head"><h2 id="holeReviewTitle">REVIEWING HOLE</h2><button type="button" class="btn" onclick="closeHoleReview()" autofocus>RETURN TO ACTIVE HOLE</button></div><div class="hole-review-content"><p class="notice" id="holeReviewNotice">Review is read-only until you choose Edit Score &amp; Penalties. Recorded throws cannot be changed here. Voice commands are paused while this panel is open.</p><p class="small muted" id="holeReviewActive"></p><dl class="hole-review-facts" id="holeReviewFacts"></dl><p id="holeReviewAdjusted" class="notice hidden">Manually adjusted score — final score differs from recorded throws plus penalties.</p><p class="notice hidden" id="completedScoreEditStatus" role="status" aria-live="polite"></p><button type="button" id="editCompletedScoreButton" class="btn alt hidden" onclick="beginCompletedScoreEdit()">Edit Score &amp; Penalties</button><form id="completedScoreEditForm" class="hidden" onsubmit="event.preventDefault();saveCompletedScoreEdit()" novalidate><h3 id="completedScoreEditTitle">Edit completed hole</h3><p class="small muted">Enter the final total. Penalties are already included in this score and will not be added again. Score: 1–99; penalties: 0–99.</p><label class="small" for="completedFinalScore">FINAL SCORE INCLUDING PENALTIES</label><input id="completedFinalScore" class="field" type="number" min="1" max="99" step="1" inputmode="numeric" required><label class="small" for="completedPenaltyCount">Penalty count</label><input id="completedPenaltyCount" class="field" type="number" min="0" max="99" step="1" inputmode="numeric" required><div class="two"><button type="submit" class="btn">Save</button><button type="button" class="btn outline" onclick="cancelCompletedScoreEdit()">Cancel</button></div></form><h3>Recorded throws</h3><div id="holeReviewThrows"></div></div><div class="hole-review-nav"><button type="button" class="mini" id="holeReviewPrevious" onclick="moveHoleReview(-1)" aria-label="Review previous hole">←</button><span class="small" id="holeReviewPosition"></span><button type="button" class="mini" id="holeReviewNext" onclick="moveHoleReview(1)" aria-label="Review next hole">→</button></div></dialog>
 <dialog id="physicalThrowCorrection" aria-labelledby="physicalThrowCorrectionTitle"><form onsubmit="event.preventDefault();savePhysicalThrowCorrection()"><h2 id="physicalThrowCorrectionTitle">Edit throw</h2><p class="notice" id="physicalThrowCorrectionStatus" role="status"></p><label for="physicalThrowDisc" class="small">Physical disc</label><select id="physicalThrowDisc" class="field" required></select><label for="physicalThrowDistance" class="small">Distance in feet</label><input id="physicalThrowDistance" class="field" type="number" min="0" step="1" required><button type="submit" class="btn">Save correction</button><button type="button" class="btn outline" onclick="document.getElementById('physicalThrowCorrection').close()">Cancel</button></form></dialog>
 <dialog id="physicalDiscDetails" aria-labelledby="physicalDiscTitle"><form id="physicalDiscDetailsForm" onsubmit="event.preventDefault();savePhysicalDiscDetails()"><h2 id="physicalDiscTitle">Disc Details</h2><p class="notice hidden" id="physicalDiscDetailsStatus" role="status"></p><label class="small" for="physicalDiscName">Disc Name (required)</label><input id="physicalDiscName" class="field" required><label class="small" for="physicalDiscColor">Disc Color</label><input id="physicalDiscColor" class="field"><label class="small" for="physicalDiscCategory">Disc Type (required)</label><select id="physicalDiscCategory" class="field" required><option value="" disabled selected>Choose disc type</option><option value="drivers">Drivers</option><option value="fairways">Fairways</option><option value="midranges">Midranges</option><option value="putters">Putters</option></select><button type="submit" class="btn">Save</button><button type="button" class="btn outline" onclick="closePhysicalDiscDetails()">Cancel</button><button type="button" class="btn outline physical-disc-delete" onclick="archivePhysicalDisc()">Delete Disc</button></form><div id="physicalDiscStatistics" class="disc-statistics" role="region" aria-labelledby="physicalDiscStatisticsTitle"></div></dialog>
+<dialog id="fullBackupPreview" aria-labelledby="fullBackupPreviewTitle" oncancel="event.preventDefault();closeFullBackupPreview()" onclose="if(!this.open)discardFullBackupPreview()">
+<header class="voice-help-head"><h2 id="fullBackupPreviewTitle">Full Backup Preview</h2><button type="button" class="mini" onclick="closeFullBackupPreview()">Close</button></header>
+<div class="voice-help-content"><p class="notice">Preview only — no data has been restored.</p>
+<label class="small" for="fullBackupPreviewFile">Choose a local Full Backup JSON file (maximum 16 MiB)</label>
+<input type="file" class="field" id="fullBackupPreviewFile" accept=".json,application/json" onchange="previewFullBackupFile(event)">
+<p id="fullBackupPreviewStatus" class="small muted" role="status" aria-live="polite">Choose a backup to inspect it.</p><div id="fullBackupPreviewContent"></div></div>
+</dialog>
 <dialog id="endRoundDialog" aria-labelledby="endRoundTitle"><h2 id="endRoundTitle">End this round?</h2><p class="small muted">Finish early saves recorded scores and throws, with no scores for unplayed holes. Discard removes only this active round.</p><button class="btn" onclick="endRound(true)">Finish Round Early</button><button class="btn alt" onclick="endRound(false)">Discard Round</button><button class="btn outline" onclick="document.getElementById('endRoundDialog').close()" autofocus>Cancel</button></dialog>
 <dialog id="voiceDiscChoiceDialog" aria-labelledby="voiceDiscChoiceTitle" aria-describedby="voiceDiscChoiceNotice"><h2 id="voiceDiscChoiceTitle">Which physical disc?</h2><p id="voiceDiscChoiceNotice" class="small muted">Say its color or its full name and color, or tap a choice. Identical names and colors require a tap. These numbers are labels, not voice commands.</p><p class="notice hidden" id="voiceDiscChoiceStatus" role="status" aria-live="polite"></p><div id="voiceDiscChoiceList"></div><button type="button" class="btn outline" onclick="closeVoiceDiscChoice()">Cancel</button></dialog>
 <dialog id="voiceCommandsHelp" aria-labelledby="voiceCommandsHelpTitle">
@@ -348,7 +361,18 @@ function clearPhysicalThrowPreview(){
 }
 function restoreHoleThrows(){s.holeThrows=s.throws.filter(t=>t.hole===s.hole);if(isPhysicalRound()){const values=physicalHoleDistances();s.last=values.last??0;s.remaining=values.remaining??0}else{s.last=s.holeThrows.at(-1)?.distance||0;s.remaining=s.holeThrows.reduce((remaining,t)=>Math.max(0,remaining-t.distance),lengthFor(s.hole))}renderCorrections()}
 function jumpHole(h){if(!appStateMutationAllowed())return;if(isPhysicalRound()&&s.pendingScore){pendingBasketMessage();return}if(s.started){notify('Finish or cancel your active throw first');return}if(s.completed.some(x=>x.hole===h)){notify('Hole already completed · view it on the scorecard');return}if(!roundHoleOrder().includes(h))return;s.hole=h;restoreHoleThrows();s.penalty=0;clearRoundDisc();render();focusHole();notify('Jumped to Hole '+holeLabel(h))}
-function saveOtherScore(){if(!appStateMutationAllowed())return;const who=document.getElementById('playerScore').value,h=+document.getElementById('playerHole').value,v=+document.getElementById('playerStrokes').value;if(!Number.isInteger(v)||v<1||v>20){notify('Enter 1–20 strokes');return}otherScores[who][h]=v;if(saveAppState())notify(who+' score saved · Hole '+holeLabel(h));renderBoard()}
+function saveOtherScore(){
+ if(!appStateMutationAllowed())return;
+ const who=document.getElementById('playerScore').value,h=+document.getElementById('playerHole').value,v=+document.getElementById('playerStrokes').value;
+ if(!Number.isInteger(v)||v<1||v>20){notify('Enter 1–20 strokes');return}
+ const previous=otherScores;
+ otherScores={...otherScores,[who]:{...otherScores[who],[h]:v}};
+ let saved=false;
+ try{saved=saveAppState()}catch(e){/* Keep the prior scores even if saving throws. */}
+ if(!saved)otherScores=previous;
+ renderBoard();
+ notify(saved?who+' score saved · Hole '+holeLabel(h):'Score was not saved. Previous scores were kept. Resolve any save warning before retrying.');
+}
 function renderBoard(){document.getElementById('boardTitle').textContent=mode==='group'?'Live-style group scoreboard':'Your round scorecard';document.getElementById('boardNotice').textContent=mode==='group'?'SIMULATED LIVE: Scores update immediately in this preview. Other phones are not connected. Offline scores would sync when back online.':'Individual round · scores and throws are recorded locally in this preview.';document.getElementById('scorekeeperCard').classList.toggle('hidden',mode!=='group');const mine=Object.fromEntries(s.completed.map(x=>[x.hole,x.score]));const rows=[['You',mine],...(mode==='group'?Object.entries(otherScores):[])];document.getElementById('boardRows').innerHTML=rows.map(([name,scores])=>{let vals=Object.values(scores),total=vals.length?Object.entries(scores).reduce((sum,[h,n])=>sum+n-(name==='You'?s.completed.find(x=>x.hole===+h)?.par??parFor(+h)??par:parFor(+h)??par),0):0;return `<tr><td>${name}</td><td>${vals.length?(total>0?'+':'')+total:'—'}</td><td>${scores[s.hole]?'✓ '+scores[s.hole]:'Playing / pending'}</td></tr>`}).join('');document.getElementById('scorecard').innerHTML=roundHoleOrder().map(n=>`<span class="tag ${mine[n]?'activeTag':''}">H${holeLabel(n)}: ${mine[n]??'Not played'}${s.completed.some(x=>x.hole===n&&isManuallyAdjustedScore(x,s.throws))?'<small class="manual-score-note">Manually adjusted score</small>':''}</span>`).join('');document.getElementById('playerHole').innerHTML=roundHoleOrder().map(n=>`<option value="${n}" ${s.hole===n?'selected':''}>Hole ${holeLabel(n)}</option>`).join('')}
 
 function notify(t){let el=document.getElementById('toast');el.textContent=t;el.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.add('hidden'),2600)}
@@ -359,20 +383,41 @@ function updateNavigation(tab){
 
 /* Export raw stored strings only. Never flush app state or write browser storage. */
 const fullBackupExpectedKeys=Object.freeze([
- 'chain-chaser-app-state-v1','chain-chaser-disc-categories-v1','chain-chaser-custom-courses-v1',
+ 'chain-chaser-app-state-v1','chain-chaser-disc-categories-v1','chain-chaser-disc-bag-v2','chain-chaser-custom-courses-v1','chain-chaser-shared-library-cache-v1',
  'chain-chaser-mills-park-edits-v1','chain-chaser-mills-park-shapes-v1',
  'chain-chaser-dry-creek-edits-v1','chain-chaser-dry-creek-shapes-v1','chain-chaser-dry-creek-2a-v1',
  'chain-chaser-map-key','disc-golf-course-edits-v2','disc-golf-hole-shapes-v1','disc-golf-map-key'
 ]);
 const fullBackupSharedKeys=Object.freeze(['disc-golf-course-edits-v2','disc-golf-hole-shapes-v1','disc-golf-map-key']);
-function collectFullBackup(){
+async function fullBackupSha256(value,digest){
+ if(typeof value!=='string')throw Error('A checksum requires an original storage string.');
+ // Exact UTF-16 code units, little-endian, without BOM, trimming or normalization.
+ const bytes=new Uint8Array(value.length*2);
+ for(let i=0;i<value.length;i++){const unit=value.charCodeAt(i);bytes[i*2]=unit&255;bytes[i*2+1]=unit>>>8}
+ let output;
+ try{
+  if(digest)output=await digest(bytes);
+  else{
+   if(!globalThis.crypto?.subtle)throw Error('Web Crypto unavailable');
+   output=await globalThis.crypto.subtle.digest('SHA-256',bytes);
+  }
+  if(!(output instanceof ArrayBuffer)&&!(output instanceof Uint8Array))throw Error('Invalid SHA-256 output');
+  const hash=new Uint8Array(output);if(hash.length!==32)throw Error('Invalid SHA-256 output');
+  return Array.from(hash,b=>b.toString(16).padStart(2,'0')).join('');
+ }catch(e){throw Error('SHA-256 could not be completed. Use HTTPS or localhost with Web Crypto available, then retry.');}
+}
+async function collectFullBackup({includeMapsKeys=false,digest}={}){
  if(devSimEnabled)throw Error('Full Backup is unavailable in Test Mode. No saved data was accessed.');
+ if(typeof includeMapsKeys!=='boolean')throw Error('Choose whether to include saved Maps overrides.');
  const storage=window.localStorage;
  function inventory(){
   const keys=new Set(),count=storage.length;
   for(let i=0;i<count;i++){
    const key=storage.key(i);if(typeof key!=='string')throw Error('Storage changed during export. Please retry.');
-   if(key.startsWith('chain-chaser-')||fullBackupSharedKeys.includes(key))keys.add(key);
+   if(key.startsWith('chain-chaser-')||fullBackupSharedKeys.includes(key)){
+    if(!fullBackupStorageKeySpec(key))throw Error('Unsupported Chain Chaser storage was found. Use a compatible backup exporter; no data was omitted silently.');
+    keys.add(key);
+   }
   }
   return [...keys].sort();
  }
@@ -381,41 +426,474 @@ function collectFullBackup(){
   if(value!==null&&typeof value!=='string')throw Error('Could not read a valid stored value for '+key+'.');
   return value;
  }
- const discovered=inventory(),keys=[...new Set([...fullBackupExpectedKeys,...discovered])].sort(),values=new Map(keys.map(key=>[key,read(key)]));
- if(JSON.stringify(discovered)!==JSON.stringify(inventory()))throw Error('Storage changed during export. Please retry.');
- for(const key of keys)if(read(key)!==values.get(key))throw Error('Stored data changed during export. Please retry.');
- const exportedKeys=keys.filter(key=>values.get(key)!==null),missingKeys=keys.filter(key=>values.get(key)===null);
+ const discovered=inventory(),excludedKeys=discovered.filter(key=>!includeMapsKeys&&fullBackupStorageKeySpec(key).kind==='sensitive');
+ const keys=[...new Set([...fullBackupExpectedKeys,...discovered])].sort().filter(key=>includeMapsKeys||fullBackupStorageKeySpec(key).kind!=='sensitive'),values=new Map(keys.map(key=>[key,read(key)]));
+ if(discovered.some(key=>!excludedKeys.includes(key)&&values.get(key)===null))throw Error('Storage changed during export. Please retry.');
+ const unchanged=()=>{
+  if(JSON.stringify(discovered)!==JSON.stringify(inventory()))throw Error('Storage changed during export. Please retry.');
+  for(const key of keys)if(read(key)!==values.get(key))throw Error('Stored data changed during export. Please retry.');
+ };
+ unchanged();
+ const exportedKeys=keys.filter(key=>values.get(key)!==null),missingKeys=fullBackupExpectedKeys.filter(key=>!discovered.includes(key));
+ const checksums={};for(const key of exportedKeys)checksums[key]=await fullBackupSha256(values.get(key),digest);
+ unchanged(); // Async hashing must not hide a concurrent write or changed inventory.
  return {
-  appName:'Chain Chaser',format:'chain-chaser-full-backup',formatVersion:1,exportedAt:new Date().toISOString(),
+  appName:'Chain Chaser',format:'chain-chaser-full-backup',formatVersion:2,exportedAt:new Date().toISOString(),
   storageScope:'Chain Chaser localStorage plus explicitly shared compatibility keys',
   manifest:{
-   readComplete:true,expectedKeys:[...fullBackupExpectedKeys],exportedKeys,missingKeys,
+   readComplete:true,expectedKeys:[...fullBackupExpectedKeys],exportedKeys,missingKeys,excludedKeys,
    additionalOwnedKeys:exportedKeys.filter(key=>!fullBackupExpectedKeys.includes(key)),
    sharedCompatibilityKeys:exportedKeys.filter(key=>fullBackupSharedKeys.includes(key)),
    sensitiveKeysIncluded:exportedKeys.filter(key=>key==='chain-chaser-map-key'||key==='disc-golf-map-key'),
    valueEncoding:'Original localStorage strings; parse the outer JSON to recover each exact value.'
   },
+  integrity:{algorithm:'SHA-256',valueEncoding:'UTF-16LE-code-units-no-BOM',checksums},
   data:Object.fromEntries(exportedKeys.map(key=>[key,values.get(key)])),
   excludedData:['Unrelated localStorage keys','Session-only data, including legacy session Maps keys','Unsaved in-memory changes and GPS simulator state','Application code, built-in course definitions and image assets']
  };
 }
-function exportFullBackup(){
+// Restore foundation only. All inputs are explicit; no storage, DOM, network or
+// app initialization is used. Original stored strings are never rewritten.
+function parseFullBackupJson(text){
+ const fail=code=>{const e=Error('Invalid or unsupported backup JSON.');e.code=code;throw e};
+ if(typeof text!=='string'||text.length>16*1024*1024)fail('JSON_SIZE_OR_TYPE');
+ let i=0,nodes=0;
+ const space=()=>{while(/[\t\n\r ]/.test(text[i]||'!'))i++};
+ const string=()=>{
+  const start=i++;let closed=false;
+  while(i<text.length){const c=text[i++];if(c==='\\')i++;else if(c==='"'){closed=true;break}}
+  if(!closed)fail('MALFORMED_JSON');
+  try{return JSON.parse(text.slice(start,i))}catch(e){fail('MALFORMED_JSON')}
+ };
+ const value=depth=>{
+  if(depth>64||++nodes>500000)fail('JSON_COMPLEXITY');space();
+  if(text[i]==='"'){string();return}
+  if(text[i]==='{'){
+   i++;space();const keys=new Set();if(text[i]==='}'){i++;return}
+   while(i<text.length){
+    space();if(text[i]!=='"')fail('MALFORMED_JSON');const key=string();
+    if(keys.has(key))fail('DUPLICATE_JSON_KEY');keys.add(key);space();if(text[i++]!==':')fail('MALFORMED_JSON');value(depth+1);space();
+    if(text[i]==='}'){i++;return}if(text[i++]!==',')fail('MALFORMED_JSON');
+   }
+   fail('MALFORMED_JSON');
+  }
+  if(text[i]==='['){
+   i++;space();if(text[i]===']'){i++;return}
+   while(i<text.length){value(depth+1);space();if(text[i]===']'){i++;return}if(text[i++]!==',')fail('MALFORMED_JSON')}
+   fail('MALFORMED_JSON');
+  }
+  const start=i;while(i<text.length&&!/[\s,}\]]/.test(text[i]))i++;
+  if(!/^(?:null|true|false|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)$/.test(text.slice(start,i)))fail('MALFORMED_JSON');
+ };
+ value(0);space();if(i!==text.length)fail('MALFORMED_JSON');
+ try{return JSON.parse(text)}catch(e){fail('MALFORMED_JSON')}
+}
+function fullBackupStorageKeySpec(key){
+ const disc='disc-on-6th-midvale-ut',mills='mills-park-woods-cross-ut',dry='dry-creek-trail-park-lehi-ut';
+ const specs={
+  'chain-chaser-app-state-v1':{kind:'app'},'chain-chaser-disc-bag-v2':{kind:'discs'},
+  'chain-chaser-disc-categories-v1':{kind:'categories'},'chain-chaser-custom-courses-v1':{kind:'custom'},
+  'disc-golf-course-edits-v2':{kind:'edits',courseId:disc,count:10},'disc-golf-hole-shapes-v1':{kind:'shapes',courseId:disc,count:10},
+  'chain-chaser-mills-park-edits-v1':{kind:'edits',courseId:mills,count:13},'chain-chaser-mills-park-shapes-v1':{kind:'shapes',courseId:mills,count:13},
+  'chain-chaser-dry-creek-edits-v1':{kind:'edits',courseId:dry,count:12},'chain-chaser-dry-creek-shapes-v1':{kind:'shapes',courseId:dry,count:12},
+  'chain-chaser-dry-creek-2a-v1':{kind:'dry2a',courseId:dry},'chain-chaser-shared-library-cache-v1':{kind:'cache'},
+  'chain-chaser-map-key':{kind:'sensitive'},'disc-golf-map-key':{kind:'sensitive'}
+ };
+ if(Object.hasOwn(specs,key))return {...specs[key],key};
+ const match=typeof key==='string'&&/^chain-chaser-shared-round-context-v1:([a-zA-Z0-9-]{1,160})$/.exec(key);
+ return match?{kind:'context',roundId:match[1],key:'chain-chaser-shared-round-context-v1:<roundId>'}:null;
+}
+function validateFullBackupEnvelope(o){
+ const errors=[],error=(code,message)=>errors.push({code,path:'envelope',message});
+ const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x),list=x=>Array.isArray(x)&&x.every(k=>typeof k==='string')&&new Set(x).size===x.length;
+ const same=(a,b)=>JSON.stringify([...a].sort())===JSON.stringify([...b].sort());
+ if(!object(o)||o.appName!=='Chain Chaser'||o.format!=='chain-chaser-full-backup'){error('BACKUP_IDENTITY','Choose a Chain Chaser Full Backup, not a course-mapping export.');return errors}
+ if(![1,2].includes(o.formatVersion)){error('UNSUPPORTED_VERSION','Only Full Backup versions 1 and 2 are supported. Use a compatible app version for newer backups.');return errors}
+ const version2=o.formatVersion===2;
+ if(Object.keys(o).some(k=>!['appName','format','formatVersion','exportedAt','storageScope','manifest','data','excludedData',...(version2?['integrity']:[])].includes(k)))error('UNSUPPORTED_ENVELOPE_FIELD','The backup contains unsupported envelope fields.');
+ if(typeof o.exportedAt!=='string'||physicalStatisticsTime(o.exportedAt)===null)error('EXPORT_TIMESTAMP','The export timestamp must be a valid ISO timestamp.');
+ if(o.storageScope!==undefined&&typeof o.storageScope!=='string'||o.excludedData!==undefined&&(!Array.isArray(o.excludedData)||!o.excludedData.every(x=>typeof x==='string')))error('ENVELOPE_METADATA','Backup scope or exclusions have invalid types.');
+ if(!object(o.data)||!object(o.manifest)){error('ENVELOPE_STRUCTURE','The backup requires a data object and a manifest.');return errors}
+ const m=o.manifest,arrays=['expectedKeys','exportedKeys','missingKeys','additionalOwnedKeys','sharedCompatibilityKeys','sensitiveKeysIncluded',...(version2?['excludedKeys']:[])];
+ if(m.readComplete!==true||typeof m.valueEncoding!=='string'||!m.valueEncoding||arrays.some(k=>!list(m[k]))||Object.keys(m).some(k=>!['readComplete','valueEncoding',...arrays].includes(k))){error('MANIFEST_STRUCTURE','The manifest is incomplete or has unsupported fields.');return errors}
+ const keys=Object.keys(o.data),shared=['disc-golf-course-edits-v2','disc-golf-hole-shapes-v1','disc-golf-map-key'];
+ const excluded=version2?m.excludedKeys:[];
+ if(keys.length>2048)error('KEY_LIMIT','The backup exceeds the supported storage-key limit.');
+ if(keys.some(k=>!fullBackupStorageKeySpec(k))||arrays.some(field=>m[field].some(k=>!fullBackupStorageKeySpec(k))))error('UNSUPPORTED_STORAGE_KEY','The backup contains storage keys this app cannot safely restore. Use a compatible app version; unrelated keys are never accepted.');
+ if(keys.some(k=>typeof o.data[k]!=='string'))error('STORED_VALUE_TYPE','Every exported value must be its original storage string.');
+ if(!same(keys,m.exportedKeys)||m.missingKeys.some(k=>keys.includes(k)||excluded.includes(k)||!m.expectedKeys.includes(k))||excluded.some(k=>keys.includes(k)||!m.expectedKeys.includes(k)||fullBackupStorageKeySpec(k)?.kind!=='sensitive')||m.expectedKeys.some(k=>!keys.includes(k)&&!m.missingKeys.includes(k)&&!excluded.includes(k))||
+  !same(m.additionalOwnedKeys,keys.filter(k=>!m.expectedKeys.includes(k)))||!same(m.sharedCompatibilityKeys,keys.filter(k=>shared.includes(k)))||!same(m.sensitiveKeysIncluded,keys.filter(k=>fullBackupStorageKeySpec(k)?.kind==='sensitive')))error('MANIFEST_MISMATCH','The manifest does not match the stored keys. Re-export or inspect the original backup; do not edit it blindly.');
+ if(version2){
+  if(!same(m.expectedKeys,fullBackupExpectedKeys))error('EXPECTED_INVENTORY','The version-2 expected-key inventory is incomplete or unsupported.');
+  const integrity=o.integrity;
+  if(!object(integrity)||Object.keys(integrity).length!==3||integrity.algorithm!=='SHA-256'||integrity.valueEncoding!=='UTF-16LE-code-units-no-BOM'||!object(integrity.checksums)||!same(Object.keys(integrity.checksums),keys)||Object.values(integrity.checksums).some(hash=>typeof hash!=='string'||!/^[a-f0-9]{64}$/.test(hash)))error('CHECKSUM_STRUCTURE','Every exported value requires one lowercase SHA-256 checksum using the declared UTF-16LE code-unit encoding.');
+ }
+ return errors;
+}
+function validateFullBackupStorageValues(data,result,validators={}){
+ const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x),positive=x=>Number.isSafeInteger(x)&&x>0,nonnegative=x=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
+ const issue=(code,key,path,message,warning=false)=>{
+  const list=result[warning?'warnings':'errors'],safeKey=fullBackupStorageKeySpec(key)?.key??'data';
+  if(!list.some(x=>x.code===code&&x.key===safeKey&&x.path===path))list.push({code,key:safeKey,path,message});
+ };
+ const require=(condition,code='STORED_STRUCTURE')=>{if(!condition){const e=Error('Stored value is invalid.');e.code=code;throw e}};
+ const point=x=>object(x)&&isMapPoint(x),optionalPoint=x=>x===null||point(x);
+ const dry='dry-creek-trail-park-lehi-ut',dryOrders={'main-12':Array.from({length:12},(_,i)=>i+1),'custom-13':[1,2,13,3,4,5,6,7,8,9,10,11,12]};
+ const context={parsed:new Map(),courses:new Map(),contexts:new Map(),dataKeys:new Set(Object.keys(data)),dryOrders,physicalReferences:[],activePhysical:null,activeOrder:null,activeCourse:null,activeApp:null};
+ for(const [id,count]of [['disc-on-6th-midvale-ut',10],['mills-park-woods-cross-ut',13],[dry,12]])context.courses.set(id,{id,holes:Array.from({length:count},(_,i)=>({number:i+1})),origin:'builtin'});
+ const mapping=(id,edits,shapes,holes)=>validateBuiltInMappingImport({courseId:id,courseEdits:edits,holeShapes:shapes},{id},holes);
+ for(const [key,raw]of Object.entries(data)){
+  const spec=fullBackupStorageKeySpec(key);if(!spec)continue;
+  if(spec.kind==='sensitive'){result.summary.sensitiveKeys.push(key);continue}
+  let value;
+  try{
+   value=parseFullBackupJson(raw);
+   if(spec.kind==='discs'){validatePhysicalDiscRegistry(value);result.summary.discs=value.discs.length;result.summary.archivedDiscs=value.discs.filter(d=>d.archived).length;}
+   else if(spec.kind==='categories')require(object(value)&&value.version===1&&object(value.categories)&&Object.entries(value.categories).every(([name,type])=>name.trim()&&['drivers','fairways','midranges','putters'].includes(type)));
+   else if(spec.kind==='edits'||spec.kind==='shapes')mapping(spec.courseId,spec.kind==='edits'?value:{},spec.kind==='shapes'?value:{},Array.from({length:spec.count},(_,i)=>({number:i+1})));
+   else if(spec.kind==='dry2a'){validateDry2A(value);mapping(dry,value.edits,value.shapes,[{number:13}]);}
+   else if(spec.kind==='custom'){
+    require(object(value)&&value.version===1&&Array.isArray(value.courses)&&new Set(value.courses.map(c=>c?.id)).size===value.courses.length);
+    for(const c of value.courses){validateCustomCourse(c);mapping(c.id,c.edits,c.shapes,c.holes);}
+    result.summary.customCourses=value.courses.length;
+   }else if(spec.kind==='cache'){
+    require(typeof validators.validateSharedCourse==='function'&&typeof validators.validateSharedManifest==='function','SHARED_VALIDATOR_REQUIRED');
+    require(object(value)&&value.version===1&&Array.isArray(value.courses)&&value.courses.length===4);
+    validators.validateSharedManifest(value.manifest);
+    value.courses.forEach((c,i)=>{validators.validateSharedCourse(c);require(c.courseId===value.manifest.courses[i]?.courseId)});
+   }else if(spec.kind==='context'){
+    require(object(value)&&Object.keys(value).length===4&&value.version===1&&value.roundId===spec.roundId&&['disc-on-6th-midvale-ut','mills-park-woods-cross-ut',dry,'privare-course-salt-lake-city-ut'].includes(value.courseId)&&/^[a-f0-9]{64}$/.test(value.revision));
+    context.contexts.set(value.roundId,value);
+   }else if(spec.kind==='app')require(object(value)&&value.version===1,'APP_VERSION');
+   context.parsed.set(key,value);
+  }catch(e){issue(e.code||'STORED_STRUCTURE',key,'stored value',e.code==='SHARED_VALIDATOR_REQUIRED'?'Pass the existing pure shared-course and manifest validators explicitly to validate the cached library.':'Stored data is malformed or unsupported. Preserve the original file and resolve this entry before restoration.');}
+ }
+ const cache=context.parsed.get('chain-chaser-shared-library-cache-v1');
+ if(cache)for(const c of cache.courses)context.courses.set(c.courseId,{...c,origin:'cache'});
+ const custom=context.parsed.get('chain-chaser-custom-courses-v1');
+ if(custom)for(const c of custom.courses)context.courses.set(c.id,{...c,origin:'personal'});
+ const appKey='chain-chaser-app-state-v1',app=context.parsed.get(appKey);
+ if(!app)return context;
+ const validScores=(scores,order=null)=>Array.isArray(scores)&&new Set(scores.map(x=>x?.hole)).size===scores.length&&scores.every(x=>object(x)&&positive(x.hole)&&(!order||order.includes(x.hole))&&positive(x.score)&&nonnegative(x.par)&&(x.penalty===undefined||nonnegative(x.penalty))&&(x.throws===undefined||nonnegative(x.throws)));
+ const team=(scores,order=null,complete=false)=>{
+  require(object(scores)&&(!complete||['Mike','Chris','Dave'].every(name=>object(scores[name]))),'TEAM_STRUCTURE');
+  require(Object.keys(scores).every(name=>['Mike','Chris','Dave'].includes(name)),'TEAM_STRUCTURE');
+  for(const rows of Object.values(scores))require(object(rows)&&Object.entries(rows).every(([h,n])=>/^[1-9]\d*$/.test(h)&&positive(Number(h))&&(!order||order.includes(Number(h)))&&Number.isInteger(n)&&n>=1&&n<=20),'TEAM_SCORE');
+ };
+ const orderFor=(round,active)=>{
+  const id=round.courseId??(active?app.selectedCourseId:null),c=context.courses.get(id),has=Object.hasOwn(round,'layoutId')||Object.hasOwn(round,'holeOrder');
+  if(has){require(id===dry&&dryOrders[round.layoutId]&&JSON.stringify(round.holeOrder)===JSON.stringify(dryOrders[round.layoutId]),'LAYOUT_IDENTITY');return [...round.holeOrder]}
+  if(id===dry)return dryOrders['main-12'];
+  if(active){require(c,'COURSE_DEFINITION_MISSING');return c.holes.map(h=>h.number)}
+  return null; // Historical custom counts may legitimately differ from today's definition.
+ };
+ const knownThrows=new Map();
+ const canonical=x=>Array.isArray(x)?['array',...x.map(canonical)]:object(x)?['object',...Object.keys(x).sort().map(k=>[k,canonical(x[k])])]:x;
+ const throws=(records,physical,order,active)=>{
+  require(Array.isArray(records),'THROW_STRUCTURE');const ids=new Set();
+  for(const t of records){
+   require(object(t)&&positive(t.hole)&&(!order||order.includes(t.hole))&&typeof t.disc==='string'&&nonnegative(t.distance)&&typeof t.source==='string','THROW_STRUCTURE');
+   require((t.made===undefined||typeof t.made==='boolean')&&(t.throwType===undefined||typeof t.throwType==='string')&&(t.distanceUnit===undefined||t.distanceUnit==='ft'),'THROW_METADATA');
+   require(t.discId===undefined||typeof t.discId==='string'&&t.discId.trim(),'PHYSICAL_DISC_REFERENCE');
+   if(!physical&&t.discId!==undefined)issue('UNFLAGGED_DISC_REFERENCE',appKey,'throws','Some older records contain IDs without a physical-v2 round marker. They are preserved as unverified records; identities are not inferred from names.',true);
+   if(physical){require(discSnapshotValid(t)&&(t.source==='basket'?t.made===true:t.made!==true),'PHYSICAL_DISC_REFERENCE');context.physicalReferences.push({id:t.discId,active});}
+   if(t.startCoordinates!==undefined||t.landingCoordinates!==undefined)require(point(t.startCoordinates)&&point(t.landingCoordinates),'THROW_COORDINATES');
+   require(t.source!=='dev-simulator'&&t.recordingContext!=='simulated','SIMULATOR_DATA');
+   if(t.throwMetadataVersion!==undefined){
+    const method={'GPS':'browser-geolocation','map pin':'map-pin','manual correction':'manual-entry','basket':'basket-estimate','demo map pin':'synthetic'};
+    require(t.throwMetadataVersion===1&&typeof t.throwId==='string'&&t.throwId.trim()&&physicalStatisticsTime(t.recordedAt)!==null&&t.distanceUnit==='ft'&&nonnegative(t.originalDistance)&&typeof t.distanceManuallyEdited==='boolean'&&Object.hasOwn(method,t.source)&&t.distanceMethod===method[t.source]&&['normal','demo'].includes(t.recordingContext)&&
+     (t.lastCorrectedAt===null||physicalStatisticsTime(t.lastCorrectedAt)!==null)&&(!t.distanceManuallyEdited||physicalStatisticsTime(t.lastCorrectedAt)!==null)&&(t.distanceManuallyEdited||t.distance===t.originalDistance),'THROW_METADATA');
+    require(t.recordingContext!=='demo'||t.simulated===true,'THROW_PROVENANCE');
+   }
+   if(t.throwId!==undefined){
+    require(typeof t.throwId==='string'&&t.throwId.trim()&&!ids.has(t.throwId),'DUPLICATE_THROW_ID');ids.add(t.throwId);
+    const signature=JSON.stringify(canonical(t));
+    const previous=knownThrows.get(t.throwId);require(!previous||previous.signature===signature&&!active&&!previous.active,'CONFLICTING_THROW_REFERENCE');
+    if(previous)issue('REPEATED_HISTORY_THROW_ID',appKey,'throws','Repeated inactive throw snapshots may be retained current-round/history mirrors. Records are preserved separately and are never merged during validation.',true);
+    knownThrows.set(t.throwId,{signature,active});
+   }
+   result.summary.throwRecords++;
+  }
+ };
+ try{
+  const v=app.state;require(object(v)&&typeof v.active==='boolean'&&typeof v.started==='boolean'&&typeof app.selectedCourseId==='string'&&typeof app.currentThrowType==='string'&&['solo','group'].includes(app.mode)&&typeof v.disc==='string'&&Array.isArray(v.discs)&&v.discs.every(x=>typeof x==='string'&&x.trim())&&Array.isArray(v.rounds)&&nonnegative(v.penalty)&&nonnegative(v.last)&&nonnegative(v.remaining),'APP_STRUCTURE');
+  const current={...app,courseId:app.selectedCourseId},order=orderFor(current,true);context.activeOrder=order;
+  require(positive(v.hole)&&order.includes(v.hole)&&positive(app.startHole)&&order.includes(app.startHole)&&validScores(v.completed,order),'ACTIVE_HOLE');team(app.otherScores,order,true);
+  require(v.pendingScore===undefined||typeof v.pendingScore==='boolean','PENDING_SCORE');
+  require(v.scoreThrows===undefined||positive(v.scoreThrows),'PENDING_SCORE');
+  require(!v.pendingScore||v.active&&!v.started&&positive(v.scoreThrows),'PENDING_SCORE');
+  require(!v.active||!v.completed.some(x=>x.hole===v.hole),'ACTIVE_HOLE');
+  require(app.scorekeeper===undefined||[0,1].includes(app.scorekeeper),'APP_PREFERENCE');
+  if(app.throwStart!==undefined&&app.throwStart!==null)require(point(app.throwStart),'THROW_COORDINATES');
+  if(v.started){require(v.active,'PENDING_ORIGIN');if(!point(app.throwStart))issue('PENDING_ORIGIN_MISSING',appKey,'throwStart','A throw was saved before GPS origin capture. The existing resume workflow will cancel that uncaptured start; no position is inferred.',true);}
+  require(app.roundId===undefined||typeof app.roundId==='string'&&app.roundId.trim(),'ROUND_ID');
+  require(app.discMode===undefined||app.discMode==='physical-v2','DISC_MODE');
+  const physical=app.discMode==='physical-v2';
+  if(physical){require(typeof app.selectedDiscId==='string'&&(app.frozenDisc===null||discSnapshotValid(app.frozenDisc))&&(v.started?app.frozenDisc&&app.frozenDisc.discId===app.selectedDiscId:app.frozenDisc===null),'FROZEN_DISC');if(v.active)context.activePhysical={selectedDiscId:app.selectedDiscId,frozenDisc:app.frozenDisc};}
+  throws(v.throws,physical,v.active?order:null,v.active);
+  if(physical&&v.pendingScore){const candidates=v.throws.filter(t=>t.source==='basket'&&t.made===true&&!v.completed.some(x=>x.hole===t.hole));require(candidates.length===1&&candidates[0].hole===v.hole&&v.throws.at(-1)===candidates[0],'PENDING_BASKET');}
+  for(const r of v.rounds){
+   require(object(r)&&typeof r.date==='string'&&nonnegative(r.throws)&&validScores(r.scores)&&(!Object.hasOwn(r,'mode')||['solo','group'].includes(r.mode)),'HISTORY_STRUCTURE');
+   require(r.discMode===undefined||r.discMode==='physical-v2','DISC_MODE');
+   require(r.roundId===undefined||typeof r.roundId==='string'&&r.roundId.trim(),'ROUND_ID');
+   if(r.courseId===undefined)issue('HISTORY_COURSE_UNKNOWN',appKey,'history','An older round has no course ID. It is preserved without inferring its course.',true);
+   const historyOrder=orderFor(r,false);require(validScores(r.scores,historyOrder),'HISTORY_HOLE');
+   if(r.otherScores!==undefined)team(r.otherScores,historyOrder);
+   else if(r.mode==='group')issue('OLDER_GROUP_HISTORY',appKey,'history','An older group round has no teammate snapshot. Missing scores cannot be reconstructed.',true);
+   if(r.recordedThrows!==undefined)throws(r.recordedThrows,r.discMode==='physical-v2',historyOrder,false);
+   if(r.unfinishedHole!==undefined){const u=r.unfinishedHole;require(object(u)&&positive(u.hole)&&(!historyOrder||historyOrder.includes(u.hole))&&nonnegative(u.penalty),'UNFINISHED_HOLE');}
+  }
+  result.summary.completedRounds=v.rounds.length;result.summary.hasActiveRound=v.active;
+  if(v.active){context.activeApp=app;context.activeCourse=context.courses.get(app.selectedCourseId)}
+ }catch(e){
+  const messages={
+   COURSE_DEFINITION_MISSING:'The selected course definition is missing. Supply its original custom definition or validated shared cache; do not recreate holes from mapping indexes.',
+   LAYOUT_IDENTITY:'The layout ID and hole-order snapshot conflict. Supply the matching original layout without renumbering holes.',
+   ACTIVE_HOLE:'Current, starting or completed hole identities conflict with the supplied course layout.',
+   TEAM_STRUCTURE:'Teammate scores need player-keyed objects using the existing Mike, Chris and Dave identities.',
+   TEAM_SCORE:'Teammate entries must use valid hole IDs and whole-number scores from 1 to 20. Missing scores must remain absent.',
+   PHYSICAL_DISC_REFERENCE:'A physical disc reference or recorded identity snapshot is invalid. Supply its original immutable ID and snapshot; never substitute by model name.',
+   FROZEN_DISC:'The frozen throw identity is missing or conflicts with the selected physical-disc ID.',
+   THROW_COORDINATES:'Recorded coordinates must contain both valid start and landing positions. Older records may omit both; missing positions cannot be inferred.',
+   THROW_METADATA:'Newer throw metadata is inconsistent or unsupported. Preserve the original version, provenance and correction fields rather than backfilling them.',
+   PENDING_BASKET:'The pending score cannot be associated with exactly one final basket throw on the active hole.',
+   SIMULATOR_DATA:'Isolated simulator records cannot be restored into real gameplay data.'
+  };
+  issue(e.code||'APP_STRUCTURE',appKey,'round data',messages[e.code]||'Round data or its references are unsafe or unsupported. Preserve the backup and resolve this entry without guessing IDs, scores or positions.');
+ }
+ return context;
+}
+function analyzeFullBackupDependencies(context,result){
+ const add=(code,key,message,warning=false)=>result[warning?'warnings':'errors'].push({code,key,path:'dependencies',message});
+ const bag=context.parsed.get('chain-chaser-disc-bag-v2'),discs=new Map((bag?.discs||[]).map(d=>[d.id,d]));
+ const refs=context.physicalReferences;
+ if(refs.some(r=>!r.active&&!discs.has(r.id)))add('HISTORICAL_DISC_UNAVAILABLE','chain-chaser-disc-bag-v2','Some historical physical discs are absent from the registry. Their saved IDs and snapshots remain unchanged; no replacement discs are inferred.',true);
+ if(context.activePhysical){
+  if(!bag)add('ACTIVE_REGISTRY_MISSING','chain-chaser-disc-bag-v2','An active physical-v2 round requires its disc registry. Supply a complete backup containing that registry.');
+  else{
+   const selected=context.activePhysical.selectedDiscId;
+   if(selected&&!discs.has(selected)||refs.some(r=>r.active&&!discs.has(r.id)))add('ACTIVE_DISC_MISSING','chain-chaser-disc-bag-v2','An active round references a missing physical disc. Restore the matching registry; do not substitute a same-name disc.');
+   else if(selected&&discs.get(selected).archived)add('SELECTED_DISC_ARCHIVED','chain-chaser-disc-bag-v2','The selected disc is archived. Preserve its identity; select an eligible disc before a new throw.',true);
+  }
+ }
+ const app=context.activeApp,c=context.activeCourse,cache=context.parsed.get('chain-chaser-shared-library-cache-v1');
+ if(app&&c){
+  const id=app.selectedCourseId,keySet=context.dataKeys;
+  const personal=c.origin==='personal'||[...keySet].some(key=>{const spec=fullBackupStorageKeySpec(key);return spec?.courseId===id});
+  const courseReady=['disc-on-6th-midvale-ut','mills-park-woods-cross-ut','dry-creek-trail-park-lehi-ut'].includes(id)||c.holes.every(h=>{
+   const value={...h,...(c.edits?.[h.number]||{})},mapped=value.tee&&value.basket&&isMapPoint(value.tee)&&isMapPoint(value.basket);
+   return Number.isInteger(value.par)&&value.par>0&&mapped&&(value.distanceFeet??feetBetween(value.tee,value.basket))>0;
+  });
+  if(!courseReady)add('ACTIVE_CUSTOM_MAPPING_INCOMPLETE','chain-chaser-custom-courses-v1','The active custom course needs its complete existing hole details and mappings. Supply the original definition; do not recreate missing holes.');
+  const needsContext=!personal&&cache&&app.discMode==='physical-v2'||c.origin==='cache'&&id==='privare-course-salt-lake-city-ut';
+  if(needsContext){
+   const entry=cache?.manifest.courses.find(x=>x.courseId===id),saved=context.contexts.get(app.roundId);
+   if(!saved||!entry||saved.courseId!==id||saved.revision!==entry.sha256)add('SHARED_ROUND_CONTEXT','chain-chaser-shared-library-cache-v1','The active shared-course round needs its matching cached revision and round context. Do not install a newer layout to resolve this automatically.');
+  }
+  const explicit=context.contexts.get(app.roundId);
+  if(explicit&&(explicit.courseId!==id||cache?.manifest.courses.find(x=>x.courseId===id)?.sha256!==explicit.revision))add('CONTEXT_REVISION_MISMATCH','chain-chaser-shared-library-cache-v1','The active round context conflicts with its cached course revision. Supply the matching cache and context.');
+  const entry=cache?.manifest.courses.find(x=>x.courseId===id),saved=context.contexts.get(app.roundId),requiresContext=!!needsContext||!!saved;
+  result.dependencies.push(
+   {type:'active-course-definition',required:true,resolved:courseReady,personalMapping:!!personal},
+   {type:'physical-registry',required:!!context.activePhysical,resolved:!context.activePhysical||!!bag&&!result.errors.some(e=>['ACTIVE_DISC_MISSING','ACTIVE_REGISTRY_MISSING'].includes(e.code))},
+   {type:'shared-round-context',required:requiresContext,resolved:!requiresContext||!!saved&&saved.courseId===id&&entry?.sha256===saved.revision}
+  );
+ }
+ for(const saved of context.contexts.values())if(saved.roundId!==app?.roundId&&!cache?.manifest.courses.some(c=>c.courseId===saved.courseId&&c.sha256===saved.revision))add('UNVERIFIED_OLDER_CONTEXT','chain-chaser-shared-library-cache-v1','An unused older round context has no matching cached revision. It is preserved without inferring or updating its course.',true);
+ if(cache)result.warnings.push({code:'CACHE_FILE_BYTES_UNAVAILABLE',key:'chain-chaser-shared-library-cache-v1',path:'integrity',message:'Cached definitions were structurally validated. Original downloaded file bytes are not stored here, so their manifest hashes cannot be reverified from reserialized course objects.'});
+ if(result.summary.sensitiveKeys.length)result.warnings.push({code:'SENSITIVE_MAP_OVERRIDES',path:'privacy',message:'Saved Maps overrides are present. A future restore must exclude them by default and require explicit opt-in; their values are never included in this report.'});
+}
+async function validateFullBackup(text,validators={}){
+ const result={valid:false,formatVersion:null,supportedVersions:[1,2],preparedVersions:[],restoreImplemented:false,integrity:{checked:false,valid:null},errors:[],warnings:[],dependencies:[],summary:{keys:0,discs:0,archivedDiscs:0,customCourses:0,completedRounds:0,throwRecords:0,throwCountScope:'Serialized entries, including retained inactive current-round/history mirrors',hasActiveRound:false,sensitiveKeys:[]}};
+ let envelope;
+ try{envelope=parseFullBackupJson(text)}catch(e){result.errors.push({code:e.code||'MALFORMED_JSON',path:'file',message:'The backup is not valid supported JSON, contains duplicate fields, or exceeds the validation limits. Preserve the original file.'});return result}
+ result.formatVersion=Number.isInteger(envelope?.formatVersion)?envelope.formatVersion:null;
+ result.errors.push(...validateFullBackupEnvelope(envelope));if(result.errors.length)return result;
+ if(envelope.formatVersion===2){
+  try{
+   for(const [key,value]of Object.entries(envelope.data))if(await fullBackupSha256(value,validators.digest)!==envelope.integrity.checksums[key])result.errors.push({code:'CHECKSUM_MISMATCH',key:fullBackupStorageKeySpec(key)?.key??'data',path:'integrity',message:'A stored value does not match its checksum. Use the original unmodified backup; no restoration is possible from this candidate.'});
+   result.integrity={checked:true,valid:result.errors.length===0};
+  }catch(e){result.integrity={checked:false,valid:false};result.errors.push({code:'CHECKSUM_UNAVAILABLE',path:'integrity',message:'SHA-256 verification could not finish. Use HTTPS or localhost with Web Crypto available, then retry.'});}
+  if(result.errors.length)return result;
+ }
+ result.summary.keys=Object.keys(envelope.data).length;
+ const context=validateFullBackupStorageValues(envelope.data,result,validators);
+ analyzeFullBackupDependencies(context,result);
+ if(!context.parsed.has('chain-chaser-app-state-v1'))result.warnings.push({code:'NO_ROUND_STATE',path:'coverage',message:'No usable round state is present. This is not a complete round/history restoration candidate.'});
+ result.valid=result.errors.length===0;
+ return result;
+}
+async function exportFullBackup(){
  const status=document.getElementById('fullBackupStatus');status.classList.remove('hidden');
+ const button=document.getElementById('exportFullBackupButton'),includeMaps=document.getElementById('fullBackupIncludeMaps');
+ if(button.disabled)return;
+ button.disabled=true;includeMaps.disabled=true;status.textContent='Preparing backup and SHA-256 checksums…';
  let url=null;
  try{
-  const backup=collectFullBackup(),blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json;charset=utf-8'});
+  const backup=await collectFullBackup({includeMapsKeys:includeMaps.checked}),blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json;charset=utf-8'});
   const now=new Date(),date=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
   const link=document.createElement('a');link.download='chain-chaser-full-backup-'+date+'.json';
   if(!('download' in link)||!window.URL?.createObjectURL)throw Error('This browser cannot initiate a backup download.');
   url=URL.createObjectURL(blob);link.href=url;link.hidden=true;document.body.appendChild(link);
   try{link.click()}finally{link.remove()}
   const missing=backup.manifest.missingKeys;
-  status.textContent='Download requested for '+backup.manifest.exportedKeys.length+' stored keys. Check your downloads to confirm the file was saved.'+(missing.length?' Missing keys (not created): '+missing.join(', ')+'.':' No expected keys were missing.');
+  const excluded=backup.manifest.excludedKeys;
+  status.textContent='Version-2 backup download requested for '+backup.manifest.exportedKeys.length+' stored keys with SHA-256 checksums. Check your downloads to confirm the file was saved.'+(excluded.length?' Saved Maps overrides were intentionally excluded.':'')+(missing.length?' Missing keys (not created): '+missing.join(', ')+'.':' No expected keys were missing.');
  }catch(e){
   status.textContent='Backup export failed. '+(e instanceof Error?e.message:'Browser storage or downloading is unavailable.')+' Your stored data was not changed.';
- }finally{if(url)setTimeout(()=>URL.revokeObjectURL(url),60000)}
+ }finally{button.disabled=false;includeMaps.disabled=false;if(url)setTimeout(()=>URL.revokeObjectURL(url),60000)}
 }
 
+// Read-only preview. File contents and comparison snapshots never enter app state.
+let fullBackupPreviewGeneration=0,fullBackupPreviewReader=null;
+function discardFullBackupPreview(){
+ fullBackupPreviewGeneration++;
+ const reader=fullBackupPreviewReader;fullBackupPreviewReader=null;
+ if(reader?.readyState===1){try{reader.abort()}catch(e){}}
+ document.getElementById('fullBackupPreviewFile').value='';
+ document.getElementById('fullBackupPreviewContent').replaceChildren();
+ document.getElementById('fullBackupPreviewStatus').textContent='Choose a backup to inspect it.';
+}
+function openFullBackupPreview(){
+ if(devSimEnabled){notify('Full Backup Preview is unavailable in Test Mode.');return}
+ discardFullBackupPreview();const dialog=document.getElementById('fullBackupPreview');
+ if(!dialog.open)dialog.showModal();document.getElementById('fullBackupPreviewFile').focus();
+}
+function closeFullBackupPreview(){
+ discardFullBackupPreview();const dialog=document.getElementById('fullBackupPreview');if(dialog.open)dialog.close();
+}
+function readFullBackupPreviewFile(file){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();fullBackupPreviewReader=reader;
+  const finish=(error,text)=>{
+   if(fullBackupPreviewReader===reader)fullBackupPreviewReader=null;
+   reader.onload=reader.onerror=reader.onabort=null;
+   if(error)reject(Error('Backup file could not be read.'));else resolve(text);
+  };
+  reader.onload=()=>typeof reader.result==='string'&&reader.result.length<=16*1024*1024?finish(null,reader.result):finish(true);
+  reader.onerror=reader.onabort=()=>finish(true);
+  try{reader.readAsText(file,'UTF-8')}catch(e){finish(true)}
+ });
+}
+function readFullBackupPreviewStorage(storage){
+ try{
+  const inventory=()=>{
+   const count=storage.length,keys=new Set();let unknown=0;
+   if(!Number.isSafeInteger(count)||count<0||count>10000)throw Error('Storage limit');
+   for(let i=0;i<count;i++){
+    const key=storage.key(i);if(typeof key!=='string')throw Error('Storage changed');
+    if(fullBackupStorageKeySpec(key)){keys.add(key);if(keys.size>2048)throw Error('Storage comparison limit')}else if(key.startsWith('chain-chaser-'))unknown++;
+   }
+   return {keys:[...keys].sort(),unknown};
+  };
+  const found=inventory(),keys=[...new Set([...fullBackupExpectedKeys,...found.keys])].sort(),values=new Map();let size=0;
+  for(const key of keys){
+   if(fullBackupStorageKeySpec(key).kind==='sensitive'){values.set(key,found.keys.includes(key)?true:null);continue}
+   const value=storage.getItem(key);if(value!==null&&typeof value!=='string')throw Error('Unreadable storage');
+   size+=value?.length||0;if(size>16*1024*1024)throw Error('Storage limit');values.set(key,value);
+  }
+  if(JSON.stringify(found)!==JSON.stringify(inventory()))throw Error('Storage changed');
+  for(const key of keys)if(fullBackupStorageKeySpec(key).kind!=='sensitive'&&storage.getItem(key)!==values.get(key))throw Error('Storage changed');
+  return {readable:true,keys,values,unknown:found.unknown,signature:JSON.stringify({values:[...values],unknown:found.unknown})};
+ }catch(e){return {readable:false,keys:[],values:new Map(),unknown:0,signature:null}}
+}
+function summarizeFullBackupPreview(envelope,validation){
+ let app=null,cache=null,customHoles=0,editRecords=0,drawingRecords=0,contexts=0;const mappingCourses=new Set();
+ for(const key of Object.keys(envelope.data)){
+  const spec=fullBackupStorageKeySpec(key);if(spec.kind==='sensitive')continue;
+  if(spec.kind==='context'){contexts++;continue}
+  if(!['app','cache','custom','edits','shapes','dry2a'].includes(spec.kind))continue;
+  const value=parseFullBackupJson(envelope.data[key]);
+  if(spec.kind==='app')app=value;
+  else if(spec.kind==='cache')cache=value;
+  else if(spec.kind==='custom')for(const c of value.courses){customHoles+=c.holes.length;mappingCourses.add(c.id);editRecords+=Object.keys(c.edits).length;drawingRecords+=Object.keys(c.shapes).length}
+  else if(spec.kind==='dry2a'){mappingCourses.add(spec.courseId);editRecords+=Object.keys(value.edits).length;drawingRecords+=Object.keys(value.shapes).length}
+  else{mappingCourses.add(spec.courseId);if(spec.kind==='edits')editRecords+=Object.keys(value).length;else drawingRecords+=Object.keys(value).length}
+ }
+ const cards=scores=>['Mike','Chris','Dave'].filter(name=>scores?.[name]&&Object.keys(scores[name]).length>0).length;
+ const historyCards=app?app.state.rounds.reduce((n,r)=>n+cards(r.otherScores),0):0;
+ return [
+  ['Physical discs',Object.hasOwn(envelope.data,'chain-chaser-disc-bag-v2')?validation.summary.discs+' total · '+validation.summary.archivedDiscs+' archived':'Not included'],
+  ['Active rounds',app?(app.state.active?'1 unfinished round':'None active'):'Not included'],
+  ['Completed rounds',app?String(app.state.rounds.length):'Not included'],
+  ['Teammate scorecards',app?'State: '+cards(app.otherScores)+' · History: '+historyCards+' (cards with recorded scores; state may repeat history)':'Not included'],
+  ['Custom courses',validation.summary.customCourses+' definitions · '+customHoles+' holes'],
+  ['Personal mapping data',mappingCourses.size+' courses · '+editRecords+' hole-edit records · '+drawingRecords+' drawing records'],
+  ['Shared course data',cache?cache.courses.length+' cached courses · '+cache.courses.reduce((n,c)=>n+c.layouts.length,0)+' layouts · '+contexts+' round contexts':'No cache · '+contexts+' round contexts'],
+  ['Backup entries',Object.keys(envelope.data).length+' present · '+envelope.manifest.missingKeys.length+' missing expected · '+(envelope.manifest.excludedKeys?.length||0)+' excluded']
+ ];
+}
+async function buildFullBackupPreview(envelope,validation,current,validators={}){
+ const all=[...new Set([...fullBackupExpectedKeys,...Object.keys(envelope.data),...(envelope.manifest.excludedKeys||[]),...current.keys])].sort();
+ const rows=all.map(key=>{
+  const spec=fullBackupStorageKeySpec(key),included=Object.hasOwn(envelope.data,key),excluded=envelope.manifest.excludedKeys?.includes(key);
+  const source=included?'Present':excluded?'Intentionally excluded':envelope.manifest.missingKeys.includes(key)?'Missing from backup':'Not supplied in backup';
+  const value=current.values.get(key)??null,local=current.readable?(value===null?'Absent':'Present'):'Unavailable';
+  if(spec.kind==='sensitive')return {label:spec.key,source,local,effect:'Excluded — Maps overrides cannot be restored; current setting would be preserved.'};
+  if(!current.readable)return {label:spec.key,source,local,effect:'Unassessed — current storage could not be compared.'};
+  return {label:spec.key,source,local,effect:!included?'Preserved — this backup does not supply this key.':value===envelope.data[key]?'Preserved — already identical.':value===null?'Would add this missing key.':'Would replace this key — existing data differs.'};
+ });
+ const model={summary:summarizeFullBackupPreview(envelope,validation),rows,warnings:validation.warnings.map(w=>w.message),conflicts:[],comparisonAvailable:current.readable,mapsIncluded:validation.summary.sensitiveKeys.length,integrity:validation.formatVersion===2?'Version 2 · SHA-256 verified':'Version 1 · no checksums supplied'};
+ if(!current.readable){model.conflicts.push('Current browser storage could not be read consistently. Replacement effects and destination dependencies cannot be assessed.');return model}
+ if(current.unknown)model.warnings.push(current.unknown+' unsupported Chain Chaser keys would remain untouched; their dependencies cannot be assessed.');
+ if(Object.hasOwn(envelope.data,'chain-chaser-app-state-v1')&&current.values.get('chain-chaser-app-state-v1')!==null&&current.values.get('chain-chaser-app-state-v1')!==envelope.data['chain-chaser-app-state-v1'])model.conflicts.push('The app-state key differs. Replacing it would replace its active round, completed history and live group scores as a whole.');
+ if(Object.hasOwn(envelope.data,'chain-chaser-disc-bag-v2')&&current.values.get('chain-chaser-disc-bag-v2')!==null&&current.values.get('chain-chaser-disc-bag-v2')!==envelope.data['chain-chaser-disc-bag-v2'])model.conflicts.push('The physical-disc registry differs. Whole-key replacement would replace that bag; no disc identities are reconciled by name.');
+ // Analyze whole-key replacement effects on temporary strings only. No records
+ // are merged, no plan is approved and no result is applied to storage.
+ const projected={};
+ for(const key of all){if(fullBackupStorageKeySpec(key).kind==='sensitive')continue;const value=Object.hasOwn(envelope.data,key)?envelope.data[key]:current.values.get(key);if(typeof value==='string')projected[key]=value}
+ const keys=Object.keys(projected),expected=[...fullBackupExpectedKeys];
+ const hypothetical={appName:'Chain Chaser',format:'chain-chaser-full-backup',formatVersion:1,exportedAt:envelope.exportedAt,data:projected,manifest:{readComplete:true,expectedKeys:expected,exportedKeys:keys,missingKeys:expected.filter(k=>!keys.includes(k)),additionalOwnedKeys:keys.filter(k=>!expected.includes(k)),sharedCompatibilityKeys:keys.filter(k=>fullBackupSharedKeys.includes(k)),sensitiveKeysIncluded:[],valueEncoding:'Original localStorage strings'}};
+ const analysis=await validateFullBackup(JSON.stringify(hypothetical),validators);
+ if(!analysis.valid)model.conflicts.push(...analysis.errors.map(e=>'Destination dependency check: '+e.message));
+ return model;
+}
+function renderFullBackupPreview(model){
+ const target=document.getElementById('fullBackupPreviewContent');target.replaceChildren();
+ const add=(tag,text,parent=target)=>{const node=document.createElement(tag);node.textContent=text;parent.appendChild(node);return node};
+ add('p',model.integrity).className='small muted';add('h3','Backup contents');
+ const list=document.createElement('dl');list.className='backup-preview-summary';target.appendChild(list);
+ for(const [label,value]of model.summary){const cell=document.createElement('div');list.appendChild(cell);add('dt',label,cell);add('dd',value,cell)}
+ add('p',model.mapsIncluded?model.mapsIncluded+' saved Maps overrides are present in this file. Their values are hidden. Restoring them is not supported.':'Saved Maps overrides are absent or intentionally excluded. Restoring Maps overrides is not supported.').className='notice';
+ if(model.conflicts.length){add('h3','Conflicts or unavailable comparisons');const ul=document.createElement('ul');target.appendChild(ul);for(const message of [...new Set(model.conflicts)])add('li',message,ul)}
+ if(model.warnings.length){add('h3','Validation notes');const ul=document.createElement('ul');target.appendChild(ul);for(const message of [...new Set(model.warnings)])add('li',message,ul)}
+ const details=document.createElement('details');target.appendChild(details);add('summary','Supported-key comparison ('+model.rows.length+' entries)',details);
+ const keys=document.createElement('ul');details.appendChild(keys);let context=0;
+ for(const row of model.rows){const label=row.label.includes('<roundId>')?row.label+' · context '+(++context):row.label;add('li',label+' — Backup: '+row.source+'; current: '+row.local+'. '+row.effect,keys)}
+ add('p','This is a read-only comparison snapshot, not an approved restore plan. Current data can change after this preview.').className='small muted';
+}
+async function previewFullBackupFile(event){
+ const file=event.target.files?.[0];if(!file)return;
+ discardFullBackupPreview();const generation=fullBackupPreviewGeneration;
+ const current=()=>generation===fullBackupPreviewGeneration&&document.getElementById('fullBackupPreview').open&&!devSimEnabled;
+ if(!current())return;
+ const status=document.getElementById('fullBackupPreviewStatus');
+ if(!Number.isSafeInteger(file.size)||file.size<=0||file.size>16*1024*1024){status.textContent='File rejected: choose a nonempty JSON backup no larger than 16 MiB. No data was changed.';return}
+ let stage='read';status.textContent='Reading backup…';
+ try{
+  const text=await readFullBackupPreviewFile(file);if(!current())return;
+  stage='validate';status.textContent='Validating backup and integrity…';
+  const library=window.ChainChaserCourseLibrary,validators={validateSharedCourse:library?.validateCourse,validateSharedManifest:library?.validateManifest,digest:async bytes=>{
+   if(!current()||!globalThis.crypto?.subtle)throw Error('Preview verification unavailable');
+   const hash=await globalThis.crypto.subtle.digest('SHA-256',bytes);
+   if(!current())throw Error('Preview verification cancelled');return hash;
+  }};
+  const validation=await validateFullBackup(text,validators);if(!current())return;
+  if(!validation.valid){
+   status.textContent='Preview blocked: backup validation did not pass. No comparison was performed and no data was changed.';
+   const content=document.getElementById('fullBackupPreviewContent'),list=document.createElement('ul');content.appendChild(list);
+   for(const error of validation.errors){const row=document.createElement('li');row.textContent=error.code+': '+(error.code==='SHARED_VALIDATOR_REQUIRED'?'Shared-course validation is unavailable in this app session. Reload the app, then select the backup again.':error.message);list.appendChild(row)}return;
+  }
+  stage='compare';status.textContent='Comparing supported storage keys…';
+  let snapshot;try{snapshot=readFullBackupPreviewStorage(window.localStorage)}catch(e){snapshot=readFullBackupPreviewStorage(null)}
+  const model=await buildFullBackupPreview(parseFullBackupJson(text),validation,snapshot,validators);if(!current())return;
+  if(snapshot.readable){
+   let after;try{after=readFullBackupPreviewStorage(window.localStorage)}catch(e){after=readFullBackupPreviewStorage(null)}
+   if(!after.readable||after.signature!==snapshot.signature){status.textContent='Current storage changed or became unreadable during comparison. Select the file again for a fresh preview. No data was changed.';return}
+  }
+  renderFullBackupPreview(model);status.textContent=model.comparisonAvailable?'Backup validated. Review the read-only contents and potential conflicts below.':'Backup validated; current-storage comparison is unavailable. No data was changed.';
+ }catch(e){if(current())status.textContent=stage==='read'?'The selected file could not be read. Choose it again or export a fresh backup. No data was changed.':'The preview could not be completed safely. Close it and retry. No data was changed.';}
+}
 function renderMore(){
  const choice=document.getElementById('moreMappingCourse');
  choice.innerHTML=courseRegistry.map(c=>'<option value="'+escapeHtml(c.id)+'">'+escapeHtml(c.name)+'</option>').join('');
@@ -435,7 +913,7 @@ function syncAppHeader(tab){
  const menu=document.getElementById('playMenu'),target=tab==='play'?document.querySelector('.app>.top'):document.querySelector('#play>.play-head');
  if(menu.parentElement!==target)target.appendChild(menu);
 }
-function show(tab){if(tab!=='play'){if(isPhysicalRound())suspendPhysicalGps();closeHoleReview();closeVoiceDiscChoice();if(isPhysicalRound()&&voiceOn)stopVoice()}if(tab!=='play')closeThrowDiscPicker(false);if(devSimEnabled){showDevSimulator();return}if(tab!=='mapper'&&mapEditorActive)leaveMapper();if(tab==='board'&&!s.active){notify('Start a round first');tab='home'}if(tab==='play'&&!s.active){notify('Start a round first');tab='home'}if(tab!=='play')setMapExpanded(false);document.querySelectorAll('section').forEach(x=>x.classList.add('hidden'));document.getElementById(tab).classList.remove('hidden');syncAppHeader(tab);updateNavigation(tab);if(tab==='more')renderMore();document.getElementById('heading').textContent=({home:'Courses',setup:'Round setup',courses:'Courses',play:'Play Round',score:'Hole complete',board:'Scoreboard',analyze:'Analyze',discs:'My Discs',rounds:'Round History',measure:'Measure Throw',mapper:'Map course',more:'More'})[tab];render();if(tab==='mapper')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},80);if(tab==='measure')beginMeasureWatch();if(tab==='play')beginPlayWatch();else stopPlayWatch();if(tab!=='measure')stopMeasureWatch();if(tab==='play')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},60)}
+function show(tab){if(tab!=='play'){if(isPhysicalRound())suspendPhysicalGps();closeHoleReview();closeVoiceDiscChoice();if(isPhysicalRound()&&voiceOn)stopVoice()}if(tab!=='play')closeThrowDiscPicker(false);if(devSimEnabled){showDevSimulator();return}if(tab!=='mapper'&&mapEditorActive)leaveMapper();if(tab==='board'&&!s.active){notify('Start a round first');tab='home'}if(tab==='play'&&!s.active){notify('Start a round first');tab='home'}if(tab!=='play')setMapExpanded(false);document.querySelectorAll('section').forEach(x=>x.classList.add('hidden'));document.getElementById(tab).classList.remove('hidden');syncAppHeader(tab);if(tab==='discs')setDiscAddExpanded(false);updateNavigation(tab);if(tab==='more')renderMore();document.getElementById('heading').textContent=({home:'Courses',setup:'Round setup',courses:'Courses',play:'Play Round',score:'Hole complete',board:'Current Round Scorecard',analyze:'Gameplay Analytics',discs:'My Discs',rounds:'Round History',measure:'Measure Throw',mapper:'Map course',more:'More'})[tab];render();if(tab==='mapper')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},80);if(tab==='measure')beginMeasureWatch();if(tab==='play')beginPlayWatch();else stopPlayWatch();if(tab!=='measure')stopMeasureWatch();if(tab==='play')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},60)}
 // New rounds use physical IDs; absent discMode always means legacy gameplay.
 let physicalRound=null,physicalPlayError='',physicalCorrectionThrow=null;
 function isPhysicalRound(){return physicalRound!==null}
@@ -511,7 +989,8 @@ function restorePendingBasket(){
  const basket=candidates.length===1?candidates[0]:null;
  if(basket){
   const original=basket.throwMetadataVersion===1&&Number.isFinite(basket.originalDistance)&&basket.originalDistance>=0?basket.originalDistance:basket.distance;
-  pendingBasket={courseId:selectedCourseId,generation:roundGeneration,roundId:physicalRound.roundId??null,hole:basket.hole,throw:basket,remaining:original};
+  const beforeBasket=physicalHoleDistances(s.throws.filter(t=>t.hole===basket.hole&&t!==basket),basket.hole);
+  pendingBasket={courseId:selectedCourseId,generation:roundGeneration,roundId:physicalRound.roundId??null,hole:basket.hole,throw:basket,remaining:beforeBasket.remaining??original};
  }
  if(!pendingBasketValid()){pendingBasket=null;unverifiedPendingBasket()}
 }
@@ -574,7 +1053,7 @@ function confirmPhysicalScore(){
   s.pendingScore=false;pendingBasket=null;s.completed.push({hole:previous,score:s.scoreThrows+s.penalty,par:parFor(previous),throws:s.scoreThrows,penalty:s.penalty});
   complete=s.completed.length===roundHoleOrder().length;
   if(complete){
-   s.rounds.unshift({date:new Date().toLocaleDateString(),courseId:selectedCourseId,courseName:course.name,mode,startHole,...dryLayoutFields(),...roundDiscHistoryFields(),scores:s.completed.map(x=>({...x})),throws:s.throws.length,recordedThrows:s.throws.map(t=>({...t}))});
+   s.rounds.unshift({date:new Date().toLocaleDateString(),courseId:selectedCourseId,courseName:course.name,mode,startHole,...dryLayoutFields(),...roundDiscHistoryFields(),...(mode==='group'?{otherScores:JSON.parse(JSON.stringify(otherScores))}:{}),scores:s.completed.map(x=>({...x})),throws:s.throws.length,recordedThrows:s.throws.map(t=>({...t}))});
    s.active=false;clearRoundDisc();
   }else{
    const order=roundHoleOrder();let index=order.indexOf(s.hole);
@@ -631,7 +1110,7 @@ function addPhysicalMissedThrow(){if(!appStateMutationAllowed())return;
  const n=prompt('Approximate missed throw distance in feet (optional GPS correction later)','0');if(n===null)return;
  const distance=Number(n);if(!Number.isFinite(distance)||distance<0){notify('Enter a valid distance');return}
  if(!physicalRoundAction(()=>{
-  const t={hole:s.hole,...disc,distance:Math.round(distance),source:'manual correction',throwType:currentThrowType,...newPhysicalThrowMetadata(Math.round(distance),'manual correction')};s.holeThrows.push(t);s.throws.push(t);clearRoundDisc();currentThrowType='';
+  const t={hole:s.hole,...disc,distance:Math.round(distance),source:'manual correction',throwType:currentThrowType,...newPhysicalThrowMetadata(Math.round(distance),'manual correction')};s.holeThrows.push(t);s.throws.push(t);applyPhysicalHoleDistances();clearRoundDisc();currentThrowType='';
  }))return;
  renderCorrections();render();
 }
@@ -659,7 +1138,7 @@ function savePhysicalThrowCorrection(){if(!appStateMutationAllowed())return;
  }
  // Keep the shared throw reference and its complete own-property set on failure.
  // Corrections touch flat fields only; nested values are retained by reference.
- const previous=Object.getOwnPropertyDescriptors(t);
+ const previous=Object.getOwnPropertyDescriptors(t),previousDistances={last:s.last,remaining:s.remaining},previousBasket=pendingBasket;
  try{
   const changes={discId:disc.discId,disc:disc.disc,discColor:disc.discColor,distance:normalizedDistance};
   if(t.throwMetadataVersion===1){
@@ -669,10 +1148,20 @@ function savePhysicalThrowCorrection(){if(!appStateMutationAllowed())return;
    if(distanceChanged)changes.distanceManuallyEdited=true;
   }
   Object.assign(t,changes);
+  if(distanceChanged){
+   applyPhysicalHoleDistances();
+   // Undo basket must restore the estimate from the corrected non-basket throws.
+   if(s.pendingScore){
+    if(!pendingBasketValid())throw Error('Pending basket ownership could not be verified');
+    const beforeBasket=physicalHoleDistances(s.holeThrows.filter(record=>record!==pendingBasket.throw));
+    pendingBasket={...pendingBasket,remaining:beforeBasket.remaining??0};
+   }
+  }
   if(!saveAppState())throw Error('Correction save failed');
  }catch(e){
   for(const key of Reflect.ownKeys(t))if(!Object.hasOwn(previous,key))Reflect.deleteProperty(t,key);
   Object.defineProperties(t,previous);
+  s.last=previousDistances.last;s.remaining=previousDistances.remaining;pendingBasket=previousBasket;
   document.getElementById('physicalThrowCorrectionStatus').textContent='Correction was not saved. Previous throw data was kept.';return;
  }
  document.getElementById('physicalThrowCorrection').close();renderCorrections();render();
@@ -708,11 +1197,51 @@ function saveLanding(distance,source){if(!appStateMutationAllowed())return;if(is
 function gpsLanding(){captureGpsLanding()}
 function togglePin(){if(isPhysicalRound()){const c=physicalGps;if(!physicalGpsValid(c)||!appStateMutationAllowed()||c.originState!=='ready'||c.request){notify('Wait for a saved GPS origin and finish any GPS request before placing a pin.');return}s.pinMode=!s.pinMode;bindPhysicalMapLanding();render();return}if(!s.started){notify('Start throw before placing a pin');return}s.pinMode=!s.pinMode;notify(s.pinMode?'Tap satellite map to place landing':'Map pin mode off');render()}
 function mapTap(e){if(!s.pinMode)return;const rect=e.currentTarget.getBoundingClientRect();const x=(e.clientX-rect.left)/rect.width;const y=(e.clientY-rect.top)/rect.height;const distance=Math.max(10,Math.round(Math.hypot(x-.2,y-.9)*260));saveLanding(distance,'demo map pin')}
-function undoThrow(){if(!appStateMutationAllowed())return;if(isPhysicalRound())return undoPhysicalThrow();if(s.started){s.started=false;notify('Started throw canceled');render();return}const t=s.holeThrows.pop();if(!t){notify('No throw to undo');return}s.throws.splice(s.throws.lastIndexOf(t),1);s.remaining+=t.distance;s.last=s.holeThrows.at(-1)?.distance||0;notify('Last throw removed');render()}
+function undoThrow(){
+ if(!appStateMutationAllowed())return;
+ if(isPhysicalRound())return undoPhysicalThrow();
+ const previous=s,cancelStarted=s.started;
+ if(cancelStarted)s={...s,started:false};
+ else{
+  const t=s.holeThrows.at(-1);if(!t){notify('No throw to undo');return}
+  const index=s.throws.lastIndexOf(t),surviving=s.holeThrows.slice(0,-1),length=lengthFor(s.hole);
+  if(index<0||!Number.isFinite(length)||length<0||!surviving.every(t=>t&&Number.isFinite(t.distance)&&t.distance>=0)){
+   notify('Throw could not be undone: hole length or surviving throw data is unavailable. No changes were made.');return;
+  }
+  // Same recorded-distance estimate as restoreHoleThrows(); no GPS lie is inferred.
+  s={...s,holeThrows:surviving,throws:s.throws.filter((_,i)=>i!==index),last:surviving.at(-1)?.distance??0,
+   remaining:surviving.reduce((remaining,t)=>Math.max(0,remaining-t.distance),length)};
+ }
+ let saved=false;
+ try{saved=saveAppState()}catch(e){/* Restore the prior state if persistence throws. */}
+ if(!saved)s=previous;
+ renderCorrections();render();
+ notify(saved?(cancelStarted?'Started throw canceled':'Last throw removed'):'Undo was not saved. Your previous throw state was kept. Resolve any save warning before retrying.');
+}
 function finishHole(){if(!appStateMutationAllowed())return;if(isPhysicalRound())return finishPhysicalHole();if(!s.active)return;if(s.started){notify('Finish or cancel the active throw first');return}if(!s.disc){notify('Select the disc used for your final throw');return}const n=s.holeThrows.length+1;s.holeThrows.push({hole:s.hole,disc:s.disc,distance:s.remaining,source:'basket',throwType:currentThrowType,made:true});s.throws.push(s.holeThrows.at(-1));s.last=s.remaining;s.remaining=0;s.scoreThrows=n;s.pendingScore=true;show('score')}
 function adjust(kind,d){if(!appStateMutationAllowed())return;if(isPhysicalRound()&&s.pendingScore&&!pendingBasketValid()){unverifiedPendingBasket();return}if(kind==='throws')s.scoreThrows=Math.max(1,s.scoreThrows+d);else s.penalty=Math.max(0,s.penalty+d);renderScore();saveAppState()}
 function renderScore(){const holePar=parFor();document.getElementById('scoreHole').textContent='Hole '+holeLabel(s.hole)+' · Par '+holePar;const n=s.scoreThrows+s.penalty;document.getElementById('scoreValue').textContent=n;document.getElementById('throwsValue').textContent=s.scoreThrows;document.getElementById('penaltyValue').textContent=s.penalty;document.getElementById('scoreLabel').textContent=n===holePar?'Par':n===1?'Ace':n===holePar-1?'Birdie':n>holePar?'+'+(n-holePar)+' over par':(n-holePar)+' under par'}
-function confirmScore(){if(!appStateMutationAllowed())return;if(isPhysicalRound())return confirmPhysicalScore();s.pendingScore=false;s.completed.push({hole:s.hole,score:s.scoreThrows+s.penalty,par:parFor(),throws:s.scoreThrows,penalty:s.penalty});if(s.completed.length===roundHoleOrder().length){s.rounds.unshift({date:new Date().toLocaleDateString(),courseId:selectedCourseId,courseName:course.name,mode,startHole,...dryLayoutFields(),scores:[...s.completed],throws:s.throws.length,recordedThrows:s.throws.map(t=>({...t}))});s.active=false;notify('Round complete!');show('rounds')}else{const previous=s.hole,order=roundHoleOrder();let index=order.indexOf(s.hole),next=s.hole;for(let i=0;i<order.length;i++){index=(index+1)%order.length;next=order[index];if(!s.completed.some(x=>x.hole===next))break}s.hole=next;restoreHoleThrows();s.penalty=0;s.started=false;s.disc='';notify('Hole '+holeLabel(previous)+' saved · On to Hole '+holeLabel(next));show('play');focusHole()}}
+function confirmScore(){
+ if(!appStateMutationAllowed())return;
+ if(isPhysicalRound())return confirmPhysicalScore();
+ const score={hole:s.hole,score:s.scoreThrows+s.penalty,par:parFor(),throws:s.scoreThrows,penalty:s.penalty};
+ if(s.completed.length+1===roundHoleOrder().length){
+  const previous=s;let saved=false;
+  try{
+   s={...s,pendingScore:false,completed:[...s.completed,score],rounds:[...s.rounds],active:false};
+   s.rounds.unshift({date:new Date().toLocaleDateString(),courseId:selectedCourseId,courseName:course.name,mode,startHole,...dryLayoutFields(),...(mode==='group'?{otherScores:JSON.parse(JSON.stringify(otherScores))}:{}),scores:[...s.completed],throws:s.throws.length,recordedThrows:s.throws.map(t=>({...t}))});
+   saved=saveAppState();
+  }catch(e){/* Restore the pending score if history could not be saved. */}
+  if(!saved){s=previous;notify('Round completion was not saved. Your pending score and active round were kept. Check the save warning before retrying.');return}
+  notify('Round complete!');show('rounds');
+ }else{
+  s.pendingScore=false;s.completed.push(score);
+  const previous=s.hole,order=roundHoleOrder();let index=order.indexOf(s.hole),next=s.hole;
+  for(let i=0;i<order.length;i++){index=(index+1)%order.length;next=order[index];if(!s.completed.some(x=>x.hole===next))break}
+  s.hole=next;restoreHoleThrows();s.penalty=0;s.started=false;s.disc='';
+  notify('Hole '+holeLabel(previous)+' saved · On to Hole '+holeLabel(next));show('play');focusHole();
+ }
+}
 function simulateVoice(){document.getElementById('voicebox').classList.toggle('hidden');notify('Demo commands — no microphone access')}
 function voiceCommand(cmd){if(!appStateMutationAllowed())return;if(reviewHoleId!==null){notify('Return to the active hole before using voice commands.');return}if(cmd==='start')primaryAction();if(cmd==='land')gpsLanding();if(cmd==='basket')finishHole();if(cmd==='disc'){if(isPhysicalRound()){handleVoicePhrase('buzzz');return}s.disc='Buzzz';notify('Buzzz selected');render()}}
 
@@ -825,7 +1354,19 @@ function renderDiscGrid(){
  empty.textContent=!activeDiscs.length?'No discs yet. Add your first disc below.':query?'No discs match “'+discSearch.trim()+'”. Try another name or color, change the category, or clear search.':discFilter==='all'?'No discs yet. Add your first disc below.':'No discs in this category. Choose All to see your entire bag.';
  empty.classList.toggle('hidden',!ready||discs.length>0);
 }
+function setDiscAddExpanded(expanded,focus=false){
+ const form=document.getElementById('physicalDiscAddForm'),button=document.getElementById('discAddToggle');
+ form.classList.toggle('hidden',!expanded);
+ button.setAttribute('aria-expanded',String(expanded));
+ button.textContent=expanded?'Close Add Disc':'+ Add Disc';
+ if(focus)(expanded?document.getElementById('newDisc'):button).focus({preventScroll:true});
+}
+function toggleDiscAddForm(){
+ const form=document.getElementById('physicalDiscAddForm');
+ setDiscAddExpanded(form.classList.contains('hidden'),true);
+}
 function addDisc(){
+ setDiscAddExpanded(true);
  if(!ensurePhysicalDiscRegistry())return;
  const name=document.getElementById('newDisc').value.trim(),color=document.getElementById('newDiscColor').value.trim(),category=document.getElementById('newDiscCategory').value;
  if(!name||!Object.hasOwn(discCategoryLabels,category)){physicalDiscMessage('Enter a disc name and choose a disc type.');return}
@@ -833,7 +1374,7 @@ function addDisc(){
  try{do{id=newPhysicalDiscId()}while(physicalDiscRegistry.discs.some(d=>d.id===id))}
  catch(e){physicalDiscMessage(e.message);return}
  if(!persistPhysicalDiscs([...physicalDiscRegistry.discs,{id,name,color,category,archived:false}]))return;
- document.getElementById('physicalDiscAddForm').reset();discFilter='all';renderDiscGrid();physicalDiscMessage('Disc added.');
+ document.getElementById('physicalDiscAddForm').reset();setDiscAddExpanded(false,true);discFilter='all';renderDiscGrid();physicalDiscMessage('Disc added.');
 }
 // Read-only, on-demand statistics. No registry lookup, live state or storage writers.
 function physicalStatisticsTime(value){
@@ -915,6 +1456,46 @@ function calculatePhysicalDiscStatistics(saved,discId){
  if(latestTime!==null)result.useLabel=undated||result.partial?'Latest dated use':'Last Used';
  return result;
 }
+// Current-round view only. Never look up registry names or write saved records.
+function calculateGameplayAnalytics(records,physicalMode=false){
+ const throws=Array.isArray(records)?records:[],physical=new Map(),legacy=new Map();
+ const synthetic=t=>t?.simulated===true||['dev-simulator','demo map pin','simulator','synthetic','demo','test'].includes(t?.source)||['simulated','simulator','synthetic','demo','test'].includes(t?.recordingContext);
+ for(const t of throws){
+  const snapshot=t&&typeof t==='object'&&!Array.isArray(t),label=snapshot&&typeof t.disc==='string'&&t.disc.trim()?t.disc+(typeof t.discColor==='string'&&t.discColor?' — '+t.discColor:''):'Unknown disc';
+  if(physicalMode&&snapshot&&discSnapshotValid(t)&&!synthetic(t)){
+   if(!physical.has(t.discId))physical.set(t.discId,{id:t.discId,labels:new Set(),records:[]});
+   const group=physical.get(t.discId);group.labels.add(label);group.records.push(t);
+  }else{
+   const id=snapshot&&typeof t.discId==='string'&&t.discId.trim()?t.discId:null,key=JSON.stringify([id,label]);
+   if(!legacy.has(key))legacy.set(key,{id,label,records:[],distances:0,average:null});
+   const group=legacy.get(key);group.records.push(t);
+   if(snapshot&&!t.made&&typeof t.distance==='number'&&Number.isFinite(t.distance)&&t.distance>=0){
+    group.distances++;group.average=(group.average??0)*(1-1/group.distances)+t.distance/group.distances;
+   }
+  }
+ }
+ let distances=0,average=null;
+ const include=(count,mean)=>{if(!count||mean===null)return;const total=distances+count;average=(average??0)*(distances/total)+mean*(count/total);distances=total};
+ const physicalGroups=Array.from(physical.values(),group=>{
+  // The calculator's active-container path also covers retained current-round
+  // records after completion; this adapter is temporary and is never persisted.
+  const saved={version:1,selectedCourseId:'current-round',discMode:'physical-v2',state:{active:true,started:false,throws:group.records,completed:[],rounds:[]}};
+  const stats=calculatePhysicalDiscStatistics(saved,group.id);include(stats.distances,stats.average);
+  return {id:group.id,labels:[...group.labels],stats};
+ });
+ const legacyGroups=[...legacy.values()];
+ if(!physicalMode)for(const group of legacyGroups)include(group.distances,group.average);
+ return {total:throws.length,physicalMode,physicalGroups,legacyGroups,average,distances};
+}
+function renderGameplayAnalytics(){
+ const result=calculateGameplayAnalytics(s.throws,isPhysicalRound()),feet=n=>n===null?'— ft':Math.round(n)+' ft';
+ document.getElementById('statThrows').textContent=result.total;
+ document.getElementById('statAvgLabel').textContent=result.physicalMode?'Avg unedited physical distance':'Avg legacy/demo distance';
+ document.getElementById('statAvg').textContent=feet(result.average);
+ const row=(label,detail,average)=>'<div class="history" style="overflow-wrap:anywhere">'+escapeHtml(label)+' <strong style="float:right">'+feet(average)+' avg</strong><small class="small muted" style="display:block">'+escapeHtml(detail)+'</small><div class="statbar"><i style="width:'+Math.min(100,(average??0)/4)+'%"></i></div></div>';
+ document.getElementById('discStats').innerHTML=result.physicalGroups.map(group=>row(group.labels.join(' / '),'Physical disc · ID '+group.id+' · '+group.stats.distances+' usable unedited distances'+(group.stats.partial?' · Partial metadata coverage':''),group.stats.average)).join('')+
+  result.legacyGroups.map(group=>row(group.label,'Legacy / demo / unverified'+(group.id?' · Recorded ID '+group.id:''),group.average)).join('')||'Record a throw to see data.';
+}
 function renderPhysicalDiscStatistics(discId){
  const target=document.getElementById('physicalDiscStatistics');
  let stats;
@@ -971,7 +1552,7 @@ document.getElementById('physicalDiscDetails').addEventListener('close',()=>{
  const card=Array.from(document.querySelectorAll('[data-physical-disc]')).find(b=>b.dataset.physicalDisc===id);
  (card||document.querySelector('[data-disc-filter="'+discFilter+'"]'))?.focus({preventScroll:true});
 });
-function render(){renderHomeCourses();document.getElementById('status').textContent=s.active?(mode==='group'?'GROUP · DEMO':'SOLO · DEMO'):'DEMO MODE';buildSetup();renderBoard();document.getElementById('activeBasket').textContent=course.multipleBaskets?'Position '+baskets[s.hole-1]:'Fixed basket';document.getElementById('changeBasket').classList.toggle('hidden',!course.multipleBaskets);document.getElementById('holeNav').innerHTML=roundHoleOrder().map(n=>{const h=courseHole(baseCourse,n),completed=s.completed.find(x=>x.hole===n),status=completed?'Completed · '+completed.score+' strokes':s.throws.some(t=>t.hole===n)?'In progress':'Unplayed';return '<option value="'+n+'"'+(n===s.hole?' selected':'')+(completed?' disabled':'')+'>Hole '+holeLabel(n)+' · Par '+(isCustomCourse()?customHoleData(baseCourse,n).par??'not set':baseCourse.id===dryCreekCourse.id?parFor(n):h.par||par)+' — '+status+'</option>'}).join('');document.getElementById('holeTitle').textContent=roundHoleTitle();document.getElementById('strokeTitle').textContent='· Throw '+(s.holeThrows.length+1);document.getElementById('selectedDisc').textContent=discSnapshotLabel(currentThrowDisc())||'Choose a disc';updateThrowDiscSelector();document.getElementById('lastDistance').textContent=s.last?s.last+' ft':'— ft';document.getElementById('remaining').textContent=s.remaining+' ft';updateBasketLive();document.getElementById('primary').disabled=!s.started&&!currentThrowDisc();document.getElementById('primary').textContent=s.started?"I'm at my disc":'START THROW';document.getElementById('mapMessage').textContent=s.pinMode?'Tap Google satellite map to mark the landing position.':'';syncSatellite();renderDiscGrid();let ds=s.throws.filter(t=>!t.made),avg=ds.length?Math.round(ds.reduce((a,b)=>a+b.distance,0)/ds.length):null;document.getElementById('statThrows').textContent=s.throws.length;document.getElementById('statAvg').textContent=avg===null?'— ft':avg+' ft';const groups={};ds.forEach(t=>(groups[t.disc]??=[]).push(t.distance));document.getElementById('discStats').innerHTML=Object.keys(groups).length?Object.entries(groups).map(([d,arr])=>'<div class="history">'+escapeHtml(d)+' <strong style="float:right">'+Math.round(arr.reduce((a,b)=>a+b,0)/arr.length)+' ft avg</strong><div class="statbar"><i style="width:'+Math.min(100,arr.reduce((a,b)=>a+b,0)/arr.length/4)+'%"></i></div></div>').join(''):'Record a throw to see demo data.';renderCompletedScoreSummary();document.getElementById('recent').textContent=s.rounds.length?s.rounds[0].date+' · '+s.rounds[0].scores.reduce((a,b)=>a+b.score,0)+' strokes'+(s.rounds[0].endedEarly?' · Ended early':''):'No completed rounds yet.';renderRoundHistory();if(!document.getElementById('score').classList.contains('hidden'))renderScore();updatePlayLayout();renderPhysicalDistances();saveAppState()}
+function render(){renderHomeCourses();document.getElementById('status').textContent=s.active?(mode==='group'?'GROUP · DEMO':'SOLO · DEMO'):'DEMO MODE';buildSetup();renderBoard();document.getElementById('activeBasket').textContent=course.multipleBaskets?'Position '+baskets[s.hole-1]:'Fixed basket';document.getElementById('changeBasket').classList.toggle('hidden',!course.multipleBaskets);document.getElementById('holeNav').innerHTML=roundHoleOrder().map(n=>{const h=courseHole(baseCourse,n),completed=s.completed.find(x=>x.hole===n),status=completed?'Completed · '+completed.score+' strokes':s.throws.some(t=>t.hole===n)?'In progress':'Unplayed';return '<option value="'+n+'"'+(n===s.hole?' selected':'')+(completed?' disabled':'')+'>Hole '+holeLabel(n)+' · Par '+(isCustomCourse()?customHoleData(baseCourse,n).par??'not set':baseCourse.id===dryCreekCourse.id?parFor(n):h.par||par)+' — '+status+'</option>'}).join('');document.getElementById('holeTitle').textContent=roundHoleTitle();document.getElementById('strokeTitle').textContent='· Throw '+(s.holeThrows.length+1);document.getElementById('selectedDisc').textContent=discSnapshotLabel(currentThrowDisc())||'Choose a disc';updateThrowDiscSelector();document.getElementById('lastDistance').textContent=s.last?s.last+' ft':'— ft';document.getElementById('remaining').textContent=s.remaining+' ft';updateBasketLive();document.getElementById('primary').disabled=!s.started&&!currentThrowDisc();document.getElementById('primary').textContent=s.started?"I'm at my disc":'START THROW';document.getElementById('mapMessage').textContent=s.pinMode?'Tap Google satellite map to mark the landing position.':'';syncSatellite();renderDiscGrid();renderGameplayAnalytics();renderCompletedScoreSummary();document.getElementById('recent').textContent=s.rounds.length?s.rounds[0].date+' · '+s.rounds[0].scores.reduce((a,b)=>a+b.score,0)+' strokes'+(s.rounds[0].endedEarly?' · Ended early':''):'No completed rounds yet.';renderRoundHistory();if(!document.getElementById('score').classList.contains('hidden'))renderScore();updatePlayLayout();renderPhysicalDistances();saveAppState()}
 
 // Satellite map integration based on the user's uploaded Disc Golf GPS index.html.
 let baseCourse={"id":"disc-on-6th-midvale-ut","name":"Disc On 6th","address":"425 W 6th Avenue, Midvale, UT 84047","center":{"lat":40.61454239831233,"lng":-111.90334159880877},"layout":"Main","par":30,"publishedTotalFeet":2479,"publishedLengthCoversHoles":9,"holes":[{"number":1,"par":3,"distanceFeet":257,"tee":{"lat":40.614548,"lng":-111.903389,"status":"published_pdga_first_tee_unverified"},"basket":null},{"number":2,"par":3,"distanceFeet":240,"tee":null,"basket":null},{"number":3,"par":3,"distanceFeet":337,"tee":null,"basket":null},{"number":4,"par":3,"distanceFeet":251,"tee":null,"basket":null},{"number":5,"par":3,"distanceFeet":375,"tee":null,"basket":null},{"number":6,"par":3,"distanceFeet":293,"tee":null,"basket":null},{"number":7,"par":3,"distanceFeet":216,"tee":null,"basket":null},{"number":8,"par":3,"distanceFeet":281,"tee":null,"basket":null},{"number":9,"par":3,"distanceFeet":230,"tee":null,"basket":null},{"number":10,"par":3,"distanceFeet":null,"tee":null,"basket":null,"status":"user_added"}],"sources":["https://udisc.com/courses/disc-on-6th-R2cD","https://www.pdga.com/course-directory/course/disc-6th"],"notes":"Tee and basket locations require field verification. Hole 1 tee is a PDGA published location, not independently verified."};
@@ -1009,15 +1590,55 @@ function validateDry2A(value){
  return value;
 }
 function readDry2A(){
- const raw=localStorage.getItem(dryCreek2AKey);return raw?validateDry2A(JSON.parse(raw)):{version:1,edits:{},shapes:{}};
+ const raw=localStorage.getItem(dryCreek2AKey);return raw===null?{version:1,edits:{},shapes:{}}:validateDry2A(JSON.parse(raw));
+}
+// Session-only protection: uncertain storage must not be overwritten by a retry.
+const mappingStorageBlocked=new Set();
+function checkMappingStorage(c){
+ if(mappingStorageBlocked.has(c.id))throw Error('Mapping storage is blocked after an unreadable save or failed rollback. Preserve a backup and inspect storage before retrying.');
+ try{
+  if(isCustomCourse(c)){
+   const raw=localStorage.getItem(customCourseKey);
+   if(raw!==null){const saved=JSON.parse(raw);if(saved?.version!==1||!Array.isArray(saved.courses)||new Set(saved.courses.map(x=>x?.id)).size!==saved.courses.length)throw Error('Invalid custom-course storage');saved.courses.forEach(validateCustomCourse)}
+   return {courseId:c.id,edits:c.edits,shapes:c.shapes};
+  }else{
+   const keys=c.id===discOnSixth.id?[oldEditKey,oldShapeKey]:c.id===millsCourse.id?[millsEditKey,millsShapeKey]:c.id===dryCreekCourse.id?[dryCreekEditKey,dryCreekShapeKey]:null;
+   if(!keys)throw Error('Unknown mapping course');
+   const values=keys.map(key=>{const raw=localStorage.getItem(key);return raw===null?{}:JSON.parse(raw)});
+   validateBuiltInMappingImport({courseId:c.id,courseEdits:values[0],holeShapes:values[1]},c);
+   const data={courseId:c.id,edits:values[0],shapes:values[1]};
+   if(c.id===dryCreekCourse.id){const extra=readDry2A();data.edits={...data.edits,13:extra.edits[13]||{}};data.shapes={...data.shapes,13:extra.shapes[13]||{}};validateBuiltInMappingImport({courseId:c.id,courseEdits:data.edits,holeShapes:data.shapes},c)}
+   return data;
+  }
+ }catch(e){mappingStorageBlocked.add(c.id);if(isCustomCourse(c))customStorageBlocked=true;throw Error('Saved mappings are unreadable or unsupported. No saved data was replaced. Preserve a backup before repair.');}
+}
+function mappingMutationAllowed(c=mappingCourse()){
+ if(devSimEnabled)return false;
+ if(sharedCourseConflict(c.id)){notify('Course data changed in another tab. Reload before editing; existing data was kept.');return false}
+ try{checkMappingStorage(c);return true}
+ catch(e){notify('Mapping changes blocked. '+e.message+' Use Export Full Backup to preserve the original data before investigating; do not reset storage.');return false}
+}
+function writeMappingStorage(c,entries){
+ let writes;
+ try{writes=entries.map(([key,next])=>({key,next,old:localStorage.getItem(key)}))}
+ catch(e){mappingStorageBlocked.add(c.id);if(isCustomCourse(c))customStorageBlocked=true;throw Error('Mapping storage could not be read. Further saves are blocked; no values were written.');}
+ const applied=[];
+ try{for(const item of writes){if(item.old===item.next)continue;localStorage.setItem(item.key,item.next);applied.push(item)}}
+ catch(e){
+  let rollbackFailed=false;
+  for(const item of applied.reverse())try{if(item.old===null)localStorage.removeItem(item.key);else localStorage.setItem(item.key,item.old)}catch(error){rollbackFailed=true}
+  if(rollbackFailed){mappingStorageBlocked.add(c.id);if(isCustomCourse(c))customStorageBlocked=true;throw Error('Mapping save and rollback failed. Further saves are blocked. Keep this page open and preserve a backup before repair.');}
+  throw Error('Mapping was not saved. Previous saved values were restored.');
+ }
 }
 function saveDryMapping(data,mode){
+ const c=mappingCourse();checkMappingStorage(c);
  const all=mode==='import',n=mapEditorActive?mapEditorHole:s.hole,writes=[];
  const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
  const add=(key,value)=>{const old=localStorage.getItem(key),next=JSON.stringify(value);if(old!==next)writes.push({key,old,next})};
  if(all||n!==13){
   for(const [key,field]of [[dryCreekEditKey,'edits'],[dryCreekShapeKey,'shapes']]){
-   const previous=JSON.parse(localStorage.getItem(key)||'{}');if(!object(previous))throw Error('Unreadable official Dry Creek mapping');
+   const raw=localStorage.getItem(key),previous=raw===null?{}:JSON.parse(raw);if(!object(previous))throw Error('Unreadable official Dry Creek mapping');
    const value={...previous};
    for(const hole of all?dryLayouts['main-12']:[n]){
     if(!dryLayouts['main-12'].includes(hole))throw Error('Unknown official hole');
@@ -1030,9 +1651,7 @@ function saveDryMapping(data,mode){
   readDry2A(); // Refuse to replace unreadable existing 2A data.
   add(dryCreek2AKey,validateDry2A({version:1,edits:data.edits[13]?{13:data.edits[13]}:{},shapes:data.shapes[13]?{13:data.shapes[13]}:{}}));
  }
- const applied=[];
- try{for(const item of writes){localStorage.setItem(item.key,item.next);applied.push(item)}}
- catch(e){for(const item of applied.reverse()){try{if(item.old===null)localStorage.removeItem(item.key);else localStorage.setItem(item.key,item.old)}catch(rollbackError){notify('Mapping save and rollback failed. Keep this page open and check browser storage.')}}throw e}
+ writeMappingStorage(c,writes.map(item=>[item.key,item.next]));
  return true;
 }
 const dryCreekEditKey='chain-chaser-dry-creek-edits-v1',dryCreekShapeKey='chain-chaser-dry-creek-shapes-v1';
@@ -1087,8 +1706,9 @@ function saveCustomCourse(c=mappingCourse(),data=mappingData()){
  if(devSimEnabled){notify('Storage changes are disabled in DEV SIMULATION');return false}
  if(sharedCourseConflict(c.id)){notify('Course data changed in another tab. Reload before editing; existing data was kept.');return false}
  if(customStorageBlocked){notify('Custom-course storage could not be read. No saved data was replaced.');return false}
- try{c.edits=data.edits;c.shapes=data.shapes;validateCustomCourse(c);localStorage.setItem(customCourseKey,JSON.stringify({version:1,courses:customCourses}));rememberSharedPersonalBaseline(c.id);customSaveFailed=false;return true}
- catch(e){customSaveFailed=true;notify('Could not save custom course. Keep this page open and retry.');return false}
+ const previousEdits=c.edits,previousShapes=c.shapes;
+ try{checkMappingStorage(c);const candidate={...c,edits:data.edits,shapes:data.shapes};validateCustomCourse(candidate);writeMappingStorage(c,[[customCourseKey,JSON.stringify({version:1,courses:customCourses.map(x=>x===c?candidate:x)})]]);c.edits=data.edits;c.shapes=data.shapes;rememberSharedPersonalBaseline(c.id);customSaveFailed=false;return true}
+ catch(e){c.edits=previousEdits;c.shapes=previousShapes;customSaveFailed=true;notify('Could not save custom course. '+e.message);return false}
 }
 function saveCustomHoleCount(){
  const c=mappingCourse(),data=mappingData();
@@ -1138,21 +1758,17 @@ function mappingCourse(){const c=courseRegistry.find(c=>c.id===(mapEditorActive?
 function mappingData(){const data=mapEditorActive?mapperMappings:{courseId:selectedCourseId,edits,shapes};if(!data||data.courseId!==mappingCourse().id)throw Error('Mapping course ID mismatch');return data}
 function readCourseMappings(c){
  if(sharedCourseConflict(c.id))throw Error('Course data changed. Reload before opening mappings.');
- if(isCustomCourse(c))return {courseId:c.id,edits:c.edits,shapes:c.shapes};
+ const data=checkMappingStorage(c);
+ if(isCustomCourse(c))return data;
  if(sharedLibraryMode&&sharedResolvedMappings.has(c.id)&&!sharedCourseHasPersonalData(c.id))return JSON.parse(JSON.stringify(sharedResolvedMappings.get(c.id)));
- const keys=c.id===discOnSixth.id?[oldEditKey,oldShapeKey]:c.id===millsCourse.id?[millsEditKey,millsShapeKey]:c.id===dryCreekCourse.id?[dryCreekEditKey,dryCreekShapeKey]:null;
- if(!keys)throw Error('No mapping storage for this course ID');
- const data={courseId:c.id,edits:JSON.parse(localStorage.getItem(keys[0])||'{}'),shapes:JSON.parse(localStorage.getItem(keys[1])||'{}')};
- if(!data.edits||typeof data.edits!=='object'||Array.isArray(data.edits)||!data.shapes||typeof data.shapes!=='object'||Array.isArray(data.shapes))throw Error('Unreadable course mapping');
  if(c.id===millsCourse.id)data.edits[13]={...(data.edits[13]||{}),distanceFeet:303};
- if(c.id===dryCreekCourse.id){const extra=readDry2A();data.edits={...data.edits,13:extra.edits[13]||{}};data.shapes={...data.shapes,13:extra.shapes[13]||{}}}
  return data;
 }
 function savedPrivateMapLocation(c){
  const points=[c.center,...c.holes.flatMap(h=>{const x=customHoleData(c,h.number),sh=c.shapes[h.number]||{};return [x.tee,x.basket,...(sh.route||[]),...(sh.fairway||[]),...(sh.mandos||[])]})];
  const p=points.find(isMapPoint);return p?{lat:p.lat,lng:p.lng}:null;
 }
-function mappingAllowed(){return mapEditorActive&&courseHole(mappingCourse(),mapEditorHole)&&(mapperCourseId!==privareCourseId||mapperAddressLocations.get(mapperCourseId)?.state==='ready')}
+function mappingAllowed(){return mapEditorActive&&!mappingStorageBlocked.has(mappingCourse().id)&&courseHole(mappingCourse(),mapEditorHole)&&(mapperCourseId!==privareCourseId||mapperAddressLocations.get(mapperCourseId)?.state==='ready')}
 function updateMapperLocation(){
  const c=mapEditorActive?mappingCourse():null,privateMap=c?.id===privareCourseId,entry=privateMap?mapperAddressLocations.get(c.id):null;
  const error=entry?.state==='error',missing=privateMap&&!c.address.trim(),mapped=privateMap?savedPrivateMapLocation(c):null;
@@ -1233,30 +1849,29 @@ function homeCourseAction(id,action){
  const c=courseRegistry.find(c=>c.id===id);if(!c){notify('Course not found');return}
  if(!s.active&&action!=='map'&&sharedCourseBlocked(id)){notify(sharedLibraryMessage);return}
  if(action==='map'&&sharedLibraryMode&&sharedLibraryPhase==='loading'&&!sharedCourseHasPersonalData(id)&&!sharedResolvedMappings.has(id)){notify('Shared mappings are loading. Please wait before editing this course.');return}
- if(action==='map'){if(!s.active&&id!==selectedCourseId)selectCourse(id);openMapper(false,id);return}
+ if(mappingStorageBlocked.has(id)){notify('Saved mappings could not be loaded safely. Mapping writes are blocked. Use Export Full Backup before investigating; do not reset storage.');return}
+ if(action==='map'){if(!s.active&&id!==selectedCourseId&&selectCourse(id)===false)return;openMapper(false,id);return}
  if(s.active){if(id!==selectedCourseId){notify('Finish your current round before switching courses');return}resumeRound();return}
- if(id!==selectedCourseId)selectCourse(id);
+ if(id!==selectedCourseId&&selectCourse(id)===false)return;
  if(isCustomCourse()&&!customCourseReady())openMapper(false,id);else show('setup');
 }
 const millsEditKey='chain-chaser-mills-park-edits-v1',millsShapeKey='chain-chaser-mills-park-shapes-v1';
-function selectCourse(id){if(!appStateMutationAllowed())return;
- if(sharedCourseConflict(id)){notify('Course data changed in another tab. Reload before selecting it.');return}
- if(s.active){notify('Finish the current round before changing courses');return}
- const selected=courseRegistry.find(c=>c.id===id);if(!selected){notify('Course not found');return}
+function selectCourse(id){if(!appStateMutationAllowed())return false;
+ if(sharedCourseConflict(id)){notify('Course data changed in another tab. Reload before selecting it.');return false}
+ if(s.active){notify('Finish the current round before changing courses');return false}
+ const selected=courseRegistry.find(c=>c.id===id);if(!selected){notify('Course not found');return false}
+ let data;
+ try{data=readCourseMappings(selected)}catch(e){document.getElementById('courseChoice').value=selectedCourseId;notify('Saved mappings for '+selected.name+' could not be loaded safely. '+e.message+' Use Export Full Backup before investigating; do not reset storage.');return false}
  selectedCourseId=id;baseCourse=selected;course.name=selected.name;holes=selected.holes.length;lengths=selected.holes.map(h=>h.distanceFeet??0);baskets=Array(holes).fill('A');startHole=1;s.hole=1;dryRoundLayout=null;drySetupLayoutId='main-12';
- if(sharedLibraryMode&&sharedResolvedMappings.has(id)&&!sharedCourseHasPersonalData(id)){const data=readCourseMappings(selected);edits=data.edits;shapes=data.shapes}
- else if(isCustomCourse()){edits=baseCourse.edits;shapes=baseCourse.shapes}
- else if(id===dryCreekCourse.id){try{const data=readCourseMappings(selected);edits=data.edits;shapes=data.shapes}catch(e){edits={};shapes={};notify('Dry Creek mappings could not be read; existing saved data was kept.')}}
- else if(id===millsCourse.id){try{edits=JSON.parse(localStorage.getItem(millsEditKey)||'{}');shapes=JSON.parse(localStorage.getItem(millsShapeKey)||'{}');edits[13]={...(edits[13]||{}),distanceFeet:303}}catch(e){edits={};shapes={}}}
- else{try{edits=JSON.parse(localStorage.getItem(oldEditKey)||'{}');shapes=JSON.parse(localStorage.getItem(oldShapeKey)||'{}')}catch(e){edits={};shapes={}}}
+ edits=data.edits;shapes=data.shapes;
  s.remaining=lengthFor(1);renderHomeCourses();document.getElementById('courseChoice').value=id;
  document.getElementById('basketCard').querySelector('p').textContent=isCustomCourse()?'Define the hole count, par, tees and baskets in Map / Verify before starting. No course measurements are prefilled.':'One basket per hole in this preview. Basket GPS pins can be mapped later.';
  document.getElementById('courseDescription').textContent=id===dryCreekCourse.id?dryCreekCourse.layout+' · 12 holes · Par 37 · 3,184 ft listed. '+dryCreekCourse.notes:isCustomCourse()?'Private / Custom · '+baseCourse.address+' · Map each hole before play.':'Mills Park: 12 published holes (par 36 · 2,909 ft) + custom Hole 13 (303 ft · par 3). Tee/basket mapping still needs verification.';
- focusHole();render();notify(course.name+' selected');
+ focusHole();render();notify(course.name+' selected');return true;
 }
 const oldEditKey='disc-golf-course-edits-v2', oldShapeKey='disc-golf-hole-shapes-v1';
 let edits={},shapes={},gmap=null,playerMarker=null,throwStartMarker=null,landingMarker=null,throwLine=null,overlays=[],currentGps=null,throwStartGps=null;
-if(!devSimEnabled)try{edits=JSON.parse(localStorage.getItem(oldEditKey)||'{}');shapes=JSON.parse(localStorage.getItem(oldShapeKey)||'{}')}catch(e){}
+if(!devSimEnabled)try{const data=readCourseMappings(baseCourse);edits=data.edits;shapes=data.shapes}catch(e){notify('Saved course mappings could not be loaded safely. '+e.message+' Mapping writes are blocked. Use Export Full Backup before investigating; do not reset storage.')}
 const rad=x=>x*Math.PI/180;
 function feetBetween(a,b){const dlat=rad(b.lat-a.lat),dlng=rad(b.lng-a.lng),q=Math.sin(dlat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dlng/2)**2;return Math.round(6371000*2*Math.atan2(Math.sqrt(q),Math.sqrt(1-q))*3.28084)}
 function holeMapData(n=mapEditorActive?mapEditorHole:s.hole){const c=mappingCourse(),data=mappingData(),h={...courseHole(c,n),...(data.edits[n]||{})};if(c.id===millsCourse.id&&n===13)h.distanceFeet=303;return h}
@@ -1283,15 +1898,22 @@ function mapEditStorage(mode='hole'){
  if(devSimEnabled){notify('Storage changes are disabled in DEV SIMULATION');return false}
  const c=mappingCourse(),data=mappingData();
  if(sharedCourseConflict(c.id)){notify('Course data changed in another tab. Reload before saving; existing data was kept.');return false}
- if(isCustomCourse(c)){if(saveCustomCourse(c,data)===false)return false}
- else if(c.id===dryCreekCourse.id){try{saveDryMapping(data,sharedLibraryMode&&sharedResolvedMappings.has(c.id)&&!sharedCourseHasPersonalData(c.id)?'import':mode)}catch(e){notify('Dry Creek mapping could not be saved. Existing data was kept.');return false}}
- else{const keys=c.id===discOnSixth.id?[oldEditKey,oldShapeKey]:c.id===millsCourse.id?[millsEditKey,millsShapeKey]:c.id===dryCreekCourse.id?[dryCreekEditKey,dryCreekShapeKey]:null;if(!keys)throw Error('Unknown mapping course ID');localStorage.setItem(keys[0],JSON.stringify(data.edits));localStorage.setItem(keys[1],JSON.stringify(data.shapes))}
+ if(!mappingMutationAllowed(c))return false;
+ try{
+  if(isCustomCourse(c)){if(saveCustomCourse(c,data)===false)return false}
+  else if(c.id===dryCreekCourse.id)saveDryMapping(data,sharedLibraryMode&&sharedResolvedMappings.has(c.id)&&!sharedCourseHasPersonalData(c.id)?'import':mode);
+  else{
+   checkMappingStorage(c);validateBuiltInMappingImport({courseId:c.id,courseEdits:data.edits,holeShapes:data.shapes},c);
+   const keys=c.id===discOnSixth.id?[oldEditKey,oldShapeKey]:c.id===millsCourse.id?[millsEditKey,millsShapeKey]:null;if(!keys)throw Error('Unknown mapping course ID');
+   writeMappingStorage(c,[[keys[0],JSON.stringify(data.edits)],[keys[1],JSON.stringify(data.shapes)]]);
+  }
+ }catch(e){notify('Mapping could not be saved. '+e.message);return false}
  rememberSharedPersonalBaseline(c.id);if(c.id===selectedCourseId){edits=data.edits;shapes=data.shapes}return true;
 }
 function openMapper(fromRound=false,courseId=selectedCourseId){
  if(sharedCourseConflict(courseId)){notify('Course data changed in another tab. Reload before mapping.');return}
  const c=courseRegistry.find(c=>c.id===courseId);if(!c){notify('Unknown mapping course ID. No fallback course was opened.');return}
- let data;try{data=readCourseMappings(c)}catch(e){notify('Could not open '+c.name+' mappings. Existing data was kept.');if(mapEditorActive)document.getElementById('mapperCourseChoice').value=mapperCourseId;return}
+ let data;try{data=readCourseMappings(c)}catch(e){notify('Could not open '+c.name+' mappings safely. '+e.message+' Use Export Full Backup before investigating; do not reset storage.');if(mapEditorActive)document.getElementById('mapperCourseChoice').value=mapperCourseId;return}
  if(c.id===selectedCourseId){edits=data.edits;shapes=data.shapes}
  mapperReturnTab=fromRound?'play':s.active?'home':'courses';mapperCourseId=c.id;mapperMappings=data;mapEditorActive=true;mapEditorTool='none';mapperAddressOverview=true;
  mapEditorHole=s.active&&selectedCourseId===c.id?s.hole:1;
@@ -1311,6 +1933,7 @@ function mapperHole(n){
 }
 function mapTool(tool){if(tool!=='none'&&!mappingAllowed()){notify('Locate the selected course address before placing mapping points');return}mapEditorTool=tool;document.getElementById('mapToolStatus').textContent=({tee:'Tap the tee location on the map',basket:'Tap the basket location on the map',route:'Tap consecutive points along the intended flight path',fairway:'Tap points around the fairway boundary',none:'Drawing stopped'})[tool]}
 function saveMapPin(key,point){
+ if(!mappingMutationAllowed())return;
  if(!mappingAllowed()||!isMapPoint(point)){notify('Resolve the selected course address before mapping');return}
  const c=mappingCourse(),data=mappingData(),n=mapEditorHole,previous=data.edits[n],previousCenter=c.center,next={...(previous||{}),[key]:point};
  if(isCustomCourse(c)&&s.active&&selectedCourseId===c.id&&!customCourseReady({...c,edits:{...data.edits,[n]:next}})){notify('Keep all active-course holes mapped with valid pars and distances');return}
@@ -1320,18 +1943,20 @@ function saveMapPin(key,point){
  mapperAddressOverview=false;mapperHole(n);renderHomeCourses();notify(c.name+' · Hole '+holeLabel(n,c)+' '+key+' saved');
 }
 function mapperMapClick(e){
+ if(!mappingMutationAllowed())return;
  if(!mappingAllowed()){notify('Resolve the selected course address before mapping');return}
  const c=mappingCourse(),data=mappingData(),n=mapEditorHole,p={lat:e.latLng.lat(),lng:e.latLng.lng()};
  if(mapEditorTool==='tee'||mapEditorTool==='basket'){saveMapPin(mapEditorTool,p);return}
  if(mapEditorTool==='route'||mapEditorTool==='fairway'){const previous=data.shapes[n];data.shapes[n]={...(previous||{}),[mapEditorTool]:[...(previous?.[mapEditorTool]||[]),p]};if(mapEditStorage()===false){if(previous===undefined)delete data.shapes[n];else data.shapes[n]=previous;return}mapperAddressOverview=false;syncSatellite();notify(c.name+' point saved')}
 }
-function undoMapPoint(){if(!['route','fairway'].includes(mapEditorTool)){notify('Select flight path or fairway first');return}const a=mappingData().shapes[mapEditorHole]?.[mapEditorTool];if(a?.length){const p=a.pop();if(mapEditStorage()===false){a.push(p);return}syncSatellite();notify('Last point removed')}}
+function undoMapPoint(){if(!mappingMutationAllowed())return;if(!['route','fairway'].includes(mapEditorTool)){notify('Select flight path or fairway first');return}const a=mappingData().shapes[mapEditorHole]?.[mapEditorTool];if(a?.length){const p=a.pop();if(mapEditStorage()===false){a.push(p);return}syncSatellite();notify('Last point removed')}}
 function selectFlightPath(courseId,hole){
  if(!mapEditorActive||mappingCourse().id!==courseId||mapEditorHole!==hole)return;
  mapTool('none');document.getElementById('mapToolStatus').textContent=mappingCourse().name+' · Hole '+holeLabel(hole,mappingCourse())+' flight path selected. Use Clear Flight Path to remove it.';
 }
 function clearFlightPath(){
  if(devSimEnabled||!mapEditorActive)return;
+ if(!mappingMutationAllowed())return;
  const c=mappingCourse(),n=mapEditorHole,data=mappingData(),previous=data.shapes[n];
  if(!Array.isArray(previous?.route)||!previous.route.length){notify('No flight path saved for '+c.name+' Hole '+holeLabel(n,c));return}
  if(!confirm('Clear the flight path for '+c.name+' · Hole '+holeLabel(n,c)+'? Tee, basket, fairway and mandos will be kept.'))return;
@@ -1341,7 +1966,7 @@ function clearFlightPath(){
  catch(e){data.shapes[n]=previous;notify('Flight path could not be cleared because saving failed. The existing path was kept.');return}
  mapTool('none');syncSatellite();notify(c.name+' Hole '+holeLabel(n,c)+' flight path cleared and saved');
 }
-function clearMapDrawing(){if(mapEditorTool==='route'){clearFlightPath();return}if(!['route','fairway'].includes(mapEditorTool)){notify('Select flight path or fairway first');return}if(!confirm('Clear '+mappingCourse().name+' Hole '+holeLabel(mapEditorHole,mappingCourse())+' '+mapEditorTool+'?'))return;const data=mappingData();data.shapes[mapEditorHole]=data.shapes[mapEditorHole]||{};const previous=data.shapes[mapEditorHole][mapEditorTool];data.shapes[mapEditorHole][mapEditorTool]=[];if(mapEditStorage()===false){data.shapes[mapEditorHole][mapEditorTool]=previous;return}syncSatellite()}
+function clearMapDrawing(){if(!mappingMutationAllowed())return;if(mapEditorTool==='route'){clearFlightPath();return}if(!['route','fairway'].includes(mapEditorTool)){notify('Select flight path or fairway first');return}if(!confirm('Clear '+mappingCourse().name+' Hole '+holeLabel(mapEditorHole,mappingCourse())+' '+mapEditorTool+'?'))return;const data=mappingData(),previous=data.shapes[mapEditorHole];data.shapes[mapEditorHole]={...(previous||{}),[mapEditorTool]:[]};if(mapEditStorage()===false){if(previous===undefined)delete data.shapes[mapEditorHole];else data.shapes[mapEditorHole]=previous;return}syncSatellite()}
 function exportCourseMap(){const c=mappingCourse(),data=mappingData();const blob=new Blob([JSON.stringify({courseId:c.id,courseName:c.name,exportedAt:new Date().toISOString(),courseEdits:data.edits,holeShapes:data.shapes},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=c.id+'-layout.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 
 // Course-only draft format. Never spread raw records or enumerate browser storage here.
@@ -1639,21 +2264,54 @@ function suspendPhysicalGps(){
 function captureThrowStart(){if(isPhysicalRound()){if(!physicalGps)createPhysicalGps();requestPhysicalGps('origin');return}const generation=roundGeneration,frozen=physicalRound?.frozenDisc;gpsOnce(p=>{if(isPhysicalRound()&&physicalRound.frozenDisc!==frozen)return;if(generation!==roundGeneration||!s.active||!s.started)return;if(!appStateMutationAllowed())return;throwStartGps=p;if(gmap){if(throwStartMarker)throwStartMarker.setMap(null);throwStartMarker=new google.maps.Marker({map:gmap,position:p,label:'S',title:'Throw start'})}saveAppState();updateThrowStatus()})}
 function markLanding(p,source){if(isPhysicalRound())return completePhysicalLanding(p,source);if(!appStateMutationAllowed())return;if(!throwStartGps){notify('Start GPS position unavailable. Allow location access or try again.');return}if(gmap){if(landingMarker)landingMarker.setMap(null);landingMarker=new google.maps.Marker({map:gmap,position:p,draggable:true,label:'L',title:'Landing point'});landingMarker.addListener('dragend',e=>{notify('Landing pin adjusted · press Start Throw for next throw')});if(throwLine)throwLine.setMap(null);throwLine=new google.maps.Polyline({map:gmap,path:[throwStartGps,p],strokeColor:'#F58220',strokeWeight:4})}saveLanding(feetBetween(throwStartGps,p),source);if(!isPhysicalRound()||!s.started)throwStartGps=p}
 function captureGpsLanding(){if(isPhysicalRound()){requestPhysicalGps('landing');return}const generation=roundGeneration,frozen=physicalRound?.frozenDisc;gpsOnce(p=>{if(isPhysicalRound()&&physicalRound.frozenDisc!==frozen)return;if(generation===roundGeneration&&s.active&&s.started)markLanding(p,'GPS')})}
+function validateBuiltInMappingImport(o,c,definitions=mappingHoles(c)){
+ const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+ const fields=(value,allowed,label)=>{if(!object(value))throw Error(label+' must be an object.');if(Object.keys(value).some(key=>!allowed.includes(key)))throw Error(label+' contains unsupported fields.');};
+ fields(o,['courseId','courseName','exportedAt','courseEdits','holeShapes'],'Mapping export');
+ if(o.courseId!==c.id)throw Error('This layout is for a different course');
+ if(o.courseName!==undefined&&typeof o.courseName!=='string'||o.exportedAt!==undefined&&typeof o.exportedAt!=='string')throw Error('Course name and export timestamp must be strings.');
+ const ids=new Set(definitions.map(h=>h.number));
+ const point=(p,label,mando=false)=>{
+  fields(p,mando?['lat','lng','side']:['lat','lng','status'],label);
+  if(!isMapPoint(p))throw Error(label+' has invalid coordinates.');
+  if(mando&&!['left','right'].includes(p.side))throw Error(label+' requires a left or right side.');
+  if(!mando&&p.status!==undefined&&typeof p.status!=='string')throw Error(label+' status must be a string.');
+ };
+ for(const [field,allowed]of [['courseEdits',['tee','basket','par','distanceFeet']],['holeShapes',['route','fairway','mandos']]]){
+  if(!object(o[field]))throw Error(field+' must be an object keyed by hole ID.');
+  for(const [key,record]of Object.entries(o[field])){
+   if(!/^[1-9]\d*$/.test(key)||!ids.has(Number(key)))throw Error(field+' contains an unknown hole ID.');
+   const label='Hole '+key+' '+field;fields(record,allowed,label);
+   if(field==='courseEdits'){
+    for(const name of ['tee','basket'])if(Object.hasOwn(record,name)&&record[name]!==null)point(record[name],label+' '+name);
+    if(record.par!==undefined&&record.par!==null&&(!Number.isInteger(record.par)||record.par<=0))throw Error(label+' par must be a positive whole number or null.');
+    if(record.distanceFeet!==undefined&&record.distanceFeet!==null&&(!Number.isFinite(record.distanceFeet)||record.distanceFeet<=0))throw Error(label+' distance must be a positive number or null.');
+   }else for(const name of allowed)if(Object.hasOwn(record,name)){
+    if(!Array.isArray(record[name]))throw Error(label+' '+name+' must be an array.');
+    for(const p of record[name])point(p,label+' '+name,name==='mandos');
+   }
+  }
+ }
+}
 function importLayout(event){
  if(devSimEnabled){notify('Storage changes are disabled in DEV SIMULATION');return false}
+ if(!mappingMutationAllowed())return false;
  const f=event.target.files?.[0];if(!f)return;event.target.value='';const courseId=mappingCourse().id;
  const r=new FileReader();r.onload=()=>{try{
   const c=mappingCourse(),data=mappingData(),o=JSON.parse(r.result);if(c.id!==courseId)throw Error('The selected course changed. Select this file again.');
+  if(!mappingMutationAllowed(c))return;
   if(!o||typeof o!=='object'||Array.isArray(o))throw Error('Not a course layout export');
   if(!o.courseId)throw Error('This layout has no course ID');
   if(o.courseId!==c.id)throw Error('This layout is for a different course');
   if(!o.courseEdits||typeof o.courseEdits!=='object'||Array.isArray(o.courseEdits)||!o.holeShapes||typeof o.holeShapes!=='object'||Array.isArray(o.holeShapes))throw Error('Not a course layout export');
   if(isCustomCourse(c)){validateCustomCourse({...c,edits:o.courseEdits,shapes:o.holeShapes});if(s.active&&selectedCourseId===c.id&&!customCourseReady({...c,edits:o.courseEdits,shapes:o.holeShapes}))throw Error('Keep all holes ready during this course’s active round')}
+  else validateBuiltInMappingImport(o,c);
   if(c.id===dryCreekCourse.id&&(Object.hasOwn(o.courseEdits,13)||Object.hasOwn(o.holeShapes,13)))validateDry2A({version:1,edits:o.courseEdits[13]?{13:o.courseEdits[13]}:{},shapes:o.holeShapes[13]?{13:o.holeShapes[13]}:{}});
   if(!confirm('Replace all saved mappings for '+c.name+' with this file? Export a course JSON copy first if you want to keep the current mappings.'))return;
   const previousEdits=data.edits,previousShapes=data.shapes;data.edits=o.courseEdits;data.shapes=o.holeShapes;
   if(c.id===millsCourse.id)data.edits[13]={...(data.edits[13]||{}),distanceFeet:303};
-  if(mapEditStorage('import')===false){data.edits=previousEdits;data.shapes=previousShapes;if(isCustomCourse(c)){c.edits=data.edits;c.shapes=data.shapes}return}
+  try{if(mapEditStorage('import')===false)throw Error('Mapping replacement was not saved. Existing in-memory mappings were kept.')}
+  catch(e){data.edits=previousEdits;data.shapes=previousShapes;if(isCustomCourse(c)){c.edits=data.edits;c.shapes=data.shapes}throw e}
   if(c.id===dryCreekCourse.id){const fresh=readCourseMappings(c);data.edits=fresh.edits;data.shapes=fresh.shapes;if(c.id===selectedCourseId){edits=data.edits;shapes=data.shapes}}
   if(mapEditorActive){refreshMapperControls();mapperHole(mapEditorHole)}else focusHole();
   notify(c.name+' layout imported');
@@ -1678,6 +2336,7 @@ restoreMapKey();
 function escapeHtml(t){return String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 // New Play Round and Measure Throw controls. GPS is ephemeral for measuring.
 let currentThrowType='', measureStart=null, measureWatch=null, playWatch=null;
+let measureGeneration=0,measureStartRequest=null,measureWatchToken=null;
 let lastGpsAccuracy=null, voiceRecognition=null, voiceOn=false, voiceListening=false;
 let throwDiscActiveIndex=-1,throwDiscReturnFocus=true;
 function updateThrowDiscSelector(){
@@ -1791,9 +2450,53 @@ function beginPlayWatch(){
  catch(e){playWatchToken=null;playWatch=null;if(physical)notify('GPS tracking could not start. Use Retry GPS origin or cancel the throw.')}
 }
 function stopPlayWatch(){playWatchToken=null;const watch=playWatch;playWatch=null;if(watch!==null){try{navigator.geolocation.clearWatch(watch)}catch(e){}}}
-function beginMeasureWatch(){if(measureWatch!==null||!navigator.geolocation)return;measureWatch=navigator.geolocation.watchPosition(p=>{const point={lat:p.coords.latitude,lng:p.coords.longitude};lastGpsAccuracy=p.coords.accuracy;document.getElementById('measureDistance').textContent=measureStart?feetBetween(measureStart,point)+' ft':'— ft';document.getElementById('measureAccuracy').textContent=(measureStart?'Live straight-line distance · ':'Set your starting point · ')+'GPS accuracy ±'+Math.round(p.coords.accuracy*3.28084)+' ft'},e=>document.getElementById('measureAccuracy').textContent='GPS: '+e.message,{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
-function stopMeasureWatch(){if(measureWatch!==null){navigator.geolocation.clearWatch(measureWatch);measureWatch=null}}
-function setMeasureStart(){if(!navigator.geolocation){notify('GPS unavailable');return}navigator.geolocation.getCurrentPosition(p=>{measureStart={lat:p.coords.latitude,lng:p.coords.longitude};document.getElementById('measureDistance').textContent='0 ft';document.getElementById('measureAccuracy').textContent='Start set · GPS accuracy ±'+Math.round(p.coords.accuracy*3.28084)+' ft';beginMeasureWatch();notify('Starting point set — walk to your discs')},e=>notify('GPS: '+e.message),{enableHighAccuracy:true,maximumAge:0,timeout:20000})}
+function beginMeasureWatch(){
+ if(devSimEnabled||!navigator.geolocation||!validMeasureScreen())return false;
+ if(measureWatch!==null||measureWatchToken)return measureWatch!==null;
+ const token={generation:measureGeneration};measureWatchToken=token;
+ const valid=()=>measureWatchToken===token&&token.generation===measureGeneration&&!document.getElementById('measure').classList.contains('hidden');
+ document.getElementById('measureAccuracy').textContent=measureStart?'Starting GPS measurement tracking…':'Waiting for GPS updates · Set your starting point to measure.';
+ try{
+  const watch=navigator.geolocation.watchPosition(p=>{
+   if(!valid())return;
+   const point={lat:p.coords.latitude,lng:p.coords.longitude};lastGpsAccuracy=p.coords.accuracy;
+   document.getElementById('measureDistance').textContent=measureStart?feetBetween(measureStart,point)+' ft':'— ft';
+   document.getElementById('measureAccuracy').textContent=(measureStart?'Live straight-line distance · ':'Set your starting point · ')+'GPS accuracy ±'+Math.round(p.coords.accuracy*3.28084)+' ft';
+  },e=>{if(valid())document.getElementById('measureAccuracy').textContent='GPS: '+e.message},{enableHighAccuracy:true,maximumAge:1000,timeout:20000});
+  if(valid())measureWatch=watch;else navigator.geolocation.clearWatch(watch);
+  return valid()&&measureWatch!==null;
+ }catch(e){if(measureWatchToken===token){measureWatchToken=null;measureWatch=null;if(validMeasureScreen()){
+  const message='GPS measurement tracking could not start. Set your starting point again to retry.';
+  document.getElementById('measureAccuracy').textContent=message;notify(message);
+ }}}
+ return false;
+}
+function validMeasureScreen(){return !devSimEnabled&&!document.getElementById('measure').classList.contains('hidden')}
+function stopMeasureWatch(){
+ measureGeneration++;measureStartRequest=null;measureWatchToken=null;
+ const watch=measureWatch;measureWatch=null;
+ if(watch!==null){try{navigator.geolocation.clearWatch(watch)}catch(e){}}
+}
+function setMeasureStart(){
+ stopMeasureWatch();
+ if(!validMeasureScreen())return;
+ measureStart=null;document.getElementById('measureDistance').textContent='— ft';
+ document.getElementById('measureAccuracy').textContent='Waiting for a GPS starting point…';
+ if(!navigator.geolocation){document.getElementById('measureAccuracy').textContent='GPS unavailable. Enable location access, then set your starting point again.';notify('GPS unavailable');return}
+ const request={generation:measureGeneration};measureStartRequest=request;
+ const valid=()=>measureStartRequest===request&&request.generation===measureGeneration&&validMeasureScreen();
+ const failure=e=>{if(!valid())return;measureStartRequest=null;
+  const message='GPS start failed: '+e.message+' · Set your starting point again to retry.';
+  document.getElementById('measureAccuracy').textContent=message;notify(message);
+ };
+ try{navigator.geolocation.getCurrentPosition(p=>{
+  if(!valid())return;measureStartRequest=null;
+  measureStart={lat:p.coords.latitude,lng:p.coords.longitude};
+  document.getElementById('measureDistance').textContent='0 ft';
+  document.getElementById('measureAccuracy').textContent='Start set · GPS accuracy ±'+Math.round(p.coords.accuracy*3.28084)+' ft';
+  if(beginMeasureWatch())notify('Starting point set — walk to your discs');
+ },failure,{enableHighAccuracy:true,maximumAge:0,timeout:20000})}catch(e){failure(e)}
+}
 function stopMeasuring(){stopMeasureWatch();measureStart=null;document.getElementById('measureDistance').textContent='— ft';document.getElementById('measureAccuracy').textContent='Measurement stopped';notify('Measurement cleared — nothing saved')}
 function openCorrections(){const el=document.getElementById('corrections');el.classList.toggle('hidden');renderCorrections();if(!el.classList.contains('hidden'))el.scrollIntoView({block:'start',behavior:'smooth'})}
 function renderCorrections(){const el=document.getElementById('correctionList');el.innerHTML=s.holeThrows.length?s.holeThrows.map((t,i)=>'<div class="edit-throw"><span>Throw '+(i+1)+' · '+escapeHtml(t.discId?discSnapshotLabel(t):t.disc)+' · '+t.distance+' ft</span><span><button class="mini" onclick="editThrow('+i+')">Edit</button> <button class="mini" onclick="removeThrow('+i+')">×</button></span></div>').join(''):'<p class="small muted">No throws recorded for this hole yet.</p>'}
@@ -2163,7 +2866,10 @@ function loadAppState(){
    }
   }
   // Load only the selected course's existing mappings, without writing them.
-  selectCourse(c.id);
+  if(selectCourse(c.id)===false){
+   appStateBlocked=true;
+   safeAppSaveMessage('Saved round recovery is paused because its course mappings could not be loaded safely. Original round and mapping data were kept. Use Export Full Backup before investigating; do not reset storage.');return;
+  }
   for(const key of ['active','hole','started','disc','discs','throws','penalty','completed','rounds','last','remaining','scoreThrows','pendingScore'])if(v[key]!==undefined)s[key]=v[key];
   physicalRound=restoredPhysical;
   s.holeThrows=s.throws.filter(t=>t.hole===s.hole);s.pinMode=false;
@@ -2347,6 +3053,20 @@ function updatePlayLayout(){
  renderVoiceStatus();
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMapExpanded(false)});
+function historyTeammateScores(round,holeOrder){
+ if(round.mode!=='group')return '';
+ const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x),saved=round.otherScores;
+ const heading='<h3 style="margin-top:16px">Teammate scores</h3>';
+ if(!object(saved))return heading+'<p class="muted small">Teammate scores were not recorded or are unavailable for this round.</p>';
+ const rank=n=>holeOrder?holeOrder.indexOf(n):n;
+ return heading+['Mike','Chris','Dave'].map(name=>{
+  const data=saved[name],entries=object(data)?Object.entries(data):[];
+  const scores=entries.filter(([h,n])=>/^[1-9]\d*$/.test(h)&&Number.isSafeInteger(Number(h))&&(!holeOrder||holeOrder.includes(Number(h)))&&Number.isInteger(n)&&n>=1&&n<=20).sort(([a],[b])=>rank(Number(a))-rank(Number(b)));
+  const warning=(data!==undefined&&!object(data)||scores.length!==entries.length)?'<p class="small muted">Some saved scores could not be displayed safely.</p>':'';
+  const rows=scores.map(([h,n])=>'<tr><td>'+escapeHtml(holeLabel(Number(h),round.courseId||null))+'</td><td>'+n+'</td></tr>').join('');
+  return '<div class="history"><strong>'+name+'</strong>'+warning+(scores.length?'<p class="small muted">Total: '+scores.reduce((sum,[h,n])=>sum+n,0)+' strokes · '+scores.length+' scored '+(scores.length===1?'hole':'holes')+' · Recorded holes only</p><table class="scoreboard"><thead><tr><th>Hole</th><th>Score</th></tr></thead><tbody>'+rows+'</tbody></table>':'<p class="small muted">No recorded scores.</p>')+'</div>';
+ }).join('');
+}
 function renderRoundHistory(){
  const holder=document.getElementById('roundHistory');
  if(!s.rounds.length){holder.textContent='No completed rounds yet.';return}
@@ -2361,7 +3081,7 @@ function renderRoundHistory(){
   const throwDetails=throws?.length?[...new Set(throws.map(t=>t.hole))].sort((a,b)=>rank(a)-rank(b)).map(h=>'<div class="history"><strong>Hole '+holeLabel(h,r.courseId||null)+'</strong><ol>'+throws.filter(t=>t.hole===h).map(t=>'<li>'+escapeHtml(t.discId?discSnapshotLabel(t):t.disc||'Disc not recorded')+' · '+(Number.isFinite(t.distance)?t.distance+' ft':'Distance not recorded')+(t.throwType?' · '+escapeHtml(t.throwType):'')+(t.made?' · In the basket':'')+'</li>').join('')+'</ol></div>').join(''):throws?'No recorded throws.':'Throw details were not saved for this older round ('+r.throws+' recorded throws).';
   const unfinished=r.unfinishedHole;
   const unfinishedDetails=unfinished&&Number.isInteger(unfinished.hole)?'<div class="notice"><strong>Unfinished Hole '+holeLabel(unfinished.hole,r.courseId||null)+'</strong><p>Penalties: '+penalties(unfinished.penalty)+'.'+(unfinished.pendingScore&&Number.isFinite(unfinished.scoreThrows)?' Pending score: '+unfinished.scoreThrows+' throws plus penalties; not included in the total.':' No confirmed score; not included in the total.')+'</p></div>':'';
-  return '<details class="history round-history-entry"><summary><strong>'+escapeHtml(name)+'</strong><span class="small" style="display:block;margin-top:5px">'+escapeHtml(r.date)+(r.courseId===dryCreekCourse.id?' · '+(r.layoutId==='custom-13'?'Custom 13 (unofficial 2A)':'Main 12'):'')+' · '+(r.endedEarly?'Ended Early':'Completed')+'<br>Total: '+total+' strokes · '+scores.length+' scored '+(scores.length===1?'hole':'holes')+'</span></summary><h3 style="margin-top:16px">Hole scores</h3>'+(rows?'<table class="scoreboard"><thead><tr><th>Hole</th><th>Score</th><th>Penalties</th></tr></thead><tbody>'+rows+'</tbody></table>':'<p>No confirmed hole scores were recorded.</p>')+unfinishedDetails+'<h3 style="margin-top:16px">Recorded throws</h3><div class="small">'+throwDetails+'</div></details>';
+  return '<details class="history round-history-entry"><summary><strong>'+escapeHtml(name)+'</strong><span class="small" style="display:block;margin-top:5px">'+escapeHtml(r.date)+(r.courseId===dryCreekCourse.id?' · '+(r.layoutId==='custom-13'?'Custom 13 (unofficial 2A)':'Main 12'):'')+' · '+(r.endedEarly?'Ended Early':'Completed')+'<br>'+(r.mode==='group'?'Your total: ':'Total: ')+total+' strokes · '+scores.length+' scored '+(scores.length===1?'hole':'holes')+'</span></summary><h3 style="margin-top:16px">'+(r.mode==='group'?'Your hole scores':'Hole scores')+'</h3>'+(rows?'<table class="scoreboard"><thead><tr><th>Hole</th><th>Score</th><th>Penalties</th></tr></thead><tbody>'+rows+'</tbody></table>':'<p>No confirmed hole scores were recorded.</p>')+unfinishedDetails+historyTeammateScores(r,historyOrder)+'<h3 style="margin-top:16px">Recorded throws</h3><div class="small">'+throwDetails+'</div></details>';
  }).join('');
 }
 function resumeRound(){if(isPhysicalRound()&&s.pendingScore&&!pendingBasketValid()){show('play');unverifiedPendingBasket();return}show(s.active&&s.pendingScore?'score':'play')}
