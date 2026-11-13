@@ -1034,15 +1034,25 @@ function savePhysicalLanding(distance,source,landingPoint){
  catch(e){safeAppSaveMessage('Throw saved; the display could not update. Reload to view the saved round.')}
  return true;
 }
+function basketThrowDetails(){
+ const hole=holeMapData(s.hole),last=s.holeThrows.at(-1);
+ const start=s.started?throwStartGps:last?last.landingCoordinates:hole.tee;
+ if(!isMapPoint(hole.basket)){notify('Basket coordinates are unavailable for this hole. Map the active basket before finishing; no throw was added.');return null}
+ if(!isMapPoint(start)){notify(s.started?'Throw start GPS is unavailable. Capture or retry the origin before finishing; the throw is still active.':'Previous landing or tee coordinates are unavailable. Start Throw at your actual lie and capture GPS before finishing; no throw was added.');return null}
+ const distance=feetBetween(start,hole.basket);
+ if(!Number.isFinite(distance)||distance<0){notify('Basket distance could not be calculated. No throw was added.');return null}
+ return {distance,...copyThrowCoordinates(start,hole.basket)};
+}
 function finishPhysicalHole(){
  if(!s.active||s.pendingScore)return;
- if(s.started){notify('Finish or cancel the active throw first');return}
  const disc=currentThrowDisc();if(!disc){notify(physicalPlayError||'Select the physical disc used for your final throw.');return}
+ const details=basketThrowDetails();if(!details)return;
  if(!physicalRoundAction(()=>{
-  const t={hole:s.hole,...disc,distance:s.remaining,source:'basket',throwType:currentThrowType,made:true,...newPhysicalThrowMetadata(s.remaining,'basket')};
+  const t={hole:s.hole,...disc,...details,source:'basket',throwType:currentThrowType,made:true,...newPhysicalThrowMetadata(details.distance,'basket')};
   pendingBasket={courseId:selectedCourseId,generation:roundGeneration,roundId:physicalRound.roundId??null,hole:s.hole,throw:t,remaining:s.remaining};
-  s.holeThrows.push(t);s.throws.push(t);s.last=s.remaining;s.remaining=0;s.scoreThrows=s.holeThrows.length;s.pendingScore=true;clearRoundDisc();currentThrowType='';
+  s.holeThrows.push(t);s.throws.push(t);s.last=details.distance;s.remaining=0;s.scoreThrows=s.holeThrows.length;s.pendingScore=true;s.started=false;s.pinMode=false;clearRoundDisc();currentThrowType='';throwStartGps=null;
  }))return;
+ clearPhysicalThrowPreview();
  show('score');
 }
 function confirmPhysicalScore(){
@@ -1193,14 +1203,14 @@ function startRound(){if(!appStateMutationAllowed())return;
  discardPhysicalGps();pendingBasket=null;roundGeneration++;show('play');focusHole();notify('Round started · Hole '+holeLabel(s.hole));
 }
 function primaryAction(){if(!appStateMutationAllowed())return;if(isPhysicalRound())return beginPhysicalThrow();if(!s.started&&!s.disc){notify('Select a disc before each throw');return}if(!s.started){s.started=true;throwStartGps=null;captureThrowStart();notify('Throw started — GPS origin requested')}else gpsLanding();render()}
-function saveLanding(distance,source){if(!appStateMutationAllowed())return;if(isPhysicalRound())return savePhysicalLanding(distance,source);if(!s.active){notify('Start a round first');return}if(!s.started){notify('Say Start throw first');return}distance=Math.max(1,Math.round(distance));const t={hole:s.hole,disc:s.disc,distance,source,throwType:currentThrowType};s.throws.push(t);s.holeThrows.push(t);s.last=distance;s.remaining=Math.max(0,s.remaining-distance);s.started=false;s.pinMode=false;s.disc='';currentThrowType='';notify('Throw saved · '+distance+' ft · '+s.disc);render()}
+function saveLanding(distance,source,landingPoint){if(!appStateMutationAllowed())return;if(isPhysicalRound())return savePhysicalLanding(distance,source,landingPoint);if(!s.active){notify('Start a round first');return}if(!s.started){notify('Say Start throw first');return}distance=Math.max(1,Math.round(distance));const t={hole:s.hole,disc:s.disc,distance,source,throwType:currentThrowType,...copyThrowCoordinates(throwStartGps,landingPoint)};s.throws.push(t);s.holeThrows.push(t);s.last=distance;s.remaining=Math.max(0,s.remaining-distance);s.started=false;s.pinMode=false;s.disc='';currentThrowType='';notify('Throw saved · '+distance+' ft · '+s.disc);render()}
 function gpsLanding(){captureGpsLanding()}
 function togglePin(){if(isPhysicalRound()){const c=physicalGps;if(!physicalGpsValid(c)||!appStateMutationAllowed()||c.originState!=='ready'||c.request){notify('Wait for a saved GPS origin and finish any GPS request before placing a pin.');return}s.pinMode=!s.pinMode;bindPhysicalMapLanding();render();return}if(!s.started){notify('Start throw before placing a pin');return}s.pinMode=!s.pinMode;notify(s.pinMode?'Tap satellite map to place landing':'Map pin mode off');render()}
 function mapTap(e){if(!s.pinMode)return;const rect=e.currentTarget.getBoundingClientRect();const x=(e.clientX-rect.left)/rect.width;const y=(e.clientY-rect.top)/rect.height;const distance=Math.max(10,Math.round(Math.hypot(x-.2,y-.9)*260));saveLanding(distance,'demo map pin')}
 function undoThrow(){
  if(!appStateMutationAllowed())return;
  if(isPhysicalRound())return undoPhysicalThrow();
- const previous=s,cancelStarted=s.started;
+ const previous=s,cancelStarted=s.started,basketUndo=!!s.pendingScore;
  if(cancelStarted)s={...s,started:false};
  else{
   const t=s.holeThrows.at(-1);if(!t){notify('No throw to undo');return}
@@ -1210,15 +1220,29 @@ function undoThrow(){
   }
   // Same recorded-distance estimate as restoreHoleThrows(); no GPS lie is inferred.
   s={...s,holeThrows:surviving,throws:s.throws.filter((_,i)=>i!==index),last:surviving.at(-1)?.distance??0,
-   remaining:surviving.reduce((remaining,t)=>Math.max(0,remaining-t.distance),length)};
+   remaining:surviving.reduce((remaining,t)=>Math.max(0,remaining-t.distance),length),...(s.pendingScore?{pendingScore:false,scoreThrows:undefined,disc:''}:{})};
  }
  let saved=false;
  try{saved=saveAppState()}catch(e){/* Restore the prior state if persistence throws. */}
  if(!saved)s=previous;
- renderCorrections();render();
+ renderCorrections();if(saved&&basketUndo)show('play');else render();
  notify(saved?(cancelStarted?'Started throw canceled':'Last throw removed'):'Undo was not saved. Your previous throw state was kept. Resolve any save warning before retrying.');
 }
-function finishHole(){if(!appStateMutationAllowed())return;if(isPhysicalRound())return finishPhysicalHole();if(!s.active)return;if(s.started){notify('Finish or cancel the active throw first');return}if(!s.disc){notify('Select the disc used for your final throw');return}const n=s.holeThrows.length+1;s.holeThrows.push({hole:s.hole,disc:s.disc,distance:s.remaining,source:'basket',throwType:currentThrowType,made:true});s.throws.push(s.holeThrows.at(-1));s.last=s.remaining;s.remaining=0;s.scoreThrows=n;s.pendingScore=true;show('score')}
+function finishHole(){
+ if(!appStateMutationAllowed())return;
+ if(isPhysicalRound())return finishPhysicalHole();
+ if(!s.active||s.pendingScore)return;
+ if(!s.disc){notify('Select the disc used for your final throw');return}
+ const details=basketThrowDetails();if(!details)return;
+ const previous={state:s,currentThrowType,throwStartGps};let saved=false;
+ try{
+  const t={hole:s.hole,disc:s.disc,...details,source:'basket',throwType:currentThrowType,made:true};
+  s={...s,throws:[...s.throws,t],holeThrows:[...s.holeThrows,t],last:details.distance,remaining:0,scoreThrows:s.holeThrows.length+1,pendingScore:true,started:false,pinMode:false,disc:''};
+  currentThrowType='';throwStartGps=null;saved=saveAppState();
+ }catch(e){/* Keep the active throw and disc if recording could not be saved. */}
+ if(!saved){s=previous.state;currentThrowType=previous.currentThrowType;throwStartGps=previous.throwStartGps;notify('Basket throw was not saved. Your previous round state was kept. Check the save warning before retrying.');return}
+ show('score');
+}
 function adjust(kind,d){if(!appStateMutationAllowed())return;if(isPhysicalRound()&&s.pendingScore&&!pendingBasketValid()){unverifiedPendingBasket();return}if(kind==='throws')s.scoreThrows=Math.max(1,s.scoreThrows+d);else s.penalty=Math.max(0,s.penalty+d);renderScore();saveAppState()}
 function renderScore(){const holePar=parFor();document.getElementById('scoreHole').textContent='Hole '+holeLabel(s.hole)+' · Par '+holePar;const n=s.scoreThrows+s.penalty;document.getElementById('scoreValue').textContent=n;document.getElementById('throwsValue').textContent=s.scoreThrows;document.getElementById('penaltyValue').textContent=s.penalty;document.getElementById('scoreLabel').textContent=n===holePar?'Par':n===1?'Ace':n===holePar-1?'Birdie':n>holePar?'+'+(n-holePar)+' over par':(n-holePar)+' under par'}
 function confirmScore(){
@@ -2262,7 +2286,7 @@ function suspendPhysicalGps(){
  else if(kind==='landing')c.message='Landing request stopped. Tap landing again when you return.';
 }
 function captureThrowStart(){if(isPhysicalRound()){if(!physicalGps)createPhysicalGps();requestPhysicalGps('origin');return}const generation=roundGeneration,frozen=physicalRound?.frozenDisc;gpsOnce(p=>{if(isPhysicalRound()&&physicalRound.frozenDisc!==frozen)return;if(generation!==roundGeneration||!s.active||!s.started)return;if(!appStateMutationAllowed())return;throwStartGps=p;if(gmap){if(throwStartMarker)throwStartMarker.setMap(null);throwStartMarker=new google.maps.Marker({map:gmap,position:p,label:'S',title:'Throw start'})}saveAppState();updateThrowStatus()})}
-function markLanding(p,source){if(isPhysicalRound())return completePhysicalLanding(p,source);if(!appStateMutationAllowed())return;if(!throwStartGps){notify('Start GPS position unavailable. Allow location access or try again.');return}if(gmap){if(landingMarker)landingMarker.setMap(null);landingMarker=new google.maps.Marker({map:gmap,position:p,draggable:true,label:'L',title:'Landing point'});landingMarker.addListener('dragend',e=>{notify('Landing pin adjusted · press Start Throw for next throw')});if(throwLine)throwLine.setMap(null);throwLine=new google.maps.Polyline({map:gmap,path:[throwStartGps,p],strokeColor:'#F58220',strokeWeight:4})}saveLanding(feetBetween(throwStartGps,p),source);if(!isPhysicalRound()||!s.started)throwStartGps=p}
+function markLanding(p,source){if(isPhysicalRound())return completePhysicalLanding(p,source);if(!appStateMutationAllowed())return;if(!throwStartGps){notify('Start GPS position unavailable. Allow location access or try again.');return}if(gmap){if(landingMarker)landingMarker.setMap(null);landingMarker=new google.maps.Marker({map:gmap,position:p,draggable:true,label:'L',title:'Landing point'});landingMarker.addListener('dragend',e=>{notify('Landing pin adjusted · press Start Throw for next throw')});if(throwLine)throwLine.setMap(null);throwLine=new google.maps.Polyline({map:gmap,path:[throwStartGps,p],strokeColor:'#F58220',strokeWeight:4})}saveLanding(feetBetween(throwStartGps,p),source,p);if(!isPhysicalRound()||!s.started)throwStartGps=p}
 function captureGpsLanding(){if(isPhysicalRound()){requestPhysicalGps('landing');return}const generation=roundGeneration,frozen=physicalRound?.frozenDisc;gpsOnce(p=>{if(isPhysicalRound()&&physicalRound.frozenDisc!==frozen)return;if(generation===roundGeneration&&s.active&&s.started)markLanding(p,'GPS')})}
 function validateBuiltInMappingImport(o,c,definitions=mappingHoles(c)){
  const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
@@ -2648,10 +2672,13 @@ function voiceColorMatches(spoken,color){
  return requested.length>0&&requested.every(w=>available.includes(w));
 }
 function physicalVoiceMatches(phrase,bag){
- const variants=[phrase,phrase.replace(/^(?:select|choose|use)\s+/,'')];
+ const normalized=normalizeVoiceDiscText(phrase);
+ const variants=[normalized,normalized.replace(/^(?:select|choose|use)\s+/,'')];
  return bag.filter(d=>variants.some(p=>{
   const name=normalizeVoiceDiscText(d.name);if(!name)return false;if(p===name)return true;
-  return p.startsWith(name+' ')&&voiceColorMatches(p.slice(name.length+1),d.color);
+  // Keep the complete model name intact; only the other words may describe its saved color.
+  return (p.startsWith(name+' ')&&voiceColorMatches(p.slice(name.length+1),d.color))||
+   (p.endsWith(' '+name)&&voiceColorMatches(p.slice(0,-name.length-1),d.color));
  }));
 }
 function showVoiceDiscChoices(matches,diagnostic=null){
@@ -3040,7 +3067,7 @@ function updatePlayLayout(){
  document.getElementById('pinLanding').setAttribute('aria-pressed',String(s.pinMode));
  document.getElementById('undoAction').textContent=s.started?'Cancel throw':pending?'Undo basket':'Undo';
  if(pending){document.getElementById('primary').textContent='REVIEW HOLE SCORE';document.getElementById('primary').disabled=!pendingBasketValid()}
- document.getElementById('finishBasket').disabled=s.started||!currentThrowDisc();
+ document.getElementById('finishBasket').disabled=!!s.pendingScore||!currentThrowDisc();
  document.getElementById('throwDisc').disabled=s.started;
  document.getElementById('currentHoleLabel').textContent=roundHoleTitle();
  document.getElementById('currentHolePar').textContent=(parFor()===null?'Par not set':'Par '+parFor())+' ▾';
