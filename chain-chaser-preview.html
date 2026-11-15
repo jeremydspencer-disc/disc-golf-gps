@@ -212,6 +212,12 @@ input:invalid{border-color:var(--danger)}
 #fullBackupPreview::backdrop{background:var(--scrim)}#fullBackupPreview input[type="file"]{min-width:0;max-width:100%}#fullBackupPreview .mini{min-width:48px;min-height:48px}#fullBackupPreview .backup-preview-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#fullBackupPreview dt{color:var(--muted);font-size:12px}#fullBackupPreview dd{margin:4px 0 0;overflow-wrap:anywhere}#fullBackupPreview li{margin:8px 0;overflow-wrap:anywhere}#fullBackupPreviewContent{overflow-wrap:anywhere}
 
 #discCollectionImport{width:calc(100% - 24px);max-width:460px;max-height:calc(100dvh - 24px);padding:0;background:var(--panel);color:var(--text);border:1px solid var(--control-border);border-radius:17px;overflow-y:auto;overflow-wrap:anywhere}#discCollectionImport::backdrop{background:var(--scrim)}#discCollectionImport input[type="file"]{min-width:0;max-width:100%}#discCollectionImport .mini{min-width:48px;min-height:48px}#discCollectionImport .two{align-items:start}#discCollectionImport .btn{min-height:48px;white-space:normal}#discCollectionImport .disc-collection-counts{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px}#discCollectionImport dt,#discCollectionImport dd{margin:0}#discCollectionImport li{margin:8px 0}
+
+.round-history-entry>summary::after{content:"";display:block;clear:both}.round-history-relative{float:right;max-width:40%;margin-left:12px;text-align:right;color:var(--accent);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.round-history-relative strong{display:block;font-family:inherit;font-size:24px;font-weight:750;line-height:1.15}.round-history-relative small{display:block;margin-top:3px;font-size:12px;line-height:1.4;color:var(--muted)}
+
+#analyze .row{align-items:flex-start}#analyticsRefresh{min-height:48px;flex-shrink:0;max-width:42%;white-space:normal}#analyze details>summary{min-height:44px;cursor:pointer;font-weight:750;padding:6px 0}#analyze .analytics-exclusions>summary{font-weight:600;font-size:13px}#analyze .field{min-height:48px;min-width:0;max-width:100%;font-size:16px}#analyze .analytics-filter-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}#analyze .analytics-filter-grid>div{min-width:0}#analyze .analytics-filter-grid .field{margin-bottom:4px}#analyze .analytics-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}#analyze .analytics-active-filters{overflow-wrap:anywhere}#analyze .analytics-metric{min-width:0;padding:12px;overflow-wrap:anywhere}#analyze .analytics-metric .small{display:block;margin-top:6px;line-height:1.4}#analyze .analytics-panel,#analyze .analytics-filter-panel{overflow-wrap:anywhere}#analyze h4{margin:12px 0 6px;font-size:17px}#analyze h5{font-size:15px;margin:12px 0 6px}#analyze .analytics-disc-card,#analyze .analytics-course-card{border-top:1px solid var(--border);padding:8px 0 12px}#analyze .analytics-disc-id{font-size:12px;overflow-wrap:anywhere}#analyze .analytics-disc-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;font-size:13px;margin:12px 0}#analyze .analytics-distance-track{height:12px;border-radius:8px;background:var(--bg);overflow:hidden;margin:10px 0}#analyze .analytics-distance-track>span{display:block;height:100%;border-radius:8px;background:var(--accent)}#analyze .analytics-comparison{margin:14px 0;padding:0 0 16px;border-bottom:1px solid var(--border)}#analyze .analytics-relative-value{font-size:22px;font-weight:750;color:var(--accent);margin:10px 0}#analyze .analytics-relative-track{height:16px;position:relative;background:var(--bg);border-radius:4px;margin-top:12px}#analyze .analytics-relative-track:after{content:'';position:absolute;left:50%;height:100%;width:2px;background:var(--muted)}#analyze .analytics-relative-bar{position:absolute;top:3px;height:10px;background:var(--accent);border-radius:3px}#analyze .analytics-date-labels{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin:5px 0 8px}#analyze .analytics-trend-chart svg{display:block;width:100%;height:auto;max-height:200px;color:var(--text)}#analyze .analytics-trend-chart svg text{fill:currentColor;font:18px system-ui,sans-serif}#analyze .analytics-trend-chart circle{fill:var(--accent)}#analyze .analytics-trend-line{fill:none;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke}#analyze .analytics-zero{stroke:var(--control-border);stroke-dasharray:4 4}#analyze .analytics-exclusions li{font-size:13px;line-height:1.5;margin:6px 0}#analyze .analytics-exclusions ul{padding-left:20px}#analyze .notice{font-size:13px;line-height:1.5}#analyze .small{line-height:1.5}#analyticsLegacyView .metric{min-width:0;overflow-wrap:anywhere}@media(min-width:370px){#analyze .analytics-filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#analyze .analytics-wide{grid-column:1/-1}}
+
+#analyze .ask-chain-chaser-answer{margin-top:12px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow-wrap:anywhere}#analyze .ask-chain-chaser-result{font-size:17px;font-weight:700;line-height:1.45;color:var(--accent)}#analyze .ask-chain-chaser-item{border-top:1px solid var(--border);margin-top:12px;padding-top:8px}#analyze .ask-chain-chaser-item p{margin:6px 0}#askChainChaserButton{min-height:48px}#askChainChaserQuestionText{overflow-wrap:anywhere}
 </style></head><body><div class="app"><header class="top"><img class="home-header-logo" src="./chain-chaser-header-logo.png?v=108e60d4" alt="Chain Chaser" width="2172" height="724"><div class="header-titles"><div class="eyebrow">CHAIN CHASER</div><div class="title" id="heading">Courses</div></div><details class="app-menu"><summary aria-label="App settings and information">•••</summary><div class="menu-panel"><span class="pill" id="status">DEMO MODE</span><p class="foot">Prototype: Google satellite map and GPS are real when enabled. Round scoring, voice, group sync and offline support are still demos. Imported course mapping is saved in this browser.</p></div></details></header><p id="appSaveStatus" class="notice hidden" role="status" aria-live="polite"></p>
 <section id="home">
 <p id="sharedLibraryHomeStatus" class="notice hidden" role="status" aria-live="polite"></p>
@@ -272,7 +278,24 @@ input:invalid{border-color:var(--danger)}
 </section>
 <section id="board" class="hidden"><h2 id="boardTitle" class="hidden">Round scorecard</h2><div class="notice" id="boardNotice">Scores update immediately in this simulated group. Offline entries would sync when reconnected in the finished app.</div><div class="card"><h3>Current standings</h3><table class="scoreboard"><thead><tr><th>Player</th><th>Total</th><th>Current hole</th></tr></thead><tbody id="boardRows"></tbody></table></div><div class="card"><h3>Your hole scores</h3><div id="scorecard"></div></div><div class="card" id="scorekeeperCard"><h3>Scorekeeper demo</h3><p class="muted small">Enter another player's hole score to see the scoreboard update.</p><select id="playerScore" class="field"><option>Mike</option><option>Chris</option><option>Dave</option></select><div class="two"><select id="playerHole" class="field"></select><input id="playerStrokes" class="field" type="number" min="1" max="20" value="3"></div><button class="btn alt" onclick="saveOtherScore()">Save teammate score</button></div><button class="btn" onclick="show('play')">← BACK TO PLAY</button></section>
 <section id="score" class="hidden"><div class="eyebrow" id="scoreHole">Hole 1 · Par 3</div><h2>Confirm Hole Score</h2><div class="card" style="text-align:center"><div class="eyebrow">Hole score</div><div id="scoreValue" style="font-size:64px;font-weight:800">3</div><div id="scoreLabel">Par</div></div><div class="card"><div class="row"><div>Throws recorded</div><div class="counter"><button onclick="adjust('throws',-1)">−</button><strong id="throwsValue">3</strong><button onclick="adjust('throws',1)">+</button></div></div><hr style="border:0;border-top:1px solid var(--border);margin:18px 0"><div class="row"><div>Penalty strokes</div><div class="counter"><button onclick="adjust('penalty',-1)">−</button><strong id="penaltyValue">0</strong><button onclick="adjust('penalty',1)">+</button></div></div></div><button class="btn" onclick="confirmScore()">✓ CONFIRM SCORE & NEXT HOLE</button><button class="btn outline" onclick="show('play')">Back to hole</button></section>
-<section id="analyze" class="hidden"><p class="muted small">Current-round records. Physical averages use eligible unedited GPS/map-pin distances, following Disc Details rules. Legacy/demo/unverified data is separate. GPS labels are not independently verified.</p><div class="two"><div class="metric"><div class="eyebrow">Recorded throws</div><strong id="statThrows">0</strong></div><div class="metric"><div class="eyebrow" id="statAvgLabel">Avg distance</div><strong id="statAvg">— ft</strong></div></div><div class="card"><h3>Distance by disc</h3><div id="discStats" class="muted small">Record a throw to see data.</div></div><div class="card"><h3>Round scoring</h3><div id="scoreStats" class="muted small">Finish a hole to see its score.</div></div><p class="hint">Planned analytics: putting percentages, fairway accuracy, distance trends, and per-course comparisons.</p></section>
+<section id="analyze" class="hidden" aria-label="Gameplay Analytics">
+<p class="small muted">Saved gameplay on this browser. Filters and charts are read-only; unsaved changes are not included.</p>
+<div class="row"><p class="small muted" id="analyticsSnapshotStatus" role="status" aria-live="polite">Open statistics to read saved data.</p><button type="button" class="mini" id="analyticsRefresh" onclick="refreshSavedGameplayAnalytics()">Refresh saved data</button></div>
+<details class="card analytics-filter-panel"><summary>Filters</summary><form onsubmit="event.preventDefault();renderSavedGameplayAnalytics()"><div class="analytics-filter-grid">
+<div class="analytics-wide"><label for="analyticsCourse" class="small">Course</label><select class="field" id="analyticsCourse" onchange="renderSavedGameplayAnalytics()"><option value="">All courses</option></select></div>
+<div class="analytics-wide"><label for="analyticsDisc" class="small">Physical disc · throw statistics only</label><select class="field" id="analyticsDisc" onchange="renderSavedGameplayAnalytics()"><option value="">All physical discs</option></select></div>
+<div><label for="analyticsFrom" class="small">From date · inclusive</label><input type="date" class="field" id="analyticsFrom" onchange="renderSavedGameplayAnalytics()"></div><div><label for="analyticsTo" class="small">To date · inclusive</label><input type="date" class="field" id="analyticsTo" onchange="renderSavedGameplayAnalytics()"></div>
+<div class="analytics-wide"><label for="analyticsCompletion" class="small">Saved round scope</label><select class="field" id="analyticsCompletion" onchange="renderSavedGameplayAnalytics()"><option value="completed">Completed rounds only</option><option value="all">All saved rounds, including active / ended early</option><option value="ended-early">Ended-early rounds only</option><option value="active">Saved active round only</option></select></div></div>
+<p class="small muted">Throw dates use recorded timestamps. Scoring dates use unambiguous saved round dates. Missing and ambiguous dates are excluded when a date range is applied.</p><button type="button" class="btn outline" onclick="resetGameplayAnalyticsFilters()">Reset filters</button></form></details>
+<p id="analyticsFilterSummary" class="small muted analytics-active-filters"></p><div id="analyticsOverview" class="analytics-overview" aria-label="Saved gameplay overview"></div><p id="analyticsCoverage" class="small muted" aria-live="polite"></p>
+<p class="hint">Eligible distance averages use positive, unedited physical-disc GPS/map-pin records only. Basket estimates, manual and corrected distances, zeroes, and unknown legacy measurements are excluded. GPS labels are not independently verified.</p>
+<details class="card analytics-panel" id="askChainChaserPanel"><summary>Ask Chain Chaser</summary><p class="small muted">Choose a predefined statistics question. Answers are calculated locally from the saved dashboard snapshot and current filters.</p><form onsubmit="event.preventDefault();askChainChaser()"><label for="askChainChaserQuestion" class="small">Question</label><select class="field" id="askChainChaserQuestion" onchange="prepareAskChainChaser()"></select><p id="askChainChaserQuestionText" class="small muted"></p><div id="askChainChaserScope" class="hidden"><label for="askChainChaserGroup" class="small">Comparable course/layout group</label><select class="field" id="askChainChaserGroup" onchange="prepareAskChainChaser()"></select><p class="small muted">All groups are reported separately. Different layouts and course lengths are not ranked as equivalent.</p></div><button type="submit" class="btn" id="askChainChaserButton">Ask</button></form><div id="askChainChaserAnswer" class="ask-chain-chaser-answer" role="status" aria-live="polite"></div></details>
+<details class="card analytics-panel" open><summary>Disc performance · eligible distance</summary><p class="small muted">Each physical ID stays separate, even for identical names and colors. Bars show average eligible distance, scaled to the largest visible average.</p><label for="analyticsDiscSort" class="small">Sort physical discs</label><select class="field" id="analyticsDiscSort" onchange="renderSavedGameplayAnalytics()"><option value="average">Average distance · highest first</option><option value="longest">Longest distance · highest first</option><option value="measurements">Eligible measurements · most first</option><option value="throws">Recorded throws · most first</option><option value="name">Disc name · A–Z</option></select><div id="analyticsDiscs"></div></details>
+<details class="card analytics-panel" open><summary>Course performance · comparable scorecards</summary><p class="small muted">Averages and best rounds stay within saved layout / revision and par groups. Different groups are not pooled into an overall course ranking.</p><div id="analyticsCourses"></div></details>
+<details class="card analytics-panel"><summary>Personal scoring summary</summary><div id="analyticsOutcomes"></div></details>
+<details class="card analytics-panel"><summary>Data quality and exclusions</summary><div id="analyticsQuality"></div></details>
+<details class="card analytics-panel" id="analyticsLegacyView"><summary>Current / last round · existing statistics</summary><p class="small muted">This original view is unfiltered and can include legacy or demo records. Saved-dashboard filters do not change it.</p><p class="muted small">Current-round records. Physical averages use eligible unedited GPS/map-pin distances, following Disc Details rules. Legacy/demo/unverified data is separate. GPS labels are not independently verified.</p><div class="two"><div class="metric"><div class="eyebrow">Recorded throws</div><strong id="statThrows">0</strong></div><div class="metric"><div class="eyebrow" id="statAvgLabel">Avg distance</div><strong id="statAvg">— ft</strong></div></div><div class="card"><h3>Distance by disc</h3><div id="discStats" class="muted small">Record a throw to see data.</div></div><div class="card"><h3>Round scoring</h3><div id="scoreStats" class="muted small">Finish a hole to see its score.</div></div></details>
+</section>
 <section id="discs" class="hidden"><h2>My Discs</h2><p class="muted small">Tap a disc to edit its details. New rounds use this physical disc bag. Legacy active rounds continue using your previous bag.</p><details class="card"><summary>Disc Collection Backup</summary><p class="small muted">Disc Collection Backup saves your discs only. It does not restore previous rounds, scores, or statistics.</p><div class="two"><button type="button" class="btn alt" onclick="exportDiscCollection()">Export Discs</button><button type="button" class="btn outline" data-disc-import onclick="openDiscCollectionImport()" aria-haspopup="dialog" aria-controls="discCollectionImport">Import Discs</button></div><p class="small muted hidden" data-disc-import-note></p><p class="notice hidden" data-disc-collection-status role="status" aria-live="polite"></p></details><button type="button" class="btn alt" id="discAddToggle" aria-expanded="false" aria-controls="physicalDiscAddForm" onclick="toggleDiscAddForm()">+ Add Disc</button><form class="card hidden" id="physicalDiscAddForm" onsubmit="event.preventDefault();addDisc()"><fieldset id="physicalDiscAddFields"><legend>Add Disc</legend><label class="small" for="newDisc">Disc Name (required)</label><input id="newDisc" class="field" required placeholder="e.g. Destroyer"><label class="small" for="newDiscColor">Disc Color</label><input id="newDiscColor" class="field" placeholder="e.g. Blue/Yellow"><label class="small" for="newDiscCategory">Disc Type (required)</label><select class="field" id="newDiscCategory" required><option value="" disabled selected>Choose disc type</option><option value="drivers">Drivers</option><option value="fairways">Fairways</option><option value="midranges">Midranges</option><option value="putters">Putters</option></select><button type="submit" class="btn alt">Save Disc</button></fieldset></form><div class="disc-search"><label class="small" for="discSearch">Search discs</label><div class="disc-search-controls"><input id="discSearch" class="field" type="search" placeholder="Name or color" autocomplete="off" aria-controls="discList" oninput="setDiscSearch(this.value)"><button type="button" class="mini" id="clearDiscSearch" onclick="clearDiscSearch()" disabled>Clear</button></div></div><div class="disc-filters" role="group" aria-label="Filter discs by category"><button type="button" class="mini selected" data-disc-filter="all" aria-pressed="true" onclick="setDiscFilter('all')">All</button><button type="button" class="mini" data-disc-filter="drivers" aria-pressed="false" onclick="setDiscFilter('drivers')">Drivers</button><button type="button" class="mini" data-disc-filter="fairways" aria-pressed="false" onclick="setDiscFilter('fairways')">Fairways</button><button type="button" class="mini" data-disc-filter="midranges" aria-pressed="false" onclick="setDiscFilter('midranges')">Midranges</button><button type="button" class="mini" data-disc-filter="putters" aria-pressed="false" onclick="setDiscFilter('putters')">Putters</button></div><p class="notice hidden" id="discCategoryStatus" role="status"></p><div id="discList" class="disc-list" role="list" aria-label="Physical discs"></div><p id="discFilterEmpty" class="notice hidden" role="status">No discs in this category. Choose All to see your entire bag.</p></section>
 <section id="measure" class="hidden measure-screen"><div class="eyebrow">PRACTICE · NO SAVED DATA</div><p class="muted small">Set your starting point once, then walk to each disc. Distance updates live from the same starting position.</p><div class="distance-hero"><div class="eyebrow">DISTANCE FROM START</div><div id="measureDistance" class="big">— ft</div><div id="measureAccuracy" class="small muted">Waiting to set starting point</div></div><button class="btn" onclick="setMeasureStart()">📍 Set / Reset Starting Point</button><button class="btn outline" onclick="stopMeasuring()">Stop Measuring</button><div class="notice">No discs, rounds, throws, or measurements are stored. Requires GPS permission and HTTPS or localhost.</div></section><section id="rounds" class="hidden"><div id="roundHistory" class="card muted">No completed demo rounds yet.</div><p class="small muted">Rounds and discs are saved automatically in this browser.</p></section>
 <section id="more" class="hidden" aria-label="More"><h2>More</h2>
@@ -920,7 +943,7 @@ function syncAppHeader(tab){
  const menu=document.getElementById('playMenu'),target=tab==='play'?document.querySelector('.app>.top'):document.querySelector('#play>.play-head');
  if(menu.parentElement!==target)target.appendChild(menu);
 }
-function show(tab){if(tab!=='play'){if(isPhysicalRound())suspendPhysicalGps();closeHoleReview();closeVoiceDiscChoice();if(isPhysicalRound()&&voiceOn)stopVoice()}if(tab!=='play')closeThrowDiscPicker(false);if(devSimEnabled){showDevSimulator();return}if(tab!=='mapper'&&mapEditorActive)leaveMapper();if(tab==='board'&&!s.active){notify('Start a round first');tab='home'}if(tab==='play'&&!s.active){notify('Start a round first');tab='home'}if(tab!=='play')setMapExpanded(false);document.querySelectorAll('section').forEach(x=>x.classList.add('hidden'));document.getElementById(tab).classList.remove('hidden');syncAppHeader(tab);if(tab==='discs')setDiscAddExpanded(false);updateNavigation(tab);if(tab==='more')renderMore();document.getElementById('heading').textContent=({home:'Courses',setup:'Round setup',courses:'Courses',play:'Play Round',score:'Hole complete',board:'Current Round Scorecard',analyze:'Gameplay Analytics',discs:'My Discs',rounds:'Round History',measure:'Measure Throw',mapper:'Map course',more:'More'})[tab];render();if(tab==='mapper')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},80);if(tab==='measure')beginMeasureWatch();if(tab==='play')beginPlayWatch();else stopPlayWatch();if(tab!=='measure')stopMeasureWatch();if(tab==='play')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},60)}
+function show(tab){if(tab!=='play'){if(isPhysicalRound())suspendPhysicalGps();closeHoleReview();closeVoiceDiscChoice();if(isPhysicalRound()&&voiceOn)stopVoice()}if(tab!=='play')closeThrowDiscPicker(false);if(devSimEnabled){showDevSimulator();return}if(tab!=='mapper'&&mapEditorActive)leaveMapper();if(tab==='board'&&!s.active){notify('Start a round first');tab='home'}if(tab==='play'&&!s.active){notify('Start a round first');tab='home'}if(tab!=='play')setMapExpanded(false);document.querySelectorAll('section').forEach(x=>x.classList.add('hidden'));document.getElementById(tab).classList.remove('hidden');syncAppHeader(tab);if(tab==='discs')setDiscAddExpanded(false);updateNavigation(tab);if(tab==='more')renderMore();document.getElementById('heading').textContent=({home:'Courses',setup:'Round setup',courses:'Courses',play:'Play Round',score:'Hole complete',board:'Current Round Scorecard',analyze:'Gameplay Analytics',discs:'My Discs',rounds:'Round History',measure:'Measure Throw',mapper:'Map course',more:'More'})[tab];if(tab==='analyze'){renderGameplayAnalytics();renderCompletedScoreSummary();refreshSavedGameplayAnalytics()}else render();if(tab==='mapper')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},80);if(tab==='measure')beginMeasureWatch();if(tab==='play')beginPlayWatch();else stopPlayWatch();if(tab!=='measure')stopMeasureWatch();if(tab==='play')setTimeout(()=>{if(gmap){google.maps.event.trigger(gmap,'resize');focusHole()}},60)}
 // New rounds use physical IDs; absent discMode always means legacy gameplay.
 let physicalRound=null,physicalPlayError='',physicalCorrectionThrow=null;
 function isPhysicalRound(){return physicalRound!==null}
@@ -1616,6 +1639,222 @@ function calculatePhysicalDiscStatistics(saved,discId){
  if(latestTime!==null)result.useLabel=undated||result.partial?'Latest dated use':'Last Used';
  return result;
 }
+// Analytics engine v1. Explicit parsed inputs only: no storage, DOM, live state,
+// record mutation, or persistence. sourceKey identifies an input position, not a new saved ID.
+// Normalize a version-1 saved app plus optional version-2 disc registry and
+// {roundContexts: [{version:1, roundId, courseId, revision}]} supplied by the caller.
+// Calculators accept {courseId, discId, layoutId, comparisonKey, dateFrom, dateTo,
+// completion}; completion defaults to 'completed', dates are inclusive ISO days.
+function analyticsObject(value){return value!==null&&typeof value==='object'&&!Array.isArray(value)}
+function analyticsId(value){return typeof value==='string'&&value.trim()?value:null}
+function analyticsPositiveInteger(value){return Number.isSafeInteger(value)&&value>0}
+function analyticsSynthetic(value){return !!value&&(value.simulated===true||['dev-simulator','demo map pin','simulator','synthetic','demo','test'].includes(value.source)||['simulated','simulator','synthetic','demo','test'].includes(value.recordingContext))}
+function analyticsDate(value){
+ const unknown={raw:typeof value==='string'?value:null,day:null,time:null,precision:'unknown'};
+ if(typeof value!=='string')return unknown;
+ if(/^\d{4}-\d{2}-\d{2}$/.test(value)){
+  const time=Date.parse(value+'T00:00:00.000Z');
+  if(Number.isFinite(time)&&new Date(time).toISOString().slice(0,10)===value)return {raw:value,day:value,time,precision:'day'};
+ }
+ const time=physicalStatisticsTime(value);
+ if(time!==null&&/^\d{4}-/.test(value))return {raw:value,day:value.slice(0,10),time,precision:'instant'};
+ return unknown; // Never guess locale, timezone, completion time, or a date from throw order.
+}
+function analyticsMetric(value,sampleCount,excluded,basis,warnings=[]){
+ return {value,sampleCount,excluded:{...excluded},basis,warnings:[...new Set(warnings)]};
+}
+function normalizeGameplayAnalytics(saved,registry=null,options={}){
+ const result={version:1,available:false,rounds:[],discs:[],warnings:[],ignoredCurrentThrowEntries:0};
+ const warn=(code,sourceKey)=>result.warnings.push({code,sourceKey});
+ if(!analyticsObject(saved)||saved.version!==1||!analyticsObject(saved.state)||!Array.isArray(saved.state.rounds)||typeof saved.state.active!=='boolean'){warn('INVALID_APP_SNAPSHOT','input');return result}
+ result.available=true;
+ const roundContexts=analyticsObject(options)?options.roundContexts??[]:[];
+ if(!analyticsObject(options))warn('INVALID_NORMALIZATION_OPTIONS','options');
+ let registryAvailable=false;
+ const discs=new Map();
+ if(registry!==null){
+  try{validatePhysicalDiscRegistry(registry);registryAvailable=true;for(const d of registry.discs)discs.set(d.id,{discId:d.id,name:d.name,color:d.color??null,category:d.category,archived:d.archived,registryStatus:'present',labels:[]})}
+  catch(e){warn('INVALID_DISC_REGISTRY','registry')}
+ }
+ const contextMap=new Map();
+ if(!Array.isArray(roundContexts))warn('INVALID_ROUND_CONTEXTS','contexts');
+ else for(const c of roundContexts){
+  if(!analyticsObject(c)||c.version!==1||!analyticsId(c.roundId)||!analyticsId(c.courseId)||typeof c.revision!=='string'||!/^[a-f0-9]{64}$/.test(c.revision)){warn('INVALID_ROUND_CONTEXT','contexts');continue}
+  if(contextMap.has(c.roundId)){contextMap.set(c.roundId,null);warn('DUPLICATE_ROUND_CONTEXT',c.roundId)}else contextMap.set(c.roundId,{courseId:c.courseId,revision:c.revision});
+ }
+ const candidates=[];
+ if(Array.isArray(saved.state.rounds))saved.state.rounds.forEach((r,i)=>candidates.push({raw:r,sourceKey:'history:'+i,active:false}));else warn('MISSING_HISTORY_ARRAY','state.rounds');
+ if(saved.state.active===true)candidates.push({raw:{courseId:saved.selectedCourseId,mode:saved.mode,discMode:saved.discMode,roundId:saved.roundId,layoutId:saved.layoutId,holeOrder:saved.holeOrder,scores:saved.state.completed,recordedThrows:saved.state.throws,otherScores:saved.otherScores},sourceKey:'current',active:true});
+ else if(saved.state.active===false){result.ignoredCurrentThrowEntries=Array.isArray(saved.state.throws)?saved.state.throws.length:0;if(result.ignoredCurrentThrowEntries)warn('INACTIVE_CURRENT_RECORDS_NOT_RECOUNTED','current')}
+ else warn('INVALID_ACTIVE_FLAG','state.active');
+ const roundIds=new Map(),throwIds=new Map();
+ for(const {raw,sourceKey,active} of candidates){
+  if(!analyticsObject(raw)){warn('INVALID_ROUND',sourceKey);continue}
+  const round={sourceKey,roundId:analyticsId(raw.roundId),courseId:analyticsId(raw.courseId),courseName:analyticsId(raw.courseName),mode:['solo','group'].includes(raw.mode)?raw.mode:'unknown',discMode:raw.discMode==='physical-v2'?'physical-v2':raw.discMode===undefined?'legacy':'unknown',completion:active?'active':raw.endedEarly===true?'ended-early':'completed',date:analyticsDate(raw.date),synthetic:analyticsSynthetic(raw),ambiguous:false,holes:[],throws:[],teammateScores:[],scorecardValid:false,totalScore:null,totalPar:null,relativeToPar:null,layoutId:analyticsId(raw.layoutId),holeOrder:null,revision:null,comparisonKey:null,comparisonBasis:null,warnings:[]};
+  const issue=code=>{if(!round.warnings.includes(code)){round.warnings.push(code);warn(code,sourceKey)}};
+  if(raw.roundId===undefined)issue('ROUND_ID_UNAVAILABLE_NO_DEDUPLICATION');
+  if(raw.roundId!==undefined&&!round.roundId){round.ambiguous=true;issue('INVALID_ROUND_ID')}
+  if(raw.mode!==undefined&&round.mode==='unknown'){round.ambiguous=true;issue('UNSUPPORTED_PLAYER_MODE')}
+  if(raw.endedEarly!==undefined&&typeof raw.endedEarly!=='boolean'){round.ambiguous=true;issue('INVALID_COMPLETION_FLAG')}
+  if(round.roundId){if(!roundIds.has(round.roundId))roundIds.set(round.roundId,[]);roundIds.get(round.roundId).push(round)}
+  if(!round.courseId)issue('MISSING_COURSE_ID');
+  if(!round.date.day)issue(active?'ACTIVE_ROUND_UNDATED':'AMBIGUOUS_OR_MISSING_ROUND_DATE');
+  if(round.discMode==='unknown')issue('UNSUPPORTED_DISC_MODE');
+  if(raw.layoutId!==undefined&&!round.layoutId)issue('INVALID_LAYOUT_ID');
+  if(Array.isArray(raw.holeOrder)&&raw.holeOrder.length&&raw.holeOrder.every(analyticsPositiveInteger)&&new Set(raw.holeOrder).size===raw.holeOrder.length)round.holeOrder=[...raw.holeOrder];
+  else if(raw.holeOrder!==undefined)issue('INVALID_HOLE_ORDER');
+  if(round.completion==='completed'&&!round.holeOrder)issue('HISTORICAL_HOLE_COVERAGE_UNVERIFIED');
+  const context=round.roundId?contextMap.get(round.roundId):null;
+  if(context&&context.courseId===round.courseId)round.revision=context.revision;
+  else if(contextMap.has(round.roundId)){round.ambiguous=true;issue('AMBIGUOUS_COURSE_CONTEXT')}
+  const seenHoles=new Map();
+  if(!Array.isArray(raw.scores))issue('MISSING_SCORE_RECORDS');
+  else for(let i=0;i<raw.scores.length;i++){
+   const x=raw.scores[i],valid=analyticsObject(x)&&analyticsPositiveInteger(x.hole)&&analyticsPositiveInteger(x.score);
+   const h={sourceKey:sourceKey+':score:'+i,hole:analyticsObject(x)&&analyticsPositiveInteger(x.hole)?x.hole:null,score:valid?x.score:null,par:analyticsObject(x)&&analyticsPositiveInteger(x.par)?x.par:null,penalty:analyticsObject(x)&&Number.isSafeInteger(x.penalty)&&x.penalty>=0?x.penalty:null,scoreThrowCount:analyticsObject(x)&&analyticsPositiveInteger(x.throws)?x.throws:null,valid:!!valid,relativeToPar:null,outcome:null};
+   if(round.holeOrder&&h.hole!==null&&!round.holeOrder.includes(h.hole)){h.valid=false;issue('SCORE_HOLE_OUTSIDE_LAYOUT')}
+   if(h.valid&&h.par!==null){h.relativeToPar=h.score-h.par;h.outcome=h.relativeToPar<=-2?'eagleOrBetter':h.relativeToPar===-1?'birdie':h.relativeToPar===0?'par':h.relativeToPar===1?'bogey':'doubleBogeyOrWorse'}
+   if(!h.valid)issue('INVALID_HOLE_SCORE');
+   if(h.par===null)issue('MISSING_SAVED_PAR');
+   if(h.penalty===null)issue('UNKNOWN_PENALTY_COUNT');
+   if(h.hole!==null){if(!seenHoles.has(h.hole))seenHoles.set(h.hole,[]);seenHoles.get(h.hole).push(h)}
+   round.holes.push(h);
+  }
+  for(const rows of seenHoles.values())if(rows.length>1){rows.forEach(h=>{h.valid=false;h.relativeToPar=null;h.outcome=null});issue('DUPLICATE_HOLE_SCORE')}
+  round.scorecardValid=round.holes.length>0&&round.holes.every(h=>h.valid);
+  if(round.completion==='completed'&&round.holeOrder&&(round.holes.length!==round.holeOrder.length||round.holes.some(h=>!round.holeOrder.includes(h.hole)))){round.scorecardValid=false;issue('INCOMPLETE_OR_INCOMPATIBLE_SCORECARD')}
+  if(round.scorecardValid){
+   const total=round.holes.reduce((n,h)=>n+h.score,0);round.totalScore=Number.isSafeInteger(total)?total:null;
+   if(round.holes.every(h=>h.par!==null)){const totalPar=round.holes.reduce((n,h)=>n+h.par,0);if(Number.isSafeInteger(totalPar))round.totalPar=totalPar}
+   if(round.totalScore!==null&&round.totalPar!==null)round.relativeToPar=round.totalScore-round.totalPar;
+   if(round.totalScore===null){round.scorecardValid=false;issue('SCORE_TOTAL_OVERFLOW')}
+  }
+  const list=raw.recordedThrows;
+  if(!Array.isArray(list))issue('MISSING_THROW_RECORDS');
+  else for(let i=0;i<list.length;i++){
+   const x=analyticsObject(list[i])?list[i]:{},name=analyticsId(x.disc),physicalId=analyticsId(x.discId);
+   const valid=analyticsObject(list[i])&&analyticsPositiveInteger(x.hole)&&(!round.holeOrder||round.holeOrder.includes(x.hole))&&!!name&&typeof x.source==='string'&&(x.simulated===undefined||typeof x.simulated==='boolean')&&(x.made===undefined||typeof x.made==='boolean')&&(x.throwType===undefined||typeof x.throwType==='string')&&(x.source==='basket'?x.made===true:x.made!==true);
+   const discId=round.discMode==='physical-v2'&&physicalId&&name&&typeof x.discColor==='string'?physicalId:null;
+   const t={sourceKey:sourceKey+':throw:'+i,roundSourceKey:sourceKey,throwId:analyticsId(x.throwId),hole:analyticsPositiveInteger(x.hole)?x.hole:null,discId,recordedDiscId:physicalId,discName:name,discColor:typeof x.discColor==='string'?x.discColor:null,valid:!!valid,distanceFeet:typeof x.distance==='number'&&Number.isFinite(x.distance)&&x.distance>=0?x.distance:null,source:typeof x.source==='string'?x.source:null,method:typeof x.distanceMethod==='string'?x.distanceMethod:null,date:analyticsDate(x.recordedAt),made:x.made===true,distanceManuallyEdited:x.distanceManuallyEdited===true,originalDistanceFeet:typeof x.originalDistance==='number'&&Number.isFinite(x.originalDistance)&&x.originalDistance>=0?x.originalDistance:null,synthetic:round.synthetic||analyticsSynthetic(x),ambiguous:false,eligibleDistance:false,distanceExclusion:null};
+   const methods={'GPS':'browser-geolocation','map pin':'map-pin','basket':'basket-estimate','manual correction':'manual-entry'};
+   const correctedTime=physicalStatisticsTime(x.lastCorrectedAt),metadata=x.throwMetadataVersion===1&&!!t.throwId&&x.distanceUnit==='ft'&&x.recordingContext==='normal'&&Object.hasOwn(methods,x.source)&&x.distanceMethod===methods[x.source]&&t.originalDistanceFeet!==null&&typeof x.distanceManuallyEdited==='boolean'&&(x.lastCorrectedAt===null||correctedTime!==null)&&(x.distanceManuallyEdited?correctedTime!==null:x.distance===x.originalDistance);
+   t.distanceExclusion=t.synthetic?'synthetic':!t.valid?'invalid_throw_record':t.distanceFeet===null?'missing_or_invalid_distance':t.distanceFeet===0?'zero_distance':round.discMode!=='physical-v2'?'legacy_or_unverified_identity':!discId?'missing_physical_identity':!metadata?'unsupported_measurement_metadata':x.distanceManuallyEdited?'distance_corrected':t.method==='manual-entry'?'manual_distance':t.method==='basket-estimate'?'basket_estimate':null;
+   t.eligibleDistance=t.distanceExclusion===null;
+   if(t.throwId){if(!throwIds.has(t.throwId))throwIds.set(t.throwId,[]);throwIds.get(t.throwId).push(t)}
+   if(discId){
+    if(!discs.has(discId))discs.set(discId,{discId,name:null,color:null,category:null,archived:null,registryStatus:registryAvailable?'missing':'unavailable',labels:[]});
+    const d=discs.get(discId),label=name+(t.discColor?' — '+t.discColor:'');if(!d.labels.includes(label))d.labels.push(label);
+   }
+   if(!t.date.day)issue('UNDATED_THROW');
+   if(!t.valid)issue('INVALID_THROW_RECORD');
+   round.throws.push(t);
+  }
+  if(Number.isSafeInteger(raw.throws)&&raw.throws>=0&&(!Array.isArray(list)||raw.throws!==list.length))issue('AGGREGATE_THROW_COUNT_NOT_RECONCILED');
+  if(round.mode==='group'){
+   if(!analyticsObject(raw.otherScores))issue('TEAMMATE_SCORES_UNAVAILABLE');
+   else for(const [playerName,rows] of Object.entries(raw.otherScores)){
+    if(!analyticsObject(rows)){issue('INVALID_TEAMMATE_SCORES');continue}
+    for(const [hole,score] of Object.entries(rows))if(/^[1-9]\d*$/.test(hole)&&analyticsPositiveInteger(Number(hole))&&analyticsPositiveInteger(score))round.teammateScores.push({playerName,hole:Number(hole),score});else issue('INVALID_TEAMMATE_SCORE');
+   }
+  }
+  if(round.courseId&&round.scorecardValid&&round.totalPar!==null&&!round.warnings.includes('INVALID_HOLE_ORDER')&&!round.warnings.includes('INVALID_LAYOUT_ID')&&((round.layoutId&&round.holeOrder)||round.revision)){
+   const card=round.holes.map(h=>[h.hole,h.par]).sort((a,b)=>a[0]-b[0]);
+   round.comparisonKey=JSON.stringify([round.courseId,round.revision,round.layoutId,round.holeOrder,card]);
+   round.comparisonBasis=round.revision?'saved-course-revision-and-scorecard':'explicit-layout-order-and-saved-pars';
+   if(!round.revision)issue('COURSE_REVISION_AND_LENGTH_UNVERIFIED');
+  }else issue('COMPARABLE_LAYOUT_UNAVAILABLE');
+  result.rounds.push(round);
+ }
+ for(const rows of roundIds.values())if(rows.length>1)for(const r of rows){r.ambiguous=true;r.warnings.push('DUPLICATE_OR_CONFLICTING_ROUND_ID');warn('DUPLICATE_OR_CONFLICTING_ROUND_ID',r.sourceKey)}
+ for(const rows of throwIds.values())if(rows.length>1)for(const t of rows){t.ambiguous=true;t.eligibleDistance=false;t.distanceExclusion='duplicate_or_conflicting_throw_id';warn('DUPLICATE_OR_CONFLICTING_THROW_ID',t.sourceKey)}
+ result.discs=[...discs.values()];return result;
+}
+function analyticsFilters(filters={}){
+ const f={courseId:null,discId:null,layoutId:null,comparisonKey:null,dateFrom:null,dateTo:null,completion:'completed',valid:true,warnings:[]};
+ if(!analyticsObject(filters))return {...f,valid:false,warnings:['INVALID_FILTERS']};
+ for(const key of ['courseId','discId','layoutId','comparisonKey'])if(filters[key]!==undefined&&filters[key]!==null){if(!analyticsId(filters[key]))f.valid=false;else f[key]=filters[key]}
+ for(const key of ['dateFrom','dateTo'])if(filters[key]!==undefined&&filters[key]!==null){const d=analyticsDate(filters[key]);if(d.precision!=='day')f.valid=false;else f[key]=d.day}
+ if(filters.completion!==undefined){if(['completed','ended-early','active','all'].includes(filters.completion))f.completion=filters.completion;else f.valid=false}
+ if(f.dateFrom&&f.dateTo&&f.dateFrom>f.dateTo)f.valid=false;
+ if(Object.keys(filters).some(k=>!['courseId','discId','layoutId','comparisonKey','dateFrom','dateTo','completion'].includes(k)))f.valid=false;
+ if(!f.valid)f.warnings.push('INVALID_FILTERS');return f;
+}
+function analyticsScopeExclusion(round,filters,date=null){
+ if(filters.courseId&&round.courseId!==filters.courseId)return 'course_filter';
+ if(filters.layoutId&&round.layoutId!==filters.layoutId)return 'layout_filter';
+ if(filters.comparisonKey&&round.comparisonKey!==filters.comparisonKey)return 'comparison_filter';
+ if(filters.completion!=='all'&&round.completion!==filters.completion)return 'completion_filter';
+ if(date&&(filters.dateFrom||filters.dateTo)){
+  if(!date.day)return 'undated_or_ambiguous_date';
+  if(filters.dateFrom&&date.day<filters.dateFrom||filters.dateTo&&date.day>filters.dateTo)return 'date_filter';
+ }
+ return null;
+}
+function analyticsAppliedFilters(filters){
+ return Object.fromEntries(['courseId','discId','layoutId','comparisonKey','dateFrom','dateTo','completion'].map(key=>[key,filters[key]]));
+}
+function analyticsMean(values){let mean=0;values.forEach((n,i)=>{mean=mean*(i/(i+1))+n/(i+1)});return values.length?mean:null}
+function calculateAnalyticsDistances(data,filters={}){
+ const f=analyticsFilters(filters),available=data?.version===1&&data.available===true&&Array.isArray(data.rounds)&&Array.isArray(data.discs)&&f.valid,warnings=[...(Array.isArray(data?.warnings)?data.warnings.filter(analyticsObject).map(w=>w.code):[]),...f.warnings],selectionExclusions={},measurementExclusions={},recordExclusions={},groups=new Map(),selected=[];
+ const add=(counts,key,n=1)=>{counts[key]=(counts[key]||0)+n};
+ if(available)for(const r of data.rounds)for(const t of r.throws){
+  const scope=analyticsScopeExclusion(r,f,t.date)||(f.discId&&t.discId!==f.discId?'disc_filter':null);
+  if(scope){add(selectionExclusions,scope);continue}
+  const reason=r.ambiguous?'ambiguous_round_id_or_context':t.ambiguous?'duplicate_or_conflicting_throw_id':t.synthetic?'synthetic':!t.valid?'invalid_throw_record':null;
+  if(reason){add(recordExclusions,reason);add(measurementExclusions,reason);continue}
+  const row={round:r,throw:t};selected.push(row);
+  if(t.distanceExclusion)add(measurementExclusions,t.distanceExclusion);
+  if(t.discId){if(!groups.has(t.discId))groups.set(t.discId,[]);groups.get(t.discId).push(row)}
+ }
+ const basis='Positive unedited physical-v2 GPS/map-pin distances in feet with supported provenance; recordedAt dates are UTC and required only for date filtering. Basket/manual/corrected/legacy/zero/unknown distances are excluded.';
+ const summary=(rows,extraWarnings=[])=>{
+  const good=rows.filter(x=>x.throw.eligibleDistance),excluded={};for(const x of rows)if(x.throw.distanceExclusion)add(excluded,x.throw.distanceExclusion);
+  let longest=null;for(const x of good)if(!longest||x.throw.distanceFeet>longest.throw.distanceFeet)longest=x;
+  const notes=[...warnings,...extraWarnings];if(good.length<2)notes.push('SMALL_DISTANCE_SAMPLE');
+  return {recordedThrowCount:analyticsMetric(available?rows.length:null,rows.length,{},'Valid recorded entries, not score strokes; excludes synthetic, malformed and ambiguous records.',notes),eligibleThrowCount:analyticsMetric(available?good.length:null,good.length,excluded,basis,notes),averageDistanceFeet:analyticsMetric(available?analyticsMean(good.map(x=>x.throw.distanceFeet)):null,good.length,excluded,basis,notes),longestThrow:analyticsMetric(longest?{distanceFeet:longest.throw.distanceFeet,discId:longest.throw.discId,throwId:longest.throw.throwId,sourceKey:longest.throw.sourceKey,roundId:longest.round.roundId,courseId:longest.round.courseId,source:longest.throw.source,recordedAt:longest.throw.date.raw}:null,good.length,excluded,basis,notes),excludedMeasurementCount:analyticsMetric(available?rows.length-good.length:null,rows.length,excluded,'Selected recorded entries excluded from default distance averages.',notes)};
+ };
+ const byDisc=[...groups].map(([discId,rows])=>{
+  const d=data.discs.find(x=>x.discId===discId),identity={discId,name:d?.name??null,labels:[...(d?.labels||[])],archived:d?.archived??null,registryStatus:d?.registryStatus??'missing'};
+  return {...identity,...summary(rows,d?.registryStatus==='present'?[]:['DISC_REGISTRY_ENTRY_UNAVAILABLE'])};
+ });
+ const totals=summary(selected);totals.recordedThrowCount.excluded={...recordExclusions};totals.eligibleThrowCount.excluded={...measurementExclusions};totals.averageDistanceFeet.excluded={...measurementExclusions};totals.longestThrow.excluded={...measurementExclusions};
+ totals.excludedMeasurementCount=analyticsMetric(available?Object.values(measurementExclusions).reduce((n,x)=>n+x,0):null,selected.length+Object.values(recordExclusions).reduce((n,x)=>n+x,0),measurementExclusions,'Excluded input record entries, including malformed, synthetic and ambiguous entries; filtered-out entries are reported separately.',warnings);
+ return {available,filters:analyticsAppliedFilters(f),...totals,unidentifiedRecordedThrowCount:analyticsMetric(available?selected.filter(x=>!x.throw.discId).length:null,selected.length,{},'No physical identity is inferred from a legacy name or an unflagged ID.',warnings),byDisc,selectionExclusions,warnings:[...new Set(warnings)]};
+}
+function calculateAnalyticsScoring(data,filters={}){
+ const f=analyticsFilters(filters),available=data?.version===1&&data.available===true&&Array.isArray(data.rounds)&&Array.isArray(data.discs)&&f.valid,warnings=[...(Array.isArray(data?.warnings)?data.warnings.filter(analyticsObject).map(w=>w.code):[]),...f.warnings],selectionExclusions={},roundExclusions={},holeExclusions={},rounds=[],holes=[];
+ const add=(counts,key,n=1)=>{counts[key]=(counts[key]||0)+n};
+ if(f.discId)warnings.push('DISC_FILTER_APPLIES_TO_THROWS_ONLY');
+ if(available)for(const r of data.rounds){
+  const scope=analyticsScopeExclusion(r,f,r.date);if(scope){add(selectionExclusions,scope);continue}
+  if(r.ambiguous||r.synthetic){add(roundExclusions,r.synthetic?'synthetic_round':'ambiguous_round_id_or_context');continue}
+  rounds.push(r);for(const h of r.holes){if(h.valid)holes.push({round:r,hole:h});else add(holeExclusions,'invalid_or_duplicate_hole_score')}
+ }
+ const completed=rounds.filter(r=>r.completion==='completed'&&r.scorecardValid);
+ for(const r of rounds)if(r.completion!=='completed'||!r.scorecardValid)add(roundExclusions,r.completion!=='completed'?'not_completed':'invalid_completed_scorecard');
+ const parHoles=holes.filter(x=>x.hole.par!==null),outcomes={eagleOrBetter:0,birdie:0,par:0,bogey:0,doubleBogeyOrWorse:0};for(const x of parHoles)outcomes[x.hole.outcome]++;
+ const parExclusions={...holeExclusions};if(holes.length>parHoles.length)parExclusions.missing_saved_par=holes.length-parHoles.length;
+ const basis='Personal confirmed saved scores are authoritative and already include penalties/adjustments. Relative scores use saved positive pars only. Teammates, unfinished holes and disc attribution are excluded.';
+ const courseMap=new Map();for(const r of rounds)if(r.courseId){if(!courseMap.has(r.courseId))courseMap.set(r.courseId,[]);courseMap.get(r.courseId).push(r)}
+ const courses=[...courseMap].map(([courseId,rows])=>{
+  const complete=rows.filter(r=>r.completion==='completed'&&r.scorecardValid),groups=new Map(),excluded={};
+  for(const r of complete){if(r.comparisonKey){if(!groups.has(r.comparisonKey))groups.set(r.comparisonKey,[]);groups.get(r.comparisonKey).push(r)}else add(excluded,'comparable_layout_unavailable')}
+  const comparableGroups=[...groups].map(([comparisonKey,rs])=>{
+   const notes=[...warnings];if(rs.length<2)notes.push('SMALL_ROUND_SAMPLE');
+   const best=rs.reduce((n,r)=>Math.min(n,r.totalScore),Infinity),dated=rs.filter(r=>r.date.day),days=new Map(),byHole=new Map();
+   for(const r of rs)for(const h of r.holes){if(!byHole.has(h.hole))byHole.set(h.hole,[]);byHole.get(h.hole).push(h)}
+   for(const r of dated){if(!days.has(r.date.day))days.set(r.date.day,[]);days.get(r.date.day).push(r)}
+   const trend=[...days].sort(([a],[b])=>a.localeCompare(b)).map(([date,dayRows])=>({date,roundCount:dayRows.length,averageScore:analyticsMean(dayRows.map(r=>r.totalScore)),averageRelativeToPar:analyticsMean(dayRows.map(r=>r.relativeToPar))}));
+   const timelineWarnings=[...notes];if(trend.length<2)timelineWarnings.push('INSUFFICIENT_DATED_DAYS');
+   return {comparisonKey,layoutId:rs[0].layoutId,revision:rs[0].revision,comparisonBasis:rs[0].comparisonBasis,holeCount:rs[0].holes.length,savedPar:rs[0].totalPar,averageScore:analyticsMetric(analyticsMean(rs.map(r=>r.totalScore)),rs.length,{},basis,notes),averageRelativeToPar:analyticsMetric(analyticsMean(rs.map(r=>r.relativeToPar)),rs.length,{},basis,notes),bestRound:analyticsMetric({score:best,rounds:rs.filter(r=>r.totalScore===best).map(r=>({roundId:r.roundId,sourceKey:r.sourceKey,date:r.date.raw}))},rs.length,{},basis,notes),holeAverages:[...byHole].sort(([a],[b])=>a-b).map(([hole,hs])=>({hole,par:hs[0].par,averageScore:analyticsMetric(analyticsMean(hs.map(h=>h.score)),hs.length,{},basis,notes),averageRelativeToPar:analyticsMetric(analyticsMean(hs.map(h=>h.relativeToPar)),hs.length,{},basis,notes)})),scoringTrend:analyticsMetric(trend,dated.length,rs.length>dated.length?{undated_or_ambiguous_round_date:rs.length-dated.length}:{},'Daily averages of comparable completed rounds using unambiguous saved round dates; no within-day ordering or throw-time substitution.',timelineWarnings)};
+  });
+  return {courseId,courseNames:[...new Set(rows.map(r=>r.courseName).filter(Boolean))],completedRoundCount:analyticsMetric(complete.length,complete.length,{},'Valid saved scorecards recorded as completed; unknown historical layout coverage is disclosed.',warnings),comparableGroups,unrankedRoundScores:complete.filter(r=>!r.comparisonKey).map(r=>({roundId:r.roundId,sourceKey:r.sourceKey,totalScore:r.totalScore,totalPar:r.totalPar,relativeToPar:r.relativeToPar,date:r.date.raw})),comparisonExclusions:excluded};
+ });
+ return {available,filters:{...analyticsAppliedFilters(f),discId:null},completedRoundCount:analyticsMetric(available?completed.length:null,completed.length,roundExclusions,'Valid saved scorecards recorded as completed, not proof of historical layout coverage.',warnings),holeScores:analyticsMetric(available?holes.map(x=>({sourceKey:x.hole.sourceKey,roundId:x.round.roundId,courseId:x.round.courseId,completion:x.round.completion,hole:x.hole.hole,score:x.hole.score,par:x.hole.par,penalty:x.hole.penalty,relativeToPar:x.hole.relativeToPar})):null,holes.length,holeExclusions,basis,warnings),scoringOutcomes:analyticsMetric(available?outcomes:null,parHoles.length,parExclusions,basis,warnings),courses,selectionExclusions,warnings:[...new Set(warnings)]};
+}
+function calculateAnalyticsEngine(data,filters={}){
+ return {version:1,distances:calculateAnalyticsDistances(data,filters),scoring:calculateAnalyticsScoring(data,filters)};
+}
 // Current-round view only. Never look up registry names or write saved records.
 function calculateGameplayAnalytics(records,physicalMode=false){
  const throws=Array.isArray(records)?records:[],physical=new Map(),legacy=new Map();
@@ -1655,6 +1894,272 @@ function renderGameplayAnalytics(){
  const row=(label,detail,average)=>'<div class="history" style="overflow-wrap:anywhere">'+escapeHtml(label)+' <strong style="float:right">'+feet(average)+' avg</strong><small class="small muted" style="display:block">'+escapeHtml(detail)+'</small><div class="statbar"><i style="width:'+Math.min(100,(average??0)/4)+'%"></i></div></div>';
  document.getElementById('discStats').innerHTML=result.physicalGroups.map(group=>row(group.labels.join(' / '),'Physical disc · ID '+group.id+' · '+group.stats.distances+' usable unedited distances'+(group.stats.partial?' · Partial metadata coverage':''),group.stats.average)).join('')+
   result.legacyGroups.map(group=>row(group.label,'Legacy / demo / unverified'+(group.id?' · Recorded ID '+group.id:''),group.average)).join('')||'Record a throw to see data.';
+}
+// Saved dashboard adapter and presentation only. All statistics come from Step 138B.
+let savedGameplayDashboard=null,savedGameplayDashboardNotes=[];
+function readSavedGameplayAnalytics(storage){
+ const captured=new Map(),notes=[];
+ const read=key=>{const value=storage.getItem(key);captured.set(key,value);return value};
+ const raw=read(appStateKey),saved=raw===null?{version:1,state:{active:false,rounds:[],throws:[]}}:parseFullBackupJson(raw);
+ let registry=null;
+ try{const bag=read(physicalDiscKey);if(bag!==null)registry=parseFullBackupJson(bag)}catch(e){notes.push('The saved disc bag could not be read. Historical physical IDs remain separate; current disc names and archive status may be unavailable.')}
+ const ids=new Set((Array.isArray(saved?.state?.rounds)?saved.state.rounds:[]).map(r=>r?.roundId));if(saved?.state?.active)ids.add(saved.roundId);
+ const roundContexts=[];
+ for(const id of ids)if(typeof id==='string'&&/^[a-zA-Z0-9-]{1,160}$/.test(id)){
+  try{const context=read(sharedRoundContextPrefix+id);if(context!==null)roundContexts.push(parseFullBackupJson(context))}catch(e){notes.push('Some saved course revision references could not be read. Affected scores may be unranked.')}
+ }
+ for(const [key,value] of captured)if(storage.getItem(key)!==value)throw Error('Saved data changed while being read. Tap Refresh saved data to try again.');
+ if(raw===null)notes.push('No saved round snapshot exists yet. Discs alone do not contain round history.');
+ return {data:normalizeGameplayAnalytics(saved,registry,{roundContexts}),notes:[...new Set(notes)]};
+}
+function dashboardNode(tag,className,text){
+ const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=String(text);return node;
+}
+function dashboardNumber(value){return typeof value==='number'&&Number.isFinite(value)?value.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}
+function dashboardFeet(value){return typeof value==='number'&&Number.isFinite(value)?dashboardNumber(value)+' ft':'—'}
+function dashboardRelative(value){return typeof value==='number'&&Number.isFinite(value)?value===0?'E':(value>0?'+':'')+value.toLocaleString(undefined,{maximumSignificantDigits:4}):'—'}
+function dashboardDiscLabel(disc){
+ return disc?.name?disc.name+(disc.color?' — '+disc.color:''):disc?.labels?.[0]||'Physical disc name unavailable';
+}
+function populateGameplayAnalyticsFilters(){
+ const data=savedGameplayDashboard,courses=new Map();
+ for(const round of data?.rounds||[])if(round.courseId&&!courses.has(round.courseId))courses.set(round.courseId,round.courseName||'Course name unavailable · '+round.courseId);
+ const fill=(id,all,options)=>{
+  const select=document.getElementById(id),previous=select.value;select.replaceChildren();
+  for(const [value,label] of [['',all],...options]){const option=dashboardNode('option','',label);option.value=value;select.append(option)}
+  select.value=options.some(([value])=>value===previous)?previous:'';
+ };
+ fill('analyticsCourse','All courses',[...courses].sort((a,b)=>a[1].localeCompare(b[1])));
+ fill('analyticsDisc','All physical discs',(data?.discs||[]).map(d=>[d.discId,dashboardDiscLabel(d)+(d.archived?' · Archived':'')+' · ID '+d.discId]).sort((a,b)=>a[1].localeCompare(b[1])));
+}
+function refreshSavedGameplayAnalytics(){
+ try{const snapshot=readSavedGameplayAnalytics(window.localStorage);savedGameplayDashboard=snapshot.data;savedGameplayDashboardNotes=snapshot.notes}
+ catch(e){savedGameplayDashboard=normalizeGameplayAnalytics(null);savedGameplayDashboardNotes=['Saved analytics unavailable. '+(e instanceof Error?e.message:'Storage could not be read.')+' No data was changed.']}
+ populateGameplayAnalyticsFilters();renderSavedGameplayAnalytics();
+}
+function resetGameplayAnalyticsFilters(){
+ for(const id of ['analyticsCourse','analyticsDisc','analyticsFrom','analyticsTo'])document.getElementById(id).value='';
+ document.getElementById('analyticsCompletion').value='completed';document.getElementById('analyticsDiscSort').value='average';renderSavedGameplayAnalytics();
+}
+function dashboardMetric(label,value,detail){
+ const card=dashboardNode('div','metric analytics-metric');card.append(dashboardNode('span','eyebrow',label),dashboardNode('strong','',value),dashboardNode('span','small muted',detail));return card;
+}
+function dashboardExclusions(container,title,counts){
+ const labels={basket_estimate:'Basket estimates',manual_distance:'Manual distances',distance_corrected:'Distance corrections',zero_distance:'Zero distances',missing_or_invalid_distance:'Missing / invalid distances',legacy_or_unverified_identity:'Legacy / unverified identities',missing_physical_identity:'Missing physical identities',unsupported_measurement_metadata:'Unsupported measurement metadata',invalid_throw_record:'Invalid throw records',synthetic:'Demo / synthetic records',duplicate_or_conflicting_throw_id:'Repeated throw IDs',ambiguous_round_id_or_context:'Ambiguous round identity / context',synthetic_round:'Demo / synthetic rounds',not_completed:'Active / ended-early rounds',invalid_completed_scorecard:'Invalid completed scorecards',invalid_or_duplicate_hole_score:'Invalid / duplicate hole scores',missing_saved_par:'Missing saved pars',course_filter:'Outside course filter',disc_filter:'Outside disc filter',layout_filter:'Outside layout filter',comparison_filter:'Outside comparison group',completion_filter:'Outside round scope',date_filter:'Outside date range',undated_or_ambiguous_date:'Missing / ambiguous dates'};
+ const entries=Object.entries(counts||{}).filter(([,n])=>n>0);if(!entries.length)return;
+ const detail=dashboardNode('details','analytics-exclusions');detail.append(dashboardNode('summary','',title));const list=dashboardNode('ul','');for(const [key,n] of entries)list.append(dashboardNode('li','',(labels[key]||key.replace(/_/g,' '))+': '+dashboardNumber(n)));detail.append(list);container.append(detail);
+}
+function dashboardTrend(group){
+ const metric=group.scoringTrend,series=metric.value||[],wrap=dashboardNode('div','analytics-trend');
+ wrap.append(dashboardNode('h4','','Scoring over time'),dashboardNode('p','small muted',metric.sampleCount+' reliably dated comparable '+(metric.sampleCount===1?'round':'rounds')+'. Dates are UTC days when recorded with an ISO timestamp.'));
+ if(series.length<2){wrap.append(dashboardNode('p','notice','A trend needs at least two reliably dated days. Locale-formatted or missing round dates are not guessed.'));return wrap}
+ const values=series.map(x=>x.averageRelativeToPar),minimum=values.reduce((n,v)=>Math.min(n,v),0),maximum=values.reduce((n,v)=>Math.max(n,v),0),lo=minimum===maximum?minimum-1:minimum,hi=minimum===maximum?maximum+1:maximum,range=hi-lo;
+ const times=series.map(x=>Date.parse(x.date+'T00:00:00.000Z')),start=times[0],span=times.at(-1)-start||1;
+ const x=i=>32+(times[i]-start)/span*272,y=value=>112-(value-lo)/range*88;
+ const points=series.map((point,i)=>x(i).toFixed(2)+','+y(point.averageRelativeToPar).toFixed(2)).join(' ');
+ const chart=dashboardNode('div','analytics-trend-chart');
+ chart.innerHTML='<svg viewBox="0 0 320 140" role="img" aria-label="Daily average score relative to saved par. Lower scores are better."><title>Daily average relative score within this comparison group</title><line x1="32" x2="304" y1="'+y(0)+'" y2="'+y(0)+'" class="analytics-zero"/><text x="2" y="20">'+escapeHtml(dashboardRelative(hi))+'</text><text x="2" y="120">'+escapeHtml(dashboardRelative(lo))+'</text><polyline points="'+points+'" class="analytics-trend-line"/>'+series.map((point,i)=>'<circle cx="'+x(i)+'" cy="'+y(point.averageRelativeToPar)+'" r="4"><title>'+escapeHtml(point.date+': '+dashboardRelative(point.averageRelativeToPar)+' · '+point.roundCount+' rounds')+'</title></circle>').join('')+'</svg>';
+ const dates=dashboardNode('div','analytics-date-labels');dates.append(dashboardNode('span','',series[0].date),dashboardNode('span','',series.at(-1).date));chart.append(dates);wrap.append(chart);
+ const table=dashboardNode('details','analytics-exclusions');table.append(dashboardNode('summary','','Trend values'));const list=dashboardNode('ul','');for(const point of series)list.append(dashboardNode('li','',point.date+' · '+dashboardRelative(point.averageRelativeToPar)+' · '+point.roundCount+' rounds'));table.append(list);wrap.append(table);return wrap;
+}
+function renderSavedGameplayAnalytics(){
+ const data=savedGameplayDashboard,filters={courseId:document.getElementById('analyticsCourse').value||null,discId:document.getElementById('analyticsDisc').value||null,dateFrom:document.getElementById('analyticsFrom').value||null,dateTo:document.getElementById('analyticsTo').value||null,completion:document.getElementById('analyticsCompletion').value};
+ const result=calculateAnalyticsEngine(data,filters),d=result.distances,scoring=result.scoring,catalog=new Map((data?.discs||[]).map(disc=>[disc.discId,disc]));
+ const overview=document.getElementById('analyticsOverview'),discList=document.getElementById('analyticsDiscs'),courseList=document.getElementById('analyticsCourses'),quality=document.getElementById('analyticsQuality'),outcomes=document.getElementById('analyticsOutcomes');
+ for(const node of [overview,discList,courseList,quality,outcomes])node.replaceChildren();
+ const status=document.getElementById('analyticsSnapshotStatus');status.textContent=!(d.available&&scoring.available)?'Saved analytics unavailable. Check the date range and data notes below.':filters.completion==='completed'?'Showing completed saved rounds. Refresh reads saved data without saving the app.':'Showing the selected saved round scope. Course comparisons still use completed rounds only.';
+ const activeFilters=[];
+ if(filters.courseId)activeFilters.push(document.getElementById('analyticsCourse').selectedOptions[0]?.textContent||filters.courseId);
+ if(filters.discId)activeFilters.push(document.getElementById('analyticsDisc').selectedOptions[0]?.textContent||filters.discId);
+ if(filters.dateFrom||filters.dateTo)activeFilters.push('Dates: '+(filters.dateFrom||'any start')+' to '+(filters.dateTo||'any end'));
+ document.getElementById('analyticsFilterSummary').textContent=activeFilters.length?'Filters: '+activeFilters.join(' · '):'All courses · all physical discs · no date range.';
+ for(const note of savedGameplayDashboardNotes)quality.append(dashboardNode('p','notice',note));
+ if(d.available&&scoring.available){
+  const longest=d.longestThrow.value;
+  overview.append(dashboardMetric('Completed rounds',dashboardNumber(scoring.completedRoundCount.value),'Valid saved scorecards marked completed.'),dashboardMetric('Recorded throws',dashboardNumber(d.recordedThrowCount.value),'Recorded entries, not adjusted score strokes.'),dashboardMetric('Avg eligible distance',dashboardFeet(d.averageDistanceFeet.value),d.averageDistanceFeet.sampleCount+' eligible measurements.'),dashboardMetric('Longest eligible throw',dashboardFeet(longest?.distanceFeet),longest?dashboardDiscLabel(catalog.get(longest.discId))+' · '+longest.source+' · '+d.longestThrow.sampleCount+' eligible measurements.':'No eligible measurements.'));
+ }else for(const label of ['Completed rounds','Recorded throws','Avg eligible distance','Longest eligible throw'])overview.append(dashboardMetric(label,'—','Unavailable; saved data was not changed.'));
+ document.getElementById('analyticsCoverage').textContent=d.available?d.eligibleThrowCount.value+' eligible measurements · '+d.excludedMeasurementCount.value+' input entries excluded from distance averages. '+d.unidentifiedRecordedThrowCount.value+' recorded throws lack verified physical IDs.':'Measurement coverage is unavailable.';
+ const sort=document.getElementById('analyticsDiscSort').value,key=sort==='longest'?'longestThrow':sort==='measurements'?'eligibleThrowCount':sort==='throws'?'recordedThrowCount':'averageDistanceFeet';
+ const rows=[...d.byDisc].sort((a,b)=>{
+  if(sort==='name')return dashboardDiscLabel(catalog.get(a.discId)).localeCompare(dashboardDiscLabel(catalog.get(b.discId)))||a.discId.localeCompare(b.discId);
+  const av=key==='longestThrow'?a[key].value?.distanceFeet:a[key].value,bv=key==='longestThrow'?b[key].value?.distanceFeet:b[key].value;
+  return (bv??-Infinity)-(av??-Infinity)||a.discId.localeCompare(b.discId);
+ });
+ const scale=rows.reduce((max,row)=>Math.max(max,row.averageDistanceFeet.value??0),0);
+ for(const row of rows){
+  const disc=catalog.get(row.discId),card=dashboardNode('article','analytics-disc-card');card.append(dashboardNode('h4','',dashboardDiscLabel(disc)),dashboardNode('p','small muted analytics-disc-id','Physical ID: '+row.discId));
+  if(row.archived)card.append(dashboardNode('span','tag','Archived · historical throws retained'));else if(row.registryStatus!=='present')card.append(dashboardNode('p','small muted','Not available in the current disc bag; saved physical identity preserved.'));
+  const metrics=dashboardNode('div','analytics-disc-metrics');for(const [label,value] of [['Average',dashboardFeet(row.averageDistanceFeet.value)],['Longest',dashboardFeet(row.longestThrow.value?.distanceFeet)],['Eligible measurements',dashboardNumber(row.eligibleThrowCount.value)],['Recorded throws',dashboardNumber(row.recordedThrowCount.value)]])metrics.append(dashboardNode('span','',label+': '+value));card.append(metrics);
+  if(row.averageDistanceFeet.value!==null){const track=dashboardNode('div','analytics-distance-track'),bar=dashboardNode('span','');bar.style.width=(scale?row.averageDistanceFeet.value/scale*100:0)+'%';track.setAttribute('aria-label','Average eligible distance '+dashboardFeet(row.averageDistanceFeet.value));track.append(bar);card.append(track)}else card.append(dashboardNode('p','notice','No eligible distance measurements. Recorded throws are kept in the count.'));
+  if(row.averageDistanceFeet.warnings.includes('SMALL_DISTANCE_SAMPLE'))card.append(dashboardNode('p','small muted','Small measurement sample; this is not evidence of a consistent performance difference.'));
+  dashboardExclusions(card,'Excluded measurements',row.averageDistanceFeet.excluded);discList.append(card);
+ }
+ if(!rows.length)discList.append(dashboardNode('p','notice',d.available?'No physical-disc throw records match these filters. Legacy model names are not assigned to physical discs.':'Physical-disc statistics are unavailable.'));
+ for(const course of scoring.courses){
+  const card=dashboardNode('article','analytics-course-card');card.append(dashboardNode('h4','',course.courseNames.join(' / ')||'Course name unavailable'),dashboardNode('p','small muted','Course ID: '+course.courseId));
+  for(let i=0;i<course.comparableGroups.length;i++){
+   const group=course.comparableGroups[i],section=dashboardNode('div','analytics-comparison');
+   section.append(dashboardNode('h5','',group.layoutId||'Saved course revision'),dashboardNode('p','small muted',group.holeCount+' holes · saved par '+group.savedPar+' · '+group.averageScore.sampleCount+' completed comparable rounds'+(group.revision?' · revision '+group.revision.slice(0,8):' · course revision / length unverified')));
+   section.append(dashboardNode('p','analytics-relative-value',dashboardRelative(group.averageRelativeToPar.value)+' average to saved par'),dashboardNode('p','small','Average: '+dashboardNumber(group.averageScore.value)+' strokes · Best: '+dashboardNumber(group.bestRound.value?.score)+' strokes'));
+   const value=group.averageRelativeToPar.value,domain=Math.max(3,Math.ceil(Math.abs(value)/3)*3),track=dashboardNode('div','analytics-relative-track'),bar=dashboardNode('span','analytics-relative-bar');bar.style.width=(Math.abs(value)/domain*50)+'%';bar.style.left=(value<0?50-Math.abs(value)/domain*50:50)+'%';track.append(bar);track.setAttribute('aria-label','Average '+dashboardRelative(value)+' relative to par, scale minus '+domain+' to plus '+domain);section.append(track);
+   const axis=dashboardNode('div','analytics-date-labels');axis.append(dashboardNode('span','','−'+domain),dashboardNode('span','','E'),dashboardNode('span','','+'+domain));section.append(axis);
+   section.append(dashboardNode('p','small muted','Under par ← → Over par. Each layout uses its own chart scale; these are not length- or difficulty-adjusted course rankings.'));
+   if(group.averageScore.warnings.includes('SMALL_ROUND_SAMPLE'))section.append(dashboardNode('p','small muted','Small round sample; more comparable rounds are needed.'));
+   section.append(dashboardTrend(group));card.append(section);
+  }
+  if(course.unrankedRoundScores.length){
+   card.append(dashboardNode('p','notice',course.unrankedRoundScores.length+' completed scorecards lack reliable comparable layout context. Their scores are retained but not pooled into averages or rankings.'));
+   const detail=dashboardNode('details','analytics-exclusions');detail.append(dashboardNode('summary','','Unranked saved scorecards'));const list=dashboardNode('ul','');for(const round of course.unrankedRoundScores)list.append(dashboardNode('li','',(round.date||'Date unavailable')+' · '+dashboardNumber(round.totalScore)+' strokes · '+dashboardRelative(round.relativeToPar)+' to saved par'));detail.append(list);card.append(detail);
+  }
+  if(!course.comparableGroups.length&&!course.unrankedRoundScores.length)card.append(dashboardNode('p','notice','No completed comparable scorecards in this scope. Confirmed holes from active or ended-early rounds may still appear in the scoring summary.'));
+  courseList.append(card);
+ }
+ if(!scoring.courses.length)courseList.append(dashboardNode('p','notice',scoring.available?'No course scorecards match these filters.':'Course statistics are unavailable.'));
+ const labels={eagleOrBetter:'Eagle or better',birdie:'Birdie',par:'Par',bogey:'Bogey',doubleBogeyOrWorse:'Double bogey or worse'};
+ if(scoring.scoringOutcomes.value){for(const [key,n] of Object.entries(scoring.scoringOutcomes.value))outcomes.append(dashboardNode('span','tag',labels[key]+': '+dashboardNumber(n)));outcomes.append(dashboardNode('p','small muted',scoring.scoringOutcomes.sampleCount+' confirmed holes with saved pars. Final saved scores already include penalties and manual adjustments. Teammates are excluded.'))}else outcomes.append(dashboardNode('p','notice','Scoring summary unavailable.'));
+ quality.append(dashboardNode('p','small muted',d.averageDistanceFeet.basis),dashboardNode('p','small muted','GPS/map-pin labels and device timestamps are not independently verified. Dates are not inferred from locale-formatted strings. A disc filter applies only to throw statistics; course scores are not attributed to an individual disc.'));
+ if(d.unidentifiedRecordedThrowCount.value)quality.append(dashboardNode('p','notice',d.unidentifiedRecordedThrowCount.value+' recorded throws have no verified physical identity. They are not assigned by model name.'));
+ dashboardExclusions(quality,'Distance exclusions (record entries)',d.averageDistanceFeet.excluded);dashboardExclusions(quality,'Throw entries outside filters',d.selectionExclusions);dashboardExclusions(quality,'Round exclusions',scoring.completedRoundCount.excluded);dashboardExclusions(quality,'Rounds outside filters',scoring.selectionExclusions);dashboardExclusions(quality,'Scoring exclusions (hole entries)',scoring.scoringOutcomes.excluded);
+ const warnings=[...new Set([...d.warnings,...scoring.warnings])];
+ const explanations={INVALID_APP_SNAPSHOT:'Saved round data is unavailable or incompatible.',INVALID_FILTERS:'Choose a valid date range with the start no later than the end.',AMBIGUOUS_OR_MISSING_ROUND_DATE:'Some saved round dates are missing or ambiguous; those rounds cannot enter filtered scoring timelines.',UNDATED_THROW:'Some throws lack a reliable recorded timestamp and are excluded when a date filter is active.',COMPARABLE_LAYOUT_UNAVAILABLE:'Some course scores have no comparable historical layout context.',HISTORICAL_HOLE_COVERAGE_UNVERIFIED:'Historical full-course hole coverage cannot be verified for some scorecards.',COURSE_REVISION_AND_LENGTH_UNVERIFIED:'Some explicit layouts lack a saved course revision; historical lengths are unverified.',DUPLICATE_OR_CONFLICTING_ROUND_ID:'Repeated or conflicting round IDs were excluded conservatively.',DUPLICATE_OR_CONFLICTING_THROW_ID:'Repeated or conflicting throw IDs were excluded.',ROUND_ID_UNAVAILABLE_NO_DEDUPLICATION:'Some older rounds lack IDs; unrelated records are not merged by date or name.',INACTIVE_CURRENT_RECORDS_NOT_RECOUNTED:'Retained inactive current-round records were not counted again alongside history.',DISC_FILTER_APPLIES_TO_THROWS_ONLY:'The physical-disc filter affects throws only; scoring remains personal round scoring.'};
+ if(warnings.length){const detail=dashboardNode('details','analytics-exclusions');detail.append(dashboardNode('summary','','Data warnings ('+warnings.length+')'));const list=dashboardNode('ul','');for(const code of warnings)list.append(dashboardNode('li','',explanations[code]||code.replace(/_/g,' ').toLowerCase()));detail.append(list);quality.append(detail)}
+ prepareAskChainChaser(result);
+}
+// Predefined questions select/compare engine metrics only; never recalculate saved records.
+const askChainChaserQuestions=Object.freeze({
+ 'average-disc':'Which physical disc do I throw farthest on average?',
+ 'longest-throw':'What is my longest eligible recorded throw?',
+ 'most-used':'Which physical disc do I use most often?',
+ 'best-course':'Which course/layout do I score best on?',
+ 'best-round':'What is my best completed round?',
+ 'completed-rounds':'How many completed rounds have I played?',
+ 'improvement':'Am I improving over time?'
+});
+let askChainChaserResults=null;
+function askChainChaserGroups(result){
+ return (result?.scoring?.courses||[]).flatMap(course=>course.comparableGroups.map(group=>({course,group})));
+}
+function askChainChaserGroupLabel(course,group){
+ return (course.courseNames.join(' / ')||course.courseId)+' · '+(group.layoutId||'saved revision')+' · '+group.holeCount+' holes · saved par '+group.savedPar+(group.revision?' · revision '+group.revision.slice(0,8):' · revision unverified');
+}
+function askChainChaserFeet(value){return typeof value==='number'&&Number.isFinite(value)?value.toLocaleString(undefined,{maximumSignificantDigits:6})+' ft':'—'}
+function askChainChaserTop(rows,valueOf){
+ const candidates=rows.map(row=>({row,value:valueOf(row)})).filter(x=>typeof x.value==='number'&&Number.isFinite(x.value)&&x.value>0);
+ const value=candidates.reduce((best,x)=>best===null||x.value>best?x.value:best,null);
+ return {value,rows:candidates.filter(x=>x.value===value).map(x=>x.row)}; // Exact metric ties; no name-based merging or rounding-based winners.
+}
+function askChainChaserScope(data,result,scoring){
+ const f=(scoring?result?.scoring:result?.distances)?.filters||{},parts=[];
+ if(f.courseId){const round=data?.rounds?.find(r=>r.courseId===f.courseId);parts.push('Course: '+(round?.courseName||f.courseId))}else parts.push('All courses');
+ if(!scoring&&f.discId){const disc=data?.discs?.find(d=>d.discId===f.discId);parts.push('Disc: '+dashboardDiscLabel(disc)+' · physical ID '+f.discId)}
+ const scopes={completed:'completed saved rounds',all:'all saved round states','ended-early':'ended-early rounds only',active:'saved active round only'};parts.push(scopes[f.completion]||'dashboard round scope');
+ if(f.dateFrom||f.dateTo)parts.push('Dates: '+(f.dateFrom||'any start')+' to '+(f.dateTo||'any end')+(scoring?' using unambiguous saved round dates':' using recorded throw timestamps'));
+ if(scoring&&result?.distances?.filters?.discId)parts.push('The physical-disc filter does not apply to this scoring answer.');
+ return 'Dashboard scope: '+parts.join(' · ');
+}
+function buildAskChainChaserAnswer(question,data,result,comparisonKey=null){
+ const scoring=['best-course','best-round','completed-rounds','improvement'].includes(question),d=result?.distances,s=result?.scoring,source=scoring?s:d;
+ const answer={question,title:Object.hasOwn(askChainChaserQuestions,question)?askChainChaserQuestions[question]:'Choose a predefined question',status:'insufficient',summary:'',items:[],sampleCount:null,sampleUnit:'',scope:askChainChaserScope(data,result,scoring),basis:'',limitations:[],exclusions:{},selectionExclusions:{},warnings:[...(source?.warnings||[])]};
+ if(!Object.hasOwn(askChainChaserQuestions,question)||!source?.available){answer.status='unavailable';answer.summary='A reliable answer is unavailable. Choose a predefined question, correct any invalid filters, or refresh saved data.';return answer}
+ answer.exclusions={...(scoring?s.completedRoundCount.excluded:question==='most-used'?d.recordedThrowCount.excluded:d.averageDistanceFeet.excluded)};
+ answer.selectionExclusions={...source.selectionExclusions};
+ const discItem=(row,metric,line)=>{
+  const disc=data?.discs?.find(x=>x.discId===row.discId),lines=[line,'Physical ID: '+row.discId];
+  if(row.archived)lines.push('Archived disc; its historical records remain included.');else if(row.registryStatus!=='present')lines.push('Not available in the current bag; identity comes from saved physical-disc records.');
+  if(question!=='most-used'&&metric.warnings.includes('SMALL_DISTANCE_SAMPLE'))lines.push('Small measurement sample; this is an observed result, not evidence of repeatable performance.');
+  return {heading:dashboardDiscLabel(disc),lines,sampleCount:metric.sampleCount,sampleUnit:question==='most-used'?'recorded throws for this physical disc':'eligible measurements for this physical disc'};
+ };
+ if(['average-disc','longest-throw','most-used'].includes(question)){
+  const usage=question==='most-used',longest=question==='longest-throw',metric=usage?d.recordedThrowCount:longest?d.longestThrow:d.averageDistanceFeet;
+  const top=askChainChaserTop(d.byDisc,row=>usage?row.recordedThrowCount.value:longest?row.longestThrow.value?.distanceFeet:row.averageDistanceFeet.value);
+  answer.sampleCount=metric.sampleCount;answer.sampleUnit=usage?'valid recorded throw entries in the dashboard scope':'eligible measurements in the dashboard scope';
+  answer.basis=usage?'Usage ranks engine-reported physical-disc throw counts, not score strokes. Basket/manual throw entries can count as usage even when their distances are ineligible. Legacy names and unidentified throws are never assigned to a physical disc.':metric.basis;
+  if(top.value===null){answer.summary=usage?'No identifiable physical-disc throw records match these filters. Legacy model names cannot establish physical identity.':'No eligible measured physical-disc distances match these filters. Missing, estimated, corrected or legacy distances cannot supply this answer.';return answer}
+  answer.status='answer';
+  answer.summary=(top.rows.length>1?'Tied result: '+top.rows.length+' separate physical discs. ':'')+(usage?'Most often recorded: '+dashboardNumber(top.value)+' '+(top.value===1?'throw':'throws')+' per listed disc.':longest?'Longest eligible recorded distance: '+askChainChaserFeet(top.value)+'.':'Highest observed eligible average: '+askChainChaserFeet(top.value)+'.');
+  for(const row of top.rows){
+   const m=usage?row.recordedThrowCount:longest?row.longestThrow:row.averageDistanceFeet;
+   const line=usage?dashboardNumber(m.value)+' recorded '+(m.value===1?'throw':'throws')+'.':(longest?'Longest: ':'Average: ')+askChainChaserFeet(longest?m.value.distanceFeet:m.value)+'.';
+   const item=discItem(row,m,line);
+   if(longest){const record=m.value,round=data?.rounds?.find(r=>r.throws.some(t=>t.sourceKey===record.sourceKey));item.lines.push('Source: '+record.source+' · course: '+(round?.courseName||record.courseId||'not recorded')+' · layout: '+(round?.layoutId||'historical layout unavailable')+'.')}
+   answer.items.push(item);
+  }
+  if(longest)answer.limitations.push('One representative longest throw is listed per tied physical disc. Repeated equal distances within a single disc are not enumerated by this result.');
+  answer.limitations.push(usage?'Only physical IDs with recorded usage are ranked; missing historical records cannot be recovered from a disc collection backup.':'Positive unedited GPS/map-pin records only. Basket estimates, manual/corrected measurements, zeroes and unsupported legacy distances are excluded. Measurement labels are not independently verified.');
+  return answer;
+ }
+ answer.basis=s.completedRoundCount.basis;
+ answer.limitations.push('Personal saved scores are authoritative and already include penalties and manual adjustments. Teammates are excluded. Deleted or discarded rounds are not recoverable from disc-only backups.');
+ if(question==='completed-rounds'){
+  answer.status='answer';answer.sampleCount=s.completedRoundCount.sampleCount;answer.sampleUnit='valid completed scorecards';
+  answer.summary=dashboardNumber(s.completedRoundCount.value)+' recorded completed '+(s.completedRoundCount.value===1?'round matches':'rounds match')+' the current dashboard filters.';
+  if(['active','ended-early'].includes(s.filters.completion))answer.limitations.push('The selected active/ended-early scope cannot contribute completed rounds. Choose Completed rounds or All saved rounds to count them.');
+  return answer;
+ }
+ const allGroups=askChainChaserGroups(result),groups=comparisonKey?allGroups.filter(x=>x.group.comparisonKey===comparisonKey):allGroups;
+ if(!groups.length){answer.summary='No comparable completed course/layout groups are available in this scope. Reliable saved pars and historical layout or revision context are required. Active and ended-early rounds do not enter completed-round comparisons.';return answer}
+ if(comparisonKey)answer.scope+=' · Answer restricted to the selected comparison group shown below.';
+ answer.limitations.push('Different courses, layouts, revisions, hole counts or saved pars are kept separate. No overall winner is chosen across incompatible groups.');
+ const groupMetric=question==='best-course'?groups[0].group.averageRelativeToPar:question==='best-round'?groups[0].group.bestRound:groups[0].group.scoringTrend;answer.basis=groupMetric.basis;
+ if(groups.length===1){answer.sampleCount=groupMetric.sampleCount;answer.sampleUnit=question==='improvement'?'reliably dated comparable completed rounds':'comparable completed rounds'}
+ answer.status=groups.length>1?'separate-groups':'answer';
+ answer.summary=question==='best-course'?(groups.length>1?'A single best course/layout cannot be named across incompatible groups. These observed averages are reported separately.':'Only the selected available comparison group is described below; this does not establish a cross-course winner.'):question==='best-round'?(groups.length>1?'Best completed rounds are reported separately within each comparable group; raw stroke totals are not ranked across groups.':'Best recorded completed score within this comparison group:'):'Daily averages are considered separately within each comparable group.';
+ let supportedTrends=0;
+ for(const {course,group} of groups){
+  const item={heading:askChainChaserGroupLabel(course,group),lines:['Course ID: '+course.courseId],sampleCount:group.averageScore.sampleCount,sampleUnit:'comparable completed rounds'};
+  if(question==='best-course')item.lines.unshift('Average: '+dashboardRelative(group.averageRelativeToPar.value)+' relative to saved par · '+dashboardNumber(group.averageScore.value)+' strokes.');
+  else if(question==='best-round'){
+   const best=group.bestRound.value;item.lines.unshift('Best: '+dashboardNumber(best.score)+' strokes; saved par '+group.savedPar+'.');
+   if(best.rounds.length>1)item.lines.push('Tied best: '+best.rounds.length+' completed rounds.');
+   for(const r of best.rounds)item.lines.push('Saved date: '+(r.date||'unavailable')+' · '+(r.roundId?'Round ID: '+r.roundId:'Round ID was not recorded.'));
+  }else{
+   const trend=group.scoringTrend,days=trend.value||[];item.sampleCount=trend.sampleCount;item.sampleUnit='reliably dated comparable completed rounds';
+   if(trend.sampleCount<3||days.length<3)item.lines.push('Insufficient dated samples: '+trend.sampleCount+' rounds across '+days.length+' reliable days. This answer requires at least 3 comparable dated completed rounds across 3 distinct days.');
+   else{
+    supportedTrends++;const first=days[0],last=days.at(-1);
+    const direction=last.averageRelativeToPar<first.averageRelativeToPar?'lower':last.averageRelativeToPar>first.averageRelativeToPar?'higher':'equal';
+    const observation='The latest observed daily average is '+direction+' '+(direction==='equal'?'to':'than')+' the earliest. Lower is better.';
+    if(groups.length>1)item.lines.push(observation);
+    item.lines.push('First: '+first.date+' · '+dashboardRelative(first.averageRelativeToPar)+' to saved par.','Latest: '+last.date+' · '+dashboardRelative(last.averageRelativeToPar)+' to saved par.','These endpoints do not establish sustained improvement; results between the dates may vary.');
+    if(groups.length===1)answer.summary=observation;
+   }
+   if(trend.excluded.undated_or_ambiguous_round_date)item.lines.push(trend.excluded.undated_or_ambiguous_round_date+' rounds excluded from the timeline because their dates are missing or ambiguous.');
+  }
+  if(group.averageScore.warnings.includes('SMALL_ROUND_SAMPLE'))item.lines.push('Small round sample; more comparable rounds are needed.');
+  if(!group.revision)item.lines.push('Course revision and historical length are unverified; comparison uses the saved explicit layout, hole order and pars.');
+  answer.items.push(item);
+ }
+ if(question==='improvement'){
+  answer.limitations.push('The 3-round / 3-day minimum is a cautious display policy, not a statistical significance test. Only engine-produced daily averages are compared; no slope, prediction or reconstructed dates are calculated.');
+  if(!supportedTrends){answer.status='insufficient';answer.summary='There is not enough reliably dated comparable data to describe improvement. Locale-formatted or missing dates are not guessed.'}
+  else if(groups.length>1)answer.summary='Endpoint observations are shown separately for groups with sufficient dated samples. No overall improvement claim is made across layouts.';
+ }
+ return answer;
+}
+function prepareAskChainChaser(result){
+ if(result!==undefined)askChainChaserResults=result;
+ const question=document.getElementById('askChainChaserQuestion');
+ if(!question.options.length)for(const [value,label] of Object.entries(askChainChaserQuestions)){const option=dashboardNode('option','',label);option.value=value;question.append(option)}
+ document.getElementById('askChainChaserQuestionText').textContent=askChainChaserQuestions[question.value]||'Choose a predefined question.';
+ const comparison=['best-course','best-round','improvement'].includes(question.value),wrapper=document.getElementById('askChainChaserScope'),select=document.getElementById('askChainChaserGroup'),previous=select.value;
+ wrapper.classList.toggle('hidden',!comparison);select.replaceChildren();
+ const all=dashboardNode('option','','All groups, reported separately');all.value='';select.append(all);
+ askChainChaserGroups(askChainChaserResults).forEach(({course,group},i)=>{const option=dashboardNode('option','','Group '+(i+1)+' · '+askChainChaserGroupLabel(course,group));option.value=group.comparisonKey;select.append(option)});
+ select.value=comparison&&[...select.options].some(option=>option.value===previous)?previous:'';select.disabled=select.options.length<2;
+ document.getElementById('askChainChaserAnswer').replaceChildren(dashboardNode('p','small muted','Question or dashboard updated. Press Ask to answer with the current dashboard filters.'));
+}
+function askChainChaser(){
+ const question=document.getElementById('askChainChaserQuestion').value,comparison=['best-course','best-round','improvement'].includes(question)?document.getElementById('askChainChaserGroup').value||null:null;
+ const answer=buildAskChainChaserAnswer(question,savedGameplayDashboard,askChainChaserResults,comparison),target=document.getElementById('askChainChaserAnswer');target.replaceChildren();
+ const sample=(count,unit)=>'Sample: '+dashboardNumber(count)+' '+(count===1?unit.replace(/\b(measurements|rounds|throws|entries|scorecards)\b/g,word=>({measurements:'measurement',rounds:'round',throws:'throw',entries:'entry',scorecards:'scorecard'})[word]):unit)+'.';
+ target.append(dashboardNode('h4','',answer.title),dashboardNode('p','ask-chain-chaser-result',answer.summary),dashboardNode('p','small muted',answer.scope));
+ if(answer.sampleCount!==null)target.append(dashboardNode('p','small',sample(answer.sampleCount,answer.sampleUnit)));
+ for(const item of answer.items){const card=dashboardNode('div','ask-chain-chaser-item');card.append(dashboardNode('h5','',item.heading));for(const line of item.lines)card.append(dashboardNode('p','small',line));card.append(dashboardNode('p','small muted',sample(item.sampleCount,item.sampleUnit)));target.append(card)}
+ const details=dashboardNode('details','analytics-exclusions');details.append(dashboardNode('summary','','Basis and limitations'));
+ if(answer.basis)details.append(dashboardNode('p','small muted',answer.basis));for(const note of answer.limitations)details.append(dashboardNode('p','small muted',note));
+ dashboardExclusions(details,'Dashboard-scope exclusions',answer.exclusions);dashboardExclusions(details,'Entries outside dashboard filters',answer.selectionExclusions);
+ if(answer.warnings.length)details.append(dashboardNode('p','small muted','The dashboard Data quality and exclusions section contains relevant warnings. '+[...new Set(answer.warnings)].map(code=>code.replace(/_/g,' ').toLowerCase()).join('; ')+'.'));
+ target.append(details);
 }
 function renderPhysicalDiscStatistics(discId){
  const target=document.getElementById('physicalDiscStatistics');
@@ -3230,6 +3735,16 @@ function historyTeammateScores(round,holeOrder){
   return '<div class="history"><strong>'+name+'</strong>'+warning+(scores.length?'<p class="small muted">Total: '+scores.reduce((sum,[h,n])=>sum+n,0)+' strokes · '+scores.length+' scored '+(scores.length===1?'hole':'holes')+' · Recorded holes only</p><table class="scoreboard"><thead><tr><th>Hole</th><th>Score</th></tr></thead><tbody>'+rows+'</tbody></table>':'<p class="small muted">No recorded scores.</p>')+'</div>';
  }).join('');
 }
+// History display only: never fall back to today's course pars or add penalties again.
+function historyRelativeScore(scores){
+ if(!Array.isArray(scores)||!scores.length)return null;
+ let relative=0;const seen=new Set();
+ for(const row of scores){
+  if(!row||!Number.isSafeInteger(row.hole)||row.hole<1||seen.has(row.hole)||!Number.isSafeInteger(row.score)||row.score<1||!Number.isSafeInteger(row.par)||row.par<1)return null;
+  seen.add(row.hole);relative+=row.score-row.par;if(!Number.isSafeInteger(relative))return null;
+ }
+ return relative;
+}
 function renderRoundHistory(){
  const holder=document.getElementById('roundHistory');
  if(!s.rounds.length){holder.textContent='No completed rounds yet.';return}
@@ -3237,14 +3752,16 @@ function renderRoundHistory(){
   const name=(r.courseId===privareCourseId&&r.courseName==='Privare Course'?'Private Course':r.courseName)||courseRegistry.find(c=>c.id===r.courseId)?.name||'Course not recorded';
   const historyOrder=r.courseId===dryCreekCourse.id?(Array.isArray(r.holeOrder)?r.holeOrder:dryLayouts['main-12']):null;
   const rank=n=>historyOrder?historyOrder.indexOf(n):n;
-  const scores=r.scores.slice().sort((a,b)=>rank(a.hole)-rank(b.hole)),total=scores.reduce((sum,x)=>sum+x.score,0);
+  const scores=Array.isArray(r.scores)?r.scores.filter(x=>x&&typeof x==='object'&&!Array.isArray(x)).sort((a,b)=>rank(a.hole)-rank(b.hole)):[],total=scores.reduce((sum,x)=>sum+x.score,0);
+  const relative=historyRelativeScore(r.scores),relativeLabel=relative===null?'—':relative===0?'E':relative>0?'+'+relative:String(relative);
+  const relativeBadge='<span class="round-history-relative" title="'+(relative===null?'Relative score unavailable: saved confirmed scores or pars could not be verified.':r.endedEarly?'Partial score relative to saved par for confirmed holes only.':'Final score relative to saved par.')+'"><strong>'+relativeLabel+'</strong>'+(r.endedEarly?'<small>Partial</small>':'')+'</span>';
   const penalties=x=>Number.isFinite(x)?String(x):'Not recorded';
   const rows=scores.map(x=>'<tr><td>'+holeLabel(x.hole,r.courseId||null)+'</td><td>'+x.score+(isManuallyAdjustedScore(x,r.recordedThrows)?'<small class="manual-score-note">Manually adjusted score</small>':'')+'</td><td>'+penalties(x.penalty)+'</td></tr>').join('');
   const throws=Array.isArray(r.recordedThrows)?r.recordedThrows.filter(t=>t&&Number.isInteger(t.hole)):null;
   const throwDetails=throws?.length?[...new Set(throws.map(t=>t.hole))].sort((a,b)=>rank(a)-rank(b)).map(h=>'<div class="history"><strong>Hole '+holeLabel(h,r.courseId||null)+'</strong><ol>'+throws.filter(t=>t.hole===h).map(t=>'<li>'+escapeHtml(t.discId?discSnapshotLabel(t):t.disc||'Disc not recorded')+' · '+(Number.isFinite(t.distance)?t.distance+' ft':'Distance not recorded')+(t.throwType?' · '+escapeHtml(t.throwType):'')+(t.made?' · In the basket':'')+'</li>').join('')+'</ol></div>').join(''):throws?'No recorded throws.':'Throw details were not saved for this older round ('+r.throws+' recorded throws).';
   const unfinished=r.unfinishedHole;
   const unfinishedDetails=unfinished&&Number.isInteger(unfinished.hole)?'<div class="notice"><strong>Unfinished Hole '+holeLabel(unfinished.hole,r.courseId||null)+'</strong><p>Penalties: '+penalties(unfinished.penalty)+'.'+(unfinished.pendingScore&&Number.isFinite(unfinished.scoreThrows)?' Pending score: '+unfinished.scoreThrows+' throws plus penalties; not included in the total.':' No confirmed score; not included in the total.')+'</p></div>':'';
-  return '<details class="history round-history-entry"><summary><strong>'+escapeHtml(name)+'</strong><span class="small" style="display:block;margin-top:5px">'+escapeHtml(r.date)+(r.courseId===dryCreekCourse.id?' · '+(r.layoutId==='custom-13'?'Custom 13 (unofficial 2A)':'Main 12'):'')+' · '+(r.endedEarly?'Ended Early':'Completed')+'<br>'+(r.mode==='group'?'Your total: ':'Total: ')+total+' strokes · '+scores.length+' scored '+(scores.length===1?'hole':'holes')+'</span></summary><h3 style="margin-top:16px">'+(r.mode==='group'?'Your hole scores':'Hole scores')+'</h3>'+(rows?'<table class="scoreboard"><thead><tr><th>Hole</th><th>Score</th><th>Penalties</th></tr></thead><tbody>'+rows+'</tbody></table>':'<p>No confirmed hole scores were recorded.</p>')+unfinishedDetails+historyTeammateScores(r,historyOrder)+'<h3 style="margin-top:16px">Recorded throws</h3><div class="small">'+throwDetails+'</div></details>';
+  return '<details class="history round-history-entry"><summary>'+relativeBadge+'<strong>'+escapeHtml(name)+'</strong><span class="small" style="display:block;margin-top:5px">'+escapeHtml(r.date)+(r.courseId===dryCreekCourse.id?' · '+(r.layoutId==='custom-13'?'Custom 13 (unofficial 2A)':'Main 12'):'')+' · '+(r.endedEarly?'Ended Early':'Completed')+'<br>'+(r.mode==='group'?'Your total: ':'Total: ')+total+' strokes · '+scores.length+' scored '+(scores.length===1?'hole':'holes')+'</span></summary><h3 style="margin-top:16px">'+(r.mode==='group'?'Your hole scores':'Hole scores')+'</h3>'+(rows?'<table class="scoreboard"><thead><tr><th>Hole</th><th>Score</th><th>Penalties</th></tr></thead><tbody>'+rows+'</tbody></table>':'<p>No confirmed hole scores were recorded.</p>')+unfinishedDetails+historyTeammateScores(r,historyOrder)+'<h3 style="margin-top:16px">Recorded throws</h3><div class="small">'+throwDetails+'</div></details>';
  }).join('');
 }
 function resumeRound(){if(isPhysicalRound()&&s.pendingScore&&!pendingBasketValid()){show('play');unverifiedPendingBasket();return}show(s.active&&s.pendingScore?'score':'play')}
