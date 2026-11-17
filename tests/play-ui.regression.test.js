@@ -1,0 +1,104 @@
+/* Explicit synthetic-only browser harness test; never loaded by the application. */
+(async()=>{
+const results=[],check=(v,m)=>{if(!v)throw Error(m);results.push(m)},el=id=>document.getElementById(id),visible=e=>!e.classList.contains('hidden');
+try{
+check(testErrors.length===0,'App boots without JavaScript errors');
+selectCourse(dragonflyCourse.id);startHole=4;startRound();check(s.active&&s.hole===4,'Direct start on non-first hole');
+check(el('currentHoleNumber').textContent==='Hole 4'&&el('currentHoleTotal').textContent==='/ 18','Prominent hole and muted total');
+check(el('currentHolePar').textContent.startsWith('Par '),'Par label preserved');check(el('holeNav').parentElement.classList.contains('hole-picker')&&getComputedStyle(el('holeNav')).opacity==='0','Original dropdown overlays hole and Par');
+check(el('playBasketSelector').closest('.play-hole-controls')===el('holeNav').closest('.play-hole-controls'),'Unified control panel');
+check(getComputedStyle(el('primary')).backgroundColor==='rgb(40, 120, 184)'&&getComputedStyle(el('primary')).color==='rgb(255, 255, 255)','Start Throw remains blue and white while disabled');
+const beforeStart=s.throws.length;selectThrowDisc('test-disc');check(!el('primary').disabled,'Physical disc enables Start Throw');el('primary').click();check(s.started&&s.throws.length===beforeStart&&physicalRound.frozenDisc?.discId==='test-disc','Start Throw begins GPS capture and freezes disc without recording');el('undoAction').click();check(!s.started&&s.throws.length===beforeStart,'Undo cancels active throw');
+selectThrowDisc('test-disc');voiceCommand('start');check(s.started&&s.throws.length===beforeStart,'Start Throw voice command preserved');el('undoAction').click();clearRoundDisc();render();
+const original=JSON.stringify({throws:s.throws,scores:s.completed});
+// Disposable synthetic map edits in memory only.
+edits[s.hole]={...(edits[s.hole]||{}),basket:{lat:0.001,lng:0.001},basketPositions:{B:{lat:0.002,lng:0.002},C:{lat:0.003,lng:0.003}}};currentGps={lat:0,lng:0};render();
+check(visible(el('playBasketSelector')),'Multiple basket row visible');
+check([...el('playBasketSelector').querySelectorAll('button')].every(visible),'Only three mapped positions shown');
+check(setActiveBasketPosition(4,'B')&&activeBasketPosition()==='B','Basket switch succeeds');
+check(holeMapData().basket.lat===0.002&&el('basketTargetLabel').textContent==='To basket B','Basket target updates immediately');
+check(el('basketLive').textContent===feetBetween(currentGps,holeMapData().basket)+' ft','GPS distance updates immediately');
+check(el('playBasketSelector').querySelector('[data-play-basket="B"]').classList.contains('selected'),'Selected basket class');
+const basketButtons=[...el('playBasketSelector').querySelectorAll('[data-play-basket]')];
+el('playBasketSelector').scrollIntoView({block:'center'});
+for(const button of basketButtons){
+ const rect=button.getBoundingClientRect(),pill=getComputedStyle(button,'::before');
+ check(rect.width===54&&rect.height>=44&&rect.height-parseFloat(pill.top)-parseFloat(pill.bottom)===36,'54x36 visual pill and 44px hit area for '+button.dataset.playBasket);
+ check(pill.borderRadius==='999px','Fully rounded pill '+button.dataset.playBasket);
+ const hit=document.elementFromPoint(rect.left+rect.width/2,rect.top+1);check(hit===button,'Invisible upper hit area receives input '+button.dataset.playBasket);hit.click();
+ check(activeBasketPosition()===button.dataset.playBasket&&button.getAttribute('aria-pressed')==='true','Hit-area click selects '+button.dataset.playBasket);
+ check(getComputedStyle(button,'::before').backgroundColor==='rgb(255, 255, 255)'&&getComputedStyle(button).color==='rgb(23, 36, 56)','Active pill is white and navy '+button.dataset.playBasket);
+ check(basketButtons.filter(b=>b!==button).every(b=>getComputedStyle(b,'::before').backgroundColor==='rgb(52, 73, 99)'&&getComputedStyle(b).color==='rgb(255, 255, 255)'),'Inactive pills remain slate and white');
+ check(el('basketLive').textContent===feetBetween(currentGps,holeMapData().basket)+' ft','GPS updates for '+button.dataset.playBasket);
+ check(JSON.parse(localStorage.getItem(appStateKey)).state.basketSelections[4]===button.dataset.playBasket,'Selected pill saved '+button.dataset.playBasket);
+ button.focus();check(button.matches(':focus-visible')&&getComputedStyle(button).outlineStyle!=='none','Keyboard focus visible '+button.dataset.playBasket);
+}
+const pills=el('playBasketSelector').querySelector('.play-basket-buttons').getBoundingClientRect(),row=el('playBasketSelector').getBoundingClientRect();
+check(Math.abs((pills.left+pills.right)/2-(row.left+row.right)/2)<1,'Pills centered horizontally without visible label');
+check(el('playBasketSelector').textContent.trim()==='ABC','Only A/B/C visible in selector');
+check(basketButtons.every(b=>b.getAttribute('aria-label')==='Basket position '+b.dataset.playBasket)&&el('playBasketSelector').getAttribute('role')==='group','Accessible basket labels and group retained');
+check(basketButtons.slice(1).every((b,i)=>b.getBoundingClientRect().left-basketButtons[i].getBoundingClientRect().right===6),'Consistent six pixel pill spacing');
+setActiveBasketPosition(4,'B');
+check(JSON.stringify({throws:s.throws,scores:s.completed})===original,'Basket switch preserves throws and scores');
+check(JSON.parse(localStorage.getItem('chain-chaser-app-state-v1')).state.basketSelections[4]==='B','Per-hole basket selection saved');
+s.pendingScore=true;renderPlayBasketSelector();check([...el('playBasketSelector').querySelectorAll('button')].every(b=>b.disabled)&&!setActiveBasketPosition(4,'C'),'Pending finish blocks basket switching');s.pendingScore=false;
+s.completed.push({hole:4,score:3,par:3});renderPlayBasketSelector();check(!setActiveBasketPosition(4,'C'),'Completed hole blocks basket switching');s.completed=[];
+render();el('nextHole').click();check(s.hole===5,'Next arrow navigates');el('previousHole').click();check(reviewHoleId===4&&s.hole===5,'Previous arrow preserves review behavior');closeHoleReview();
+el('holeNav').value='4';el('holeNav').dispatchEvent(new Event('change'));check(s.hole===4&&activeBasketPosition()==='B','Dropdown return preserves basket choice');
+edits[4].basketPositions={C:{lat:0.003,lng:0.003}};s.basketSelections[4]='A';render();check(!visible(el('playBasketSelector').querySelector('[data-play-basket="B"]')),'Unmapped basket button hidden');
+delete edits[4].basketPositions;render();check(!visible(el('playBasketSelector')),'Single basket row hidden');
+edits[4].basketPositions={B:{lat:0.002,lng:0.002},C:{lat:0.003,lng:0.003}};render();
+for(const width of [innerWidth]){const panel=document.querySelector('.play-hole-controls'),r=panel.getBoundingClientRect(),buttons=[el('previousHole'),el('nextHole'),...el('playBasketSelector').querySelectorAll('button')];check(document.documentElement.scrollWidth<=width,'No horizontal overflow at '+width);check(buttons.every(b=>{const q=b.getBoundingClientRect();return q.width>=44&&q.height>=44&&q.left>=r.left&&q.right<=r.right}),'Touch targets fit at '+width);check(el('holeNav').getBoundingClientRect().left>=el('previousHole').getBoundingClientRect().right&&el('holeNav').getBoundingClientRect().right<=el('nextHole').getBoundingClientRect().left,'No navigation overlap at '+width);check(r.height<=122,'Compact panel height at '+width);}
+const basket=el('finishBasket'),penalty=el('penaltyAction');
+check(document.querySelectorAll('#finishBasket').length===1&&document.querySelectorAll('#penaltyAction').length===1,'Each action appears exactly once');
+check(basket.nextElementSibling===penalty,'Penalty directly follows In the Basket');
+const penaltyType=getComputedStyle(penalty),startType=getComputedStyle(el('primary')),basketType=getComputedStyle(basket),fontProperties=['fontFamily','fontSize','fontWeight','letterSpacing'];
+check(penalty.textContent==='PENALTY','Uppercase PENALTY label');
+check(fontProperties.every(p=>penaltyType[p]===startType[p]&&penaltyType[p]===basketType[p]),'Penalty typography matches both gameplay buttons');
+check(penaltyType.backgroundColor==='rgb(52, 73, 99)'&&penaltyType.borderTopWidth==='1px'&&penaltyType.borderRadius==='13px','Penalty slate fill, border and corners preserved');
+check(penalty.getBoundingClientRect().height===48,'Penalty remains 48px tall');
+const br=basket.getBoundingClientRect(),pr=penalty.getBoundingClientRect();
+check(br.left===pr.left&&br.width===pr.width&&br.width===basket.parentElement.clientWidth-24,'Action widths and alignment match');
+check(pr.top-br.bottom===6&&br.height>=48&&pr.height>=48,'Six pixel gap and 48px touch targets');
+check(getComputedStyle(basket).backgroundColor==='rgb(245, 130, 32)'&&getComputedStyle(penalty).backgroundColor==='rgb(52, 73, 99)','Orange primary and slate secondary actions');
+const throwsBefore=s.throws.length,roundsBefore=JSON.stringify(s.rounds);
+penalty.click();check(el('gameplayPenaltyDialog').open,'Penalty click opens original menu');
+el('gameplayPenaltyDialog').querySelector('.btn.outline').click();check(!el('gameplayPenaltyDialog').open&&s.penalty===0,'Cancel changes no penalties');
+penalty.click();el('gameplayPenaltyDialog').querySelector('.btn').click();check(s.penalty===1&&!el('gameplayPenaltyDialog').open&&s.throws.length===throwsBefore,'Missed Mando adds one penalty without throw');
+check(JSON.parse(localStorage.getItem('chain-chaser-app-state-v1')).state.penalty===1,'Penalty persisted');
+el('undoAction').click();check(s.penalty===0&&s.throws.length===throwsBefore,'Undo removes penalty before throws');
+handleVoicePhrase('missed mando');check(s.penalty===1,'Missed Mando voice command preserved');el('undoAction').click();
+check(basket.disabled,'Basket still requires disc');selectThrowDisc('test-disc');edits[4].tee={lat:0,lng:0};basket.click();check(s.pendingScore&&s.throws.length===throwsBefore+1&&!el('score').classList.contains('hidden'),'Basket click records final throw and opens score');
+show('play');check(penalty.disabled&&basket.disabled,'Pending score disables both actions');el('undoAction').click();check(!s.pendingScore&&s.throws.length===throwsBefore,'Undo basket restores unfinished hole');
+selectThrowDisc('test-disc');penalty.click();el('gameplayPenaltyDialog').querySelector('.btn').click();basket.click();check(s.scoreThrows===1&&s.penalty===1&&el('scoreValue').textContent==='2','Score confirmation includes final throw and penalty');confirmScore();check(s.completed.find(x=>x.hole===4)?.score===2&&s.hole===5&&s.penalty===0,'Confirmation saves score and advances');
+check(JSON.stringify(s.rounds)===roundsBefore,'Unfinished round history remains unchanged');
+const disabledAppearance=(b,label)=>{const c=getComputedStyle(b);check(b.disabled&&c.backgroundColor==='rgba(0, 0, 0, 0)'&&c.borderColor==='rgba(0, 0, 0, 0)'&&c.boxShadow==='none'&&c.outlineStyle==='none'&&Number(c.opacity)>0&&Number(c.opacity)<1,label)};
+startHole=1;jumpHole(1);disabledAppearance(el('previousHole'),'First hole disabled arrow has no box, outline or shadow');const first=s.hole;el('previousHole').click();check(s.hole===first&&reviewHoleId===null,'Disabled Previous is non-interactive');
+el('nextHole').focus();check(el('nextHole').matches(':focus-visible')&&getComputedStyle(el('nextHole')).outlineStyle!=='none','Enabled arrow retains keyboard focus outline');
+jumpHole(18);disabledAppearance(el('nextHole'),'Last hole disabled arrow has no box, outline or shadow');el('nextHole').click();check(s.hole===18,'Disabled Next is non-interactive');
+const saved=localStorage.getItem(appStateKey);s={...s,active:false,hole:17};appStateReady=false;loadAppState();appStateReady=true;check(s.hole===18&&localStorage.getItem(appStateKey)===saved,'Saved round restores without changing storage');render();
+const backup=await collectFullBackup();check(backup.data[appStateKey]===saved&&backup.integrity.algorithm==='SHA-256','Awaited full backup includes exact saved round and checksums');
+const storageSnapshot=()=>JSON.stringify(Object.keys(localStorage).sort().map(k=>[k,localStorage.getItem(k)])),beforeBackup=storageSnapshot();
+const backupValidators={validateSharedCourse:ChainChaserCourseLibrary.validateCourse,validateSharedManifest:ChainChaserCourseLibrary.validateManifest};
+const validBackup=await validateFullBackup(JSON.stringify(backup),backupValidators);check(validBackup.valid&&validBackup.integrity.valid,'Exported v2 backup validates with checksums: '+validBackup.errors.map(e=>e.code).join(','));
+const legacyBackup=structuredClone(backup);legacyBackup.formatVersion=1;delete legacyBackup.integrity;delete legacyBackup.manifest.excludedKeys;
+check((await validateFullBackup(JSON.stringify(legacyBackup),backupValidators)).valid,'Legacy v1 full backup remains compatible');
+const tampered=structuredClone(backup);tampered.data[appStateKey]+=' ';const tamperedResult=await validateFullBackup(JSON.stringify(tampered),backupValidators);check(!tamperedResult.valid&&tamperedResult.errors.some(e=>e.code==='CHECKSUM_MISMATCH'),'Modified backup data rejected');
+check(!(await validateFullBackup('{broken',backupValidators)).valid,'Malformed backup JSON rejected');
+check(!(await validateFullBackup('{"formatVersion":1,"formatVersion":2}',backupValidators)).valid,'Duplicate backup fields rejected');
+let downloadBlob=null,downloadClicked=false;const originalCreate=URL.createObjectURL,originalAnchorClick=HTMLAnchorElement.prototype.click;URL.createObjectURL=blob=>{downloadBlob=blob;return originalCreate(blob)};HTMLAnchorElement.prototype.click=function(){if(this.download)downloadClicked=true;else originalAnchorClick.call(this)};
+try{await exportFullBackup()}finally{URL.createObjectURL=originalCreate;HTMLAnchorElement.prototype.click=originalAnchorClick}
+check(downloadClicked&&downloadBlob instanceof Blob&&(await validateFullBackup(await downloadBlob.text(),backupValidators)).valid,'Actual export action produces valid downloadable backup');
+openFullBackupPreview();await previewFullBackupFile({target:{files:[new File([JSON.stringify(backup)],'synthetic-backup-v2.json',{type:'application/json'})]}});
+check(el('fullBackupPreviewStatus').textContent.startsWith('Backup validated.')&&el('fullBackupPreviewContent').children.length>0,'Full Backup import opens validated read-only preview');
+check(storageSnapshot()===beforeBackup,'Import preview writes no player or mapping data');closeFullBackupPreview();check(storageSnapshot()===beforeBackup,'Canceling backup preview changes no storage');
+openFullBackupPreview();await previewFullBackupFile({target:{files:[new File([JSON.stringify(legacyBackup)],'synthetic-backup-v1.json',{type:'application/json'})]}});check(el('fullBackupPreviewStatus').textContent.startsWith('Backup validated.'),'Legacy v1 backup import preview remains compatible');closeFullBackupPreview();
+openFullBackupPreview();await previewFullBackupFile({target:{files:[new File([JSON.stringify(tampered)],'synthetic-tampered.json',{type:'application/json'})]}});check(el('fullBackupPreviewStatus').textContent.startsWith('Preview blocked:'),'Tampered import blocked before comparison');closeFullBackupPreview();check(storageSnapshot()===beforeBackup,'Rejected import changes no storage');
+const inlineScripts=[...document.scripts].filter(script=>!script.src&&script.textContent.length>100000);check(inlineScripts.length===1&&!!new Function(inlineScripts[0].textContent),'Production application JavaScript syntax valid');
+for(const element of document.querySelectorAll('*'))for(const name of element.getAttributeNames())if(name.startsWith('on'))new Function('event',element.getAttribute(name));check(true,'Inline event handler syntax valid');
+const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);check(new Set(ids).size===ids.length,'DOM IDs remain unique');
+check(testErrors.length===0,'No JavaScript errors after interactions');
+window.browserResult={pass:true,count:results.length,results,width:innerWidth};
+}catch(e){window.browserResult={pass:false,count:results.length,results,error:e.message,width:innerWidth}}
+const output=document.createElement('pre');output.id='browser-results';output.textContent=JSON.stringify(browserResult);document.body.append(output);
+})();
